@@ -565,40 +565,4 @@ tab.newButton("Moblie crosshair", "", function()
         verticalLine.Position = UDim2.new(0.5, 0, 0.45, 0) 
     end)
 end)
-tab.newButton("arm changer", "will change skin color of arms", function()
-    local function setArmProperties(property, value)
-        local armParts = {"LeftUpperArm", "LeftLowerArm", "LeftHand", "RightUpperArm", "RightLowerArm", "RightHand"}
-        for _, partName in ipairs(armParts) do
-            game:GetService("Workspace").Ignore.FPSArms[partName][property] = value
-        end
-    end
-    setArmProperties("Color", Color3.fromRGB(1, 0, 0)) 
-    setArmProperties("Material", "ForceField") 
-    setArmProperties("TextureID", "rbxassetid://9305457875")
-
-
-
-
-    local function changeArmsToForceField(player)
-        local fpsArms = workspace:FindFirstChild("Ignore")
-        if not fpsArms then
-            warn("Workspace.Ignore not found")
-            return
-        end
-
-
-
-
-        local fakeArms = fpsArms:FindFirstChild("FPSArms"):FindFirstChild("Fake")
-        if not fakeArms then
-            warn("FPSArms.Fake not found")
-            return
-        end
-        for _, partName in ipairs({"c_LeftLowerArm", "c_RightLowerArm"}) do
-            local armPart = fakeArms:FindFirstChild(partName)
-            if armPart and armPart:IsA("BasePart") then
-                armPart.Material = Enum.Material.ForceField
-                armPart.Color = Color3.new(1, 0, 0)
-            else
-                warn(partName .. " not found in FPSArms.Fake")
-   
+end)
