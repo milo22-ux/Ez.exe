@@ -1,1 +1,542 @@
-([[This file was protected with MoonSec V3]]):gsub('.+', (function(a) _ceotLkoqTH_x = a; end)); return(function(d,...)local n;local r;local h;local p;local m;local u;local e=24915;local o=0;local t={};while o<316 do o=o+1;while o<0x10c and e%0x3b38<0x1d9c do o=o+1 e=(e+1007)%26145 local j=o+e if(e%0x2bf0)<=0x15f8 then e=(e-0x23d)%0x6867 while o<0x1ba and e%0x1c9e<0xe4f do o=o+1 e=(e-731)%40027 local n=o+e if(e%0x3e0a)>=0x1f05 then e=(e-0x359)%0x859e local e=35287 if not t[e]then t[e]=0x1 p="\4\8\116\111\110\117\109\98\101\114\81\112\81\101\101\112\118\81\0\6\115\116\114\105\110\103\4\99\104\97\114\65\98\122\98\108\103\102\75\0\6\115\116\114\105\110\103\3\115\117\98\80\104\85\108\88\68\100\77\0\6\115\116\114\105\110\103\4\98\121\116\101\85\90\95\70\122\101\120\71\0\5\116\97\98\108\101\6\99\111\110\99\97\116\118\71\97\121\79\116\76\72\0\5\116\97\98\108\101\6\105\110\115\101\114\116\109\105\80\117\67\65\89\76\5";end elseif e%2~=0 then e=(e+0x31)%0x8434 local e=29679 if not t[e]then t[e]=0x1 m=(not m)and _ENV or m;end else e=(e+0x365)%0x6739 o=o+1 local e=56454 if not t[e]then t[e]=0x1 r=tonumber;end end end elseif e%2~=0 then e=(e*0x2e5)%0x128a while o<0x1bc and e%0x38b8<0x1c5c do o=o+1 e=(e*495)%44863 local n=o+e if(e%0x3624)>=0x1b12 then e=(e+0x89)%0xbff7 local e=54994 if not t[e]then t[e]=0x1 u=string;end elseif e%2~=0 then e=(e-0x152)%0x94a1 local e=2089 if not t[e]then t[e]=0x1 m=getfenv and getfenv();end else e=(e-0xbe)%0x4773 o=o+1 local e=52060 if not t[e]then t[e]=0x1 h={};end end end else e=(e-0x219)%0x976f o=o+1 while o<0x235 and e%0x3f94<0x1fca do o=o+1 e=(e*213)%4883 local p=o+e if(e%0x3db4)>=0x1eda then e=(e*0x35b)%0xa59c local e=10104 if not t[e]then t[e]=0x1 end elseif e%2~=0 then e=(e+0x1d9)%0x6ffe local e=77312 if not t[e]then t[e]=0x1 n=function(n)local e=0x01 local function t(o)e=e+o return n:sub(e-o,e-0x01)end while true do local o=t(0x01)if(o=="\5")then break end local e=u.byte(t(0x01))local e=t(e)if o=="\2"then e=h.QpQeepvQ(e)elseif o=="\3"then e=e~="\0"elseif o=="\6"then m[e]=function(e,o)return d(8,nil,d,o,e)end elseif o=="\4"then e=m[e]elseif o=="\0"then e=m[e][t(u.byte(t(0x01)))];end local o=t(0x08)h[o]=e end end end else e=(e*0x20)%0xa821 o=o+1 local e=44758 if not t[e]then t[e]=0x1 end end end end end e=(e*936)%5072 end n(p);local o={};for e=0x0,0xff do local t=h.AbzblgfK(e);o[e]=t;o[t]=e;end local function j(e)return o[e];end local l=(function(p,n)local d,t=0x01,0x10 local o={{},{},{}}local m=-0x01 local e=0x01 local u=p while true do o[0x03][h.PhUlXDdM(n,e,(function()e=d+e return e-0x01 end)())]=(function()m=m+0x01 return m end)()if m==(0x0f)then m=""t=0x000 break end end local m=#n while e<m+0x01 do o[0x02][t]=h.PhUlXDdM(n,e,(function()e=d+e return e-0x01 end)())t=t+0x01 if t%0x02==0x00 then t=0x00 h.miPuCAYL(o[0x01],(j((((o[0x03][o[0x02][0x00]]or 0x00)*0x10)+(o[0x03][o[0x02][0x01]]or 0x00)+u)%0x100)));u=p+u;end end return h.vGayOtLH(o[0x01])end);n(l(238,"Y T+Wyc)s(!z-U1_ )"));n(l(184,"aU=+H,m({sZY4%?:H{smHYsH%ZUsmmZ({4+H{%4%U{+=s4?sU,(Z%UU{H=+H(%+XmYYUjHH4s{YU=4m({%0sUYmUmsY,m{Y=:U+?{44:U%m+s(?(U?(H4:Zt??Z+?4+=(UY?::?,s,%U=4m+Y5:?=U(;%{<fmYs1?(%&U44%&smHZI{,+H(HY%U{,{(+Y?BZ(Zs:bZH:(,(H4H(+Z%JHH,{,%4UUm4ZU?Z+4(%4%:4,?s?:Zd:m=4+ZH:WZH?(++(44=PUH?{:%+=?(UYm:sH{m%?NY*:%YH?s+={H4,Z?m,Zm:q=s(+4+bsHUZZ4+=H(%4=::?H=??,=m(#Zs:+H+sU%(==mH{U%4=H{%mHZ%m/ZZ?s+m{HZ_VH,%s%4HU,,:sUs4?msY%,=Hm,ZYRH+4{{4%OZ,4Zs:{+YU{mHU,,UZ4?{4%(m4HE:,(Z=4YU+H%4(:%H{{U%:Y%"));local e=(-1870+(function()local m,o=0,1;(function(m,t,o,e)o(e(t,o and m,e and e,e)and e(e,e,o,e),e(m,t and o,o,t)and o(t,e,o,e),t(m,e,m,m and t),t(o,e,e,o))end)(function(t,u,e,n)if m>386 then return u end m=m+1 o=(o*749)%447 if(o%1406)>703 then o=(o-191)%46105 return t(e(t,e and e,e and e,u),e(e,e,e and e,t),n(u,n,e,e and t),e(t and n,n,u,e))else return n end return e end,function(n,e,u,t)if m>312 then return e end m=m+1 o=(o+835)%31784 if(o%1710)>855 then return n else return n(e(u,e and n,t and t,t),n(e,n,t,e and n),t(n,u and e,n,e),n(n,t,e and t,e and u))end return e(u(t,e,u,u),n(e,u,e,u),t(t and e,u,e,u),t(e,t,e,e))end,function(e,t,n,u)if m>103 then return t end m=m+1 o=(o-945)%25476 if(o%584)>=292 then o=(o*216)%46527 return t(e(t,e,u,t)and e(e and n,e,e,t),t(e,t and n,e,n),t(e,e,u,u),e(n,e,e,e))else return u end return n end,function(n,t,e,u)if m>276 then return e end m=m+1 o=(o-199)%24954 if(o%834)>=417 then return e(e(t,t,e,n),t(t,e,e and u,n and t),e(t,t,e,e),e(n and t,u,t,u))else return t end return n end)return o;end)())local j=h.qorlATTu or h.iYzKdurg;local ne=(getfenv)or(function()return _ENV end);local p=4;local n=3;local ee=1;local m=2;local function oe(a,...)local f=l(e,"ZjmK7touJ81%?pe+jjo?mmpJ8j7%+1%aootpK+e11ut8jJp7j8KeJKKJeeJo+31j1Jjm?7?1K7eue?to+eMeuJm%KN817?tm%?opu7peJ+8o^h%m%Jmmptp177e?+?ooj8jeJJK17a11t%om??ueJ7ee1j1ojc%J?JKmete1t7To_?uomume8J78t}%1o?ump?J+87+e1o%omHpKpJ7m+7+1o7jtj?JoKJKe1Jt%or?1umJme?8+17Xe?4?oK:ejmop?8m7J+e%7m?8o7u7e%Jo1u9p1Jp8m+?17%7jepjpo7!+m+JomjKj1J7KtK?1otJte?Ju%J{e18m1ms?%+?7meeneotOVjBJumm7m1877u7?%oteoepJJ%8d+11?%mj??pp7Kee++ooTjmjJJmKtK1177?t??ou8ueeJ811UM1%%?mm?pee77e{jcouzjJmJ8m7t71%7ooo?poJuJe+J11%:j1?ppmK?e7+7tejjjoJPKmKJ1mtK8J7eT7%1usmo8eSJ%8?Xm1p?em7?++;7oejomo8f7K7J%mo7o1p7Jt?1J_Koe?1mtJBe?7u1K5eo8?tm?1K7ete?to*JHeuJm%Kg817mtm%?o+u7pe858oV0%j%JmmpKp177+o+?ooj8jeJJKN7z11tpom??ueJ7ee8+1ojf?m?JKmete1t7+?*?uom8me8J71t{%1o%ump?Jp87+e%h%om<pKpJ7me1+1o7juj?JoKJKe1Jt88et7(1?Quom?173e%+?oKRemeJtmxt^1u7j?m?8o787e%Jo1uDp1J%%KuTj?pmJJ11oKq%?7J87H+71jt?#%tp8J?uu?Km2JJ_e18%1mn?%e?7meejeotY+JbJumj1m187K?7?%oteoepJJw8O+11m%mj??+p7Ke+5+ooSjjjJJmKKK117tot??ou8ueeJ8x1Cw1%p?mm?pee77e++ToukmjmJ8m7771%7ouo?poueJe+J1%%(j1??pmK?ep+7tejUjoJ2KKKJ1m71t1?7o?u?eoJe8eSJ%6?Tm1pmem7?+797oejomo8zKJ7J%moto1p7JoJ?+o1u1ejJ?1pPK1ep+mt?I7j7uemoKo1h7JtJ?mo1u1e7J?8?So1e%emJpGe<71+p9mo?jem7JeK+7o%6ojoJpmJ7J1+71u1?jo%e?eKJe%+Ct1&?jmu?mpK78e7+to?0umuJem8t81c71?%?mop8pe7J+13,o1j%mmJ?Ke771eojoopCuJJJ+m1t11j7?o??KoeueetJg1j.u1mpKm8?77t7%eujuoew8m8Jnm%K+J1eo7j1p_Jo+eoJj8mAJ1K?7m1?t+o7?euoJo+X1K1Jjm?7?1K7etm1ey8o7?dm%Joem7p18S7o+?%mm1877t7?%ooJoepJJ%8f+11m%mj??+p7Ke+L+oosjjjJJmKKK117tot??ou8ueeJ8F1*21%p?mm?pee77e++9ou=mmmJ8m7t71%7t?o?poJ8Je+J11%^j1?%pmK?ep+7tejhjoJ#KKKJ1m71t1?7uuu?eo8J8edJ%8?&m1p?em7?++F7oejomo8DKJ7J%mt1o1p7u?J?+o8e1ejJ?:pLK1em+mt?B7j7ueKjKo1#tmtJ?muK8%tow7%1uwu87t+8%tt+empjJupoJ?7m+J1eo7j1m8?oK?+m1Jtej7?1Jit1m?1mtJ-e?7u1K_eo8?8m)%tJutm1eV%ome8J78t:%1o?ump?J+87+e1o%om6?JpJ7me1+1o7s?j?JomeKe1JtNo#?1upJme?8e17ce%+:7%1u0eJtmcKW1u7mom?8o787e%Jo_uPp1Jm8m+?1+%7jep(po7!+jKoe?o7?eu+Jo+>1m1Jjm?t?1K7p?e?to+eLeuJmxK^817mtm%?o7u7peJo8o&;1J%Jmm?1p177+u+?oojJjeJJK87l11t?om??u+J7ee8o1ojG?K?JKme7e1t7)t*?uomume8J71t9%1opump?J787+e%j%om,pmpJ7m+K+1o7joj?JoK8Ke1Jtdor?1upJme?8e17Ue%+?oK6ejeJtmM7Y1u7mum?8oKe7e%Jo%u/p1J?8m+?1p%7jephpo75+K+Jom21j1J7KuK?1otJte?Ju8JHe18?1m4?%+?7mepoeotx+JFJumj1m187K?7?%oteoepJJa8&+11m%mj??7p7Ke+j+oodjmjJJmKKK117tot??ou8ueeJ8l1y21%m?mm?p7e77e+o#ouljJmJ8mK171%7t?o?poueJe+J1%%gj1??pmK?ep+7tejSjoJ*KKKJ1m71t1?7o?u?eo888e9J%1?5m1p%em7?+e_7oemjmo8UKJ7J%moto1p7JoJ?+o1u1ejJ?8pEK1e?+mt?z+j7uemoKo1RtKtJ?mu7u1e78tp18S.JummKm1877o7?%oo8oepJJ58_+11p%mj??ep7Kee+K7e11HjJJmKKK117tot??ou8ueeJ8f1_Q1%m?mm?p7e77e+o&ouFjJmJ8mK171%7t?o?poueJe+J1%%Vj1??pmK?epjtp7ueK7e1+{%8m?mte18ptu;p%Joumte7m%eu8771dTkpp%877KMj%7t%jK?%j+poJJKe+7+o?8J7KjJt7mee17t1o7KteK88t7TKu7ummmp%m+e+8J7ex7A?pt877M+u%1tjmJ?+867o+j1o+%pto7j1p4p117t%j%ueu1KKe?8%6?j8%8Jje7e11mttj>%uo%Kmp8Je{gSp%tuomQJeuj78++%77+ju?%Kem1%p7Ko81pomjJ%,j1?%pmK?ee+7tejjjoJ^mJKJ1mttt1?7uou?eo8u8eVJ%8?^m1p?em7?++w7oejomo8U7K7J%mo7o1p7JtJ?+o1u1ejJ?1pQK1ep+mt?O7j7ueKjKo1UtmtJ?mu7u1e78u8?go1e%emJp%e071+?Umo?jpm7JeK+7o%/omoJpmJtJ1+78?1?jo?8?eKJe1+st1c%tLvo%?ummJpeto?AujuJem8781A7%u%?mo?epe7J+%B{o1j?mmJ?Kp771et+ooprJmJJ+m1t11j7%???Koe8eetJ31jqu1m%Km8?7et7%eujuoeNJJ8J!m%t%1m7pop?7o+u+eoJj8mLJ1K?7m1?t+o7?euoJo+#1K1Jjm?7?1K7ete?to J<euJm%KB817mtm%?o+u7pe828ow0%j%Jmmp7p177+u+?oo)ejeJJK%7-11t?om??up?muJmee781t0?JKmeKe1t7ro}?uom8me8J7)t5%1opump?Je87+e1++711oMjo??JmKJee17t1jf?ou?+7teh+joJzKmKJ1mttt1?7o?u?eo888eyJ%1?.m1p%em7?+p=7oem!mo8F7K7J%mt1o1p7JuJ?+o1J1ejJ?8pFK1e?+mt?s+j7uemoKo1XtKtJ?mu7u1e78t8?.o%u%emJp1eO71+p_mo?j7m7Je7j7o%MomoJpmJK?JueK7e1om??upJ7ee1G1oj5?K?JKmp1e1t7+?W?uom8me8J71t.%1o%8K7p+?%moJoe7Ie%%8t%jeptj%p8J7K1+P+m?%utm8e1J7toHj?+ujK7u%m+e781tFte%+uomJpe87%?utm8e mtpJJe77+1%Ko?j?pmJJ1?t8mj%7uumeJtKeee17t1u8Kopp8%t1jjtujm?buom?Km/u?jopmep88t718ttt+e%7o18m7%++%ojJjo?pJe7K+t%joIO?ojoP?1JkKot7jo??ueKu%7t+jt^e%Ku+e?p%8Kt7+e?jo7mpejJ87?+K%to1mo?pJ?7J%J1Kotj88jt8mJpp1pKu=+pAu1KpeloKmejm1JopK%1tJKmp?u8?o+jee7J8t#_pu8opjupt8=Lupm%o7?jjp+71Ke+p8++u%jo)jo??pJ1joj!p%?u?m%u+KJeJ8et7t?mjp18ttui%tjR%%1ubmoKm+u1%ummKp?tmp88W7m+J1e%EJ8Kje1K?+m1Jtej7?1Jlmom%1tomPe?7u1uu7%j;1topKre18K7K+%7+Uu%Joem7jp++%mo%m7o%mmp7J176opIpp7JopjJ%K1+*1o8+JjKoe?887pj7t8jK?muJmeKKD+?7ummtekJpej8J71MV%op8JK7j+?7ujK%xooj?j++u1pom+p?tu8m%pt1?o=ip?JuuK8?78%7?vm%8uJfje114t78%7+Q7%1uHu+p+8o7J+e%7?eJ877+u7t=j1eo7j1jJe+%cotjupKJmme+KKoe?1mtJxe?7u1K<eo8?tm}J%eu7m1e&p+J?Ht%+oem7p1pJ%1uAmm1+JK7JJp7?+o1?omou7K+J1ot8j7?jttKue11Kt?1Kogc??muJJ6t8kJ1Ko%meeJ8j7j+87plK%oo?mm7o+K%%+p%uooj?pmee%SoKju%mtpieJtKeee17t1tKm+ee8tt7dKtujo?Ouom?Kob11+ummpe4Ju7e+u%oojmpopm%poJ?7mt8mwpjK1KKee8pos:+?KJo?pe8Kue?1mK117ttt??ouJueeJ8%13 1%m?mm?p+e77eklOou!mjmJ8m7K71%7ooo?poJ8Je+J1X%Wj1?ppmK?ee+7te.+t7??KoeueetJQ1j;u1mpKm8?77t7%eujuoe*8K8JSm11%1m7pup?7o+J+eoJj8tepo7}+j+Jomj7j1J7KuK?1o7ete?Ju%Jhe18?1m5?%pam%Joem7p18_HJummKm1877o7?%oo8oepJJ{8C+11p%mj??ep7Kee++oosjjjJJmK7K117tut??ooeueeJ8%1wO1%??mm?ppe77eI!Vou>mKmJ8mK171%7ouo?poJJJe+J18%-j1?%pmK?ee+7tejjjoJ{mJKJ1mttt1?7uou?eo8u8e J%1?dm1ppem7?+7a7oemjmo8*7m7J%moKo1p7JoJ?+o181ejJ?zpcK1ep+mt?!ej7uem+u7m1eM8o7?dmu1e78t8?_o%J%emJp%e;71+m-mo?j+m7Je7Q7o%Moj1ot?jm?JueK71?jo?u?eKJe1+gt1cpjmu?m7K78e7oto? uKuJem8781x7%t%?mopJpe7J+%4To1jmmmJ?K+771eo6oopvJjJJ+m1K11j7?o??Koe8eetJDQjcu1mpKm8?7et7%eo+%7o1em7?+p(7oem{mo8_7K7J%mt1o1p7JuJ?+o1J1ejJ?8Me?7u1+mt?/pj7ueK5Ko1!tKtJ?mo1u1e78u8?Go%J%emJp84jm8o%mWpooepJJ88!+11?%mj??+p7Keeo+ooDjKjJJmK7K117ttt??ouuueeJ811&F1%p?mm?p7e77e#jvouDmmmJ8m7K71%7oto?poJJJe+J1%%Uj1?mpmK?e++7tej_joJ>KmKJ1mttt1?7o?u?eo888e)J%1?{m1p%em7?+pR7oemamo8i7K7J%mt1o1p7u?J?+o8e1ejJ?^pvK1em+mt?}7j7ueKjKo1EtmtJ?muK%JK=817%tm%?oeu7pe8j8oVN1J%Jmm?1p177e?+?oo#ejeJJKL7L11tmom??u7J7ee1j1ojT?m?JKmeKe1t72t0?uomJme8J7%tI%1omump?J787+e1o%om&?JpJ7me1+1o7d?j?JomeKe1Jt%oz?1u?Jme?8p17ce%+?oKxemeJtmPt&1u7j?m?8o787e%Jo1ufp1J%8m+?1e%7jepjpo7^eJ+Jomjtj1J7KoK?1otu8?tmiJ%eu7m11m9?%p?7meeOeot{}KIJumj1m1877u7?%ooJoepJJ8?eJ7K1+H1ot?jm?JueK7e11#toY?J7ee8+1ojR?m?JKmete1t7+?L?uojeme8J73t^%1omump?J787+e1o%om}pKpJ7m+7+1o7jtt1pmK?ep+7tejrjoJdKKKJ1m71t1?7o?u?eoJe8e^J%4?Nm1pmem7?+7f7oemjmo837m7J%moK1Jtej7J?+o1u1ejJ?1pYK1ep+mt?c7j7uemoKo1DtKtJ?mu7u1e78t%pu%mop?8m%;oumJ??J+7e1?%tojmJ?8jpp7JoK?+m+t?uuuKpJK7je?1mtJtuKjp%8u7%et%ot:mKeoJ+eK887?Vm%J%K8u718Kom+?%moJum7K+j1uomjjJmtejpp1t1KKP+?eutK7eKt7oGq8?8utm7ej817p(e?8R8pOummJpeeJ%8oujppJJu+J?+%jt?j8?%J17o1JJ1tpjj?JJ1?+1AKJee171eu+mpeK8e7p%e%tuummp+8jtMc?oeucmKpuJet/+%%ootp7p8Je=t+%1Jte%jo1j1pRJoJmt%j7?1u8meJKKee?1mtJt1mpej8Jt1;t?Xo+?j8;m1eS8o1Iujj+pt8TK+%21etejuJJ7oK?+K%7tJj%p1KJKK+?11tjj7?WuuK11uKuee1yto6?jtej1J788pooFo%?um8Y7u5J1?o+meJ?Jut0+e1toJj7?%Je+m+%11tpMe?tJJ?+J8KJee178eutm?pp1ut7jmtuju?!uom?7o(j%?o+p1pJJ+t>#t%uuKmm?emK+7J?7m+Jmt?pJoK?1o8+t1>8??u%m+1-18tu3%?omemue88?ttbeumuum787J%tmbK%+Vt%8oem7p1%%78t%%KoJje%omqpjpJ7m+7+1o7juj?JomeKe1Jt%oG?1u?Jme?8p17we%+?oKiemeJtm_t<1u7j?m?8o787e%Jo1u:p1J%pf7J%moKo1p7JoJ?+o181ejJ?spdK1ep+mt?E+j7uemoKo1UtKtJ?mu7u1e78tp1tm%?opu7pe8!8oqH%K%Jmm?1p177+u+?oojJjeJJK8ueK7e11.tod?J7ee8+1ojb?m?JKmete1t7+?U?uom8me8J71tH%1o%ump?Jp87+e%c%ombpKpJ7me1+1o7juj?JoKJKe1Jt8oI?1u?Jme?8+17>e%o?oK;eKeJtmH7R1u7mtm?8o7u7e%Jo1u{p1Jp8m+?17%7jepjpo7>+m+JomjKj1J7KoK?1ot8te?JuSJ,e18p1ma?%e?7mep+eotC,mnJummtm187K?7?%oo8oepJJ18#+11%+>1ot?jm?Jue+oofjjjJJmK7K117tut??ooeueeJ8%1vi1%??mm?ppmmpJJe77+1%Aooj?pmJJKe+711mmJ?Kp771eohoop)JKJJ+m8111j7?u??KoeJeetJ/8jau1m%Km8?7et7%eujuoedJJ8J5m%t%1m7pop?7o+uK?+mo1p7JtJ?+o1J1ejJ?%p)K1em+mt?b+j7ueK;Ko1Dtj8o7?Nm%JK{817%tm%?oeu7pe8j8o=c1J%Jmm?1p177+u+?oojJjeJJK8ojjp?1J&Ko76g1?jujm+eJ8tt8k+ttae%eu7m1mKOt%Jujm11jm7p1897o+?%meJt+j7Jptv+o1?omotKpeo1ot8N%u?utK1ep1utpzJ%uutK7uJmee781tr_o8?ejoJp+877p/8%oo?mm7o+K%%7ej+?pJKKeep7j+J11o^joKKeK1ttK1uoKjV?ou?137pjt1uuom8p18jt78%oJ07%1u2u17%+81+o1j8J1uK77ep%mo7jupmu++x+?1totjj?.upKoe811ot1tt?qe?7u1J77%j7?oG%?%u7m1e_+t1+oumuemuX7t++%ut!+1?u8op7J17I+o1?omjJXu?7Kp+o1ot?jmL%eK1mte.t?J0+?+uJmee7pp?tuJmepu8otmpu1%opj%peJKp%8t77+1%a11JeKK++1uomjjoKj+??JmKJt?E8pjtmK%+-1otuX?tuj%?Auom?Ko_u%to%mopt7ommej8eje+upK8mK8+J1u+81+oum8pNJoK?7oju?tu%KoettoK+j4%8ueK4eK8e7%8+teBJ%eu7JP78+%?Kummue{8Jmp+8?wojp1o8jep7J1ue+o1?omj8?eJ7K1Im1?t?jm?J17K7e11yoJmj?muJmeKo81tRzoemJtmJpe87t4_.%uo?KjpJ8muj+1%FoommpmJ8Ke+71eoBjo??JKKJee17o?Km?ou?Kme%8et7D1pmK%m?eK8J8?}7%1uh7o+78m78+e%to17?po8e7?+J%jo7K7pkJoK?+m%Ktejt?1JKKoe?1mtJjp?7u1Kneo8?t7SJ%eJum1eU8o7p=m%1oe77eo8{7u+?%moJK?p78?j?+o1+omjp?eJ7K1FmJet?jo?J?EK7e11Bto2e?mu8meeJ81tm!op?uKmJe 8771yw??o?K7eKJe7u+1ptooj?pm8178+71eo-m%??JmKJee%%t1jm?oJbKme18eoom:?:u8m?KC8J7eT7p17mmop+8m7%+ep7o1KmetJ?7u+Jp?o7j1pfJo71+m1%tej8?1JmKo+e%KtJjm?7?JKTeo8?umjj%euJm1e78oo?fm?1J1m7eU8xtu+?%moJjepJJ177+o%momj1?e17tj+k1%t?jo?J8DK7+?%?tojm?m?omee781u_je%?uJmJe787tt TpouommpeJe71+1AtoomepeJJ7t+7-;oEjo??1mK?ee1%t1ju?o1%Km+1%tt7jm?R1um?em8J7ej?%1uumope8m71+ee787mYppJ?te+J%7o771e7Jo7K+me+tej??18mpKe?11tJto?7u1K6So1?tmjd%eu?m1j)8otej.%Juum7mt8U7o+??7JtjepeJ1J%+o1?omm1p8J77t+Y+jt?jm?Jue7ee11Jtoju?mu1me+78?tURp%?8KmJeo87u18t%ouKmmjtJe8T+1erJ<j?p8JJu}+7?8oSmJe8Jm7Aee?jt1j_?o8?7eeJ1ot7jm?.1tm?Rm1?7e;p%1uomoKu8moJjK%7uKm/p+J?tt+J?eoej1p8Jo7t+m%rteK7j8Jw7ie?1JtJo8?781jueo1otmjm%e8%m1Ax8%7?&?%JuJm7em8R7ojf%muEjepeJ17m+o%?u%jJptJ7tm+#1et?7mp7ueK%e1%%totJ?mJ1K2e71mt^t?%?ummJ+e1j71_J%ou7mmQuJetopo%so+j?peJJKe+711J7jop7JmK1ee1ot17QJju?K1eJett7m8?_JJK?em1j7e7?%1u*mo+?1u7JOu%7uKm/;oJ?t7j71eoej1j%JoK?+m%1u8j7ptJ(o3e?1mtJm}puu1K?eo?otm4J%eu77teV8+7?,e%JuEm7e1_K7o#7%mJ8jeppJ1u#mG1?o1jJTVJ7t8+cpot+jmp:ue7+e1e?tojm77uJKue718tRCu%?uumJpeeJ71Ik%ou4mmpJJe777e%gooj?puJJKe+711%7jo??JmKeee17t1j4j1u?KmeJ1tt7H1?RuoJEem8J7eg?%1uOmop??m7JcJ%7o1mfpoJ?om?71eo+j1pmJoJ8+m%1uoj7poJ Jee?1mtJm6pKu1Kpeopotm.J%eu7t1eh177?(m%Joem7enjm7o6%%muzjeptJ17j+o1?%ojJ?eJ777+F1ot?jmm+ueK+e11+toBp?muJK?e71tt)2o%?ummJ+e1?71E?%ooemmmtJeto+?%LuKj?m?JJKe+7%?u7jop1JmJJee17t1j0?uu?7jeJ8et7U1?xu?1eem1J7e47%1ujmopp8m7Jtm%7o1m4ejJ?7m+J1eK1j1p?Jo7?+m18teK7?%Jx7me?1ttJj??7817?eo1Jtmj7%e8um1eojJ7?j,%Ju1m7p%857?+?%m%?jep7J171+o1?omjJmmJ7K1+n1pt?jm?JueJJe11xtojm?muJmee7eet!/o%?upmJpe8771t7%oo?mmejJe77+1%!%1j?pmJJ7o+711oPjoJpJm77ee%mt1jj?o8?KeeJ11t7Y??V?pm?+7%T7ejj%118mop?8mt1Y6%7uJmSe%J?7m+J%>11j1p+JoK++m1Jtej7J%J=7me?%jtJA+?781K+eo1Jtmg1%e?jm1+m1+7?{+%Ju%m7p18:tJ{7%muojejKJ17r+o1?8mjJppJ7K%+61ot?j7_eue77e11otoW??muJe+e71ot3jo%?uKmJ+e%=71H?%ooemmmuJetoHo%,uKj?9JJJKe+7%?otjop1Jmu8ee17t1mm1mu?7jeJ1tt7i1?Yuot?em1J7e07%1uamopepJ7J.+%7u7m!poJ?7m?u1euXj1ejJoKp+m1117j7poJO77e?1mtJm0Ktu1Kpeoe1tmCJ%e87K?eD1K7?-+%JJem7e?1p7o<%%m8ojep7J17gb?1?o+jJppJ7K?+.?otpjmptue7je11etom?p=uJK%e71utXm8%?uJ11pe1K71jj%oopmmp8Je777e%kooj?peJJKe+711mjjop8Jm7uee1tt1K}?%u?K+eJ8et7m9?lJJ78em1o7eK%%1u6moee187JTp%7u+m_poJ?7mm11eujj1p+JoKe+m?Jm1j7pJJ 7Ke?+8tJmH?8u1K+eo1otm<J%eJoKNe:1o7?ju%Joem7p?po7okp%mo1jep7J17;tP1?uGjJp+J7K%+s%JutjmpoueJme110tom?ptuJK?e71Jt6mo%?J7m?pe1771c%%oo?mmpJ1%77:J%9uoj?p7JJte p11oejop1JmJpee%ooJj!ptu?J}eJ8et7m1+7uoK%em1u7em7%1Jmpep?1K7Jv+%7o1mxpo817mzu1eutj1pmJot?iJ1Joej7p8JA7Je?%7tp3eptu1Joeo8?tmmJp8u7K%eq1u7?Kj%JJ Kep11m7omp%moJjep71m7<vu1?o7jJp9J7o1j11oopjme7ueupe1p0tJ;?pKuJute71mtnjJt8umK1pep?71DU%oJ?KtpJ1,77l?%_8oj?e71tKe_u111%jo??Jm71+117oej4+Tu?KmeJ%St+v1ptuotoem8J7en7p7u,KJp?1u7Jv}%7u1K1po8p7mj81euoj1OVj%K?9K1J8%j7joJ}oo+o1mo8ne+ou17+eo1eotcJp^u77uer8o7?mm?JoeKop11m7om%%mJJKKp78p7L_71?%pjJee8eK1.K1oo+jmp%uet7{u1Do8:?ptuJKoe7%18+aopVumKopee+71mR8po?KopJ1m77mj%GJomopm8?KezJ11oJjo??8oKJCO17oej*?Ju?7m2m8eot<1pJuoKeem?Jtpa7?%u>7jp?pe7Jj=?Jo1Kmpoem7m+J1eJ7m>p_8JK?:71JJpj7p?t?Ko++1m18)e?7u1KV_18?o7dJ?Pu7m?es?oejfm?1oeutp1pt7om??goJKCp7?17Bmj1?u7j??e8uK1Xp1ot?jmeJ81K7+p1To8.?+juJ7eeu81o7wo?1umJKpe%7ojf-?1o?KopJ1j77j1?8ooKfpm8?Ke+?11J9um??8oKJym17u8j,eo87Km+p8eom>1j%uo7?eu8JoK_7?+uB7pp?%mt?+e?8o1Ktpo877mjJ%mo7m+pM8%K?7t1Jteju?18KKonj1mt1Vep7ueKX+J8?o1lJpju7K?up8ot+SmUPoem7p1%-7J+??toJKjp7%17RFJ?momm??e?+K1+21ooem%?J8KK7j71ztol?p7Jpme+181u1vo%?ummJ+%87tpU0??o?m7pJ8et?+1?mooKppm8%Kem7p7oEmJ??poKJ7u17J1j%?oJeKmh?8e1p>1pmjKm?+t8J8oC7%1u27o+m8mt%+e?uo1t4po8e7J+J?mo777p>JoK?#7%utem8?111Koe?1mo1N+?78YKBj_8?tm&J%eJ?m1+K8oom/m%1oeK7em84tJ+?p+oJKjp7%1j;+o%eomKK?ep;K1+omJt?mt?JJKK7e%10t8{??m??mee781te}o%?ummJKm8771V5?uo?mmpJJe8J+1%XoomepmJJKeiotpoym1??p)KJee17u1j8?o82Km+?8eu7Q1pmJ7m?+J8Ju?97%1u,mo+t8mt?+e?1o1mmpo1?tu+J?mo7mepB87K?jm1etemJ?187Ko>+1mtJmJ?78CKr+88?tmHJ%eKtm1+78oom_m%8oe77em8>t1+?%+oJutp78?7K+o?jomom?eJ7K13m1Jt?mJ?J8KK7e11NtJtm?mJ+mee%81tx^o%?KKmJ+m87oj!P%uo?7meuJetJ+1%poouKpm817?+7%+oy78??JmKJ))%et1mo?o?6KmeJ8etotV?PJpm?eK8J7e47%1K8mo+x8mt++e%to1KmepJ?to+J+?o7j1pi1oto+m%?temJ?11YKo+e%7tJm7?7%JKSeo8?tmjn%eJJm1+o8o7ebm?1J1m7e+8D87+?%moJKepoJ1tt+o?jomKJ?e8ojo+^%pt?7I?JueK7e1m8tomj?mJ+meeo81tgj%%?JJmJp+87713Hpouumme+JetJ+1%joommt7JJto+71eo=ju??JtKJee+Jt1j!?o8mKmeJ8et7te?)uom?+o8J7e/7%1?7mop?8mt++e%7o17617J?t%+J?Ko7mJpX1oK++m?jtemp?11KKo+mm7tJm8?7JuKfeu8?ttbJ%e?Jm1e58oom,m%Joem7me8c7o+??ooJjep7J187+o1?omm+?eJ7K1+Dout?m%?J88K7e%1wuojm?m8jme+j818p<o?eJpmJ+J87JtGI%oo?K7ejJet++1e?ooj?pmJJoe+7?ooQju??JmKJ+7mot1mp?oJtKme88eton1?_?1m?em8Jo7Q7%1u}moK48m7J+e??o1mCpoJ?OK+J?uo7KupYJuK?jm18temp?1J3Ko(m1mo1j+?787Kkw+8?tmiJpGu8m1+%8oJ7Ym%Joem7s?8kt++??poJm<p711(?+o?oomKj?ep%K1nm%8t?mp?J1oK7e113oJjK?m87memu81t!Uo%e%JmJ+%87ttRy%oo?mm88Jete+1?poojppm1Jt1+7?7o;m+??p8KJn-11t1m%?o8{KmeJ8eoojm?I8mm?+%8J7eY7%?%omo+88mtJ+e%7o1m)%jJ?t?+J?%o7j%pq8J7++m?mtem%?1JnKoe?%ptJm8?7JjKweo8?o7mj%e8Lm1e78o7?Bm?1uum7+u8B7J+?%moJK&eeJ1te+o%?omjJ?e8o7o+9?tt?7u?JueK7+?u?tom??m%emee781ome8%?8KmJjm8771zx?Ju8mm+1Je7p+1%3ooj?etJJt8+7??o-ju??JmK%ee%et1jm?o8JKme??%t731?f8%mpeK8Jo#mo%1J+mo+e8m7J+e%7+tmW+oJ?o}+J1eo7j1exJot%+m11tejt?1Jop?e?%?tJK.?tu%K eJ8?toKt%eu7m1(m8u7pwm%Jumm7p18v7u+?%moJjeeoJ17C+o1?omjJ?eJoK1+f1ot?eK?JueK7e11,to_??mu?mee781tj5o%?umm8pe8771aV?mo?mmpJ8j7++1%DoooJ7je%8+oF+1??uu7teu11+j1?t1jc?o?88Kt?WK?ouKmjemm+eo8J7e07mjpj8K7j8m7J+e%7o1m=pou?Jj+%%Jo7j1pT??1%o7.%?Kt1KKet1mtA1to+He?7u11m7Jj7%Ku%Kjp88e78+1JoKjeu1utul1?tu1Kje81Mtt58Jp7u+o1?omue7!+K1u7mep8ejt?pueK7e1eK?tuJKje1mee781tNXo%?ummJpe8utQ<9%oo?ot7u+1%Ko?eKo8mtpmJJKe7J:+pJJ17j+78pKueJtpju?ou?KmKJ:1%tJKmteJ8++?8J7eF7%?%omop?8m78+e%7o1mHJtJ?7K+J1eo7j1pY8JtJ+m11tej??1J2Ko+e%8tJjj?7J7K eo8?umj+%euum1eK8otK2m?1u%m7pe8I71+?%moJKae_J17t+o%tomjJ?e8o7?+,1?t?j%?JueK7e1??toM+?muemee781t_7K%?uKmJpe877%C^%ou8mmp8Je77+1%Ioomee7JJ7L+71?oCjo??87Keee1ut1jt?ou?KmeJ1pt7g%?9u8m?eK8J7e:e%1ujmop?8m7J+e?oJKm.pJJ?7p+J1eo7m?1?JoK++m1etej7?1J_Ete?1KtJjj?7u%K_eJemtm98%eu7m1e48otem7%JuAm7pp8:7o+?pm%ujepoJ17m+o%JomKJjpJ7K?+X1Jt?jK?Jueu+e11KtoDp?muJmee7mtt);1%?u7mJpe8771j?%oo+mmp1Je7t+1%xo1j?pmJJK++711oNjo?eJmKJee%1t1j0?ou+K%eJ8et7Jjm+eJ8utt2J1+ouj+uKK7p?8m7JojjK%oJtK?}QJeoumt?8J?jj+J18+t?mtej7?11217t%jouJu7KKe+8e71%?%%uope%1u1KKpu%eo+m%8?o1K%+%1%+?%moJjep7J17(+o1?otj%?eJ7K1te,%pKjtpmueK7e1eo?tuemtppu77p++%?o1%+uJmJpe87Jpo+mmp%87V%8j7u+1%#ooot7t?87jD111oOjojmpmJ%m+jo?uJK+7?m8KtK}Ku7uJm+e17?7JRu?KumjeuKm?p?8m7J7uj%pJJ+7J+j7t+?1eo7j1joeu1utu1%otj7?1J u?K?+t88JhKjepKKe?8?tmqJmue7J%78^J%+Mt?ooem7p1po1+o1jo1eJu7o+p%7K8j7?%J7KmJut7+ 1ot?o8Ku+08+tpj3%uo+mu1ouu7%}J%+uJmj8m8o7prJo1oomtej8CK?8j78+1%.oot+7j+71poo1poJjo??JmJt7+jJ%+Jmm+pp8ee%1mt7,1?EepJpt7LotjjK%1uBmoK++j81ouj%pm87mm+%%8tpmr1tJ?KpJoK?+m1Jtej7?1uiute+11tJ_e?7%?8jt8Pj1mo8K:eJmpe78o7?!m+pp?887u??7o+?%mu18tp7J%7Y+u1?omjJeeJoK1+j1otpjmpoue7oe+1Vt8s???uJmee781t?ho%pumm%pe8o71xo??o?mKpJ8J77+%%0ouj?po%tKe+711o1jo?pJm71jz17t?j=pJu?KmeJ%_Kvg1?KuoK%em8J7eX7jXu/mJp?877J++%7o1m7poJ?7m+81eo7j1+P%1K?+71Jt+j7pJJ-7Jq81mt?;epxu1KVeo8?ttrJ?{u7meef8J7?mm?joemop18m7oY1%mu1K%p7Je75nj1?omjJ?e1RK1+m1oo jm?1ueK1e?1/tJR?ptuJm+e781t(n1e8ummJpe1u71Uj%oua7+pJJe77jj%&ouj?e711Ke+u11umjo??Jm71?117tejU?+u?KmeJ8e11I1?Kuomeem887eI7%euNmop?8K7J+e%7u?7mpoJ+7m t1eo7j1p&pmK?+o1Jo5j7?1Jc7J?+1mtpxe?ou1K!eo1et%cJ?7u7Kpe)8o7?/m?7oemJp18o7o+p%moJmjp7Jp7y+J1?oujJpm%jK1+z1o8tjm?8uet7je14te!??7uJK?e7818%
+local DrRayLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/AZYsGithub/DrRay-UI-Library/main/DrRay.lua"))()    
+    local window = DrRayLibrary:Load("Sigma.gg", "Default")
+    local tab = DrRayLibrary.newTab("main", "")
+    
+    local RunService = game:GetService("RunService")
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+local Camera = game.Workspace.CurrentCamera
+
+
+local FOVCircle = Drawing.new("Circle")
+FOVCircle.Radius = 100 
+FOVCircle.Thickness = 2
+FOVCircle.Color = Color3.fromRGB(255, 255, 255)
+FOVCircle.Filled = false
+FOVCircle.Transparency = 1
+FOVCircle.Position = Vector2.new(Camera.ViewportSize.X / 2, Camera.ViewportSize.Y / 2) -- Center of the screen
+FOVCircle.Visible = false  
+
+
+local Snapline = Drawing.new("Line")
+Snapline.Thickness = 1
+Snapline.Color = Color3.fromRGB(255, 0, 0) 
+Snapline.Transparency = 1
+Snapline.Visible = false 
+
+
+local function updateSnapline()
+    local closestPlayer = nil
+    local closestDistance = math.huge 
+    
+    for _, target in ipairs(Players:GetPlayers()) do
+        if target ~= LocalPlayer then
+            local character = target.Character
+            if character and character:FindFirstChild("Head") then
+                local headPosition = character.Head.Position
+                local screenPosition, onScreen = Camera:WorldToViewportPoint(headPosition)
+
+
+                if onScreen then
+                    local fovCenter = Vector2.new(Camera.ViewportSize.X / 2, Camera.ViewportSize.Y / 2) -- FOV center (screen center)
+                    local distanceFromCenter = (Vector2.new(screenPosition.X, screenPosition.Y) - fovCenter).Magnitude
+                    
+                    if distanceFromCenter <= FOVCircle.Radius then
+                        if distanceFromCenter < closestDistance then
+                            closestDistance = distanceFromCenter
+                            closestPlayer = target
+                        end
+                    end
+                end
+            end
+        end
+    end
+    
+    if closestPlayer then
+        local character = closestPlayer.Character
+        if character and character:FindFirstChild("Head") then
+            local headPosition = character.Head.Position
+            local screenPosition = Camera:WorldToViewportPoint(headPosition)
+
+
+            Snapline.From = Vector2.new(Camera.ViewportSize.X / 2, Camera.ViewportSize.Y / 2)  -- FOV center
+            Snapline.To = Vector2.new(screenPosition.X, screenPosition.Y)
+            Snapline.Visible = true
+        end
+    else
+        Snapline.Visible = false 
+    end
+end
+
+
+local isFOVCircleEnabled = false 
+tab.newToggle("Toggle FOV Circle", "Toggle FOV Circle visibility", false, function(toggleState)
+    isFOVCircleEnabled = toggleState
+end)
+
+
+local isSnaplineEnabled = false  
+tab.newToggle("Toggle Snapline", "Toggle Snapline visibility", false, function(toggleState)
+    isSnaplineEnabled = toggleState
+end)
+
+
+RunService.RenderStepped:Connect(function()
+    if isFOVCircleEnabled then
+        FOVCircle.Position = Vector2.new(Camera.ViewportSize.X / 2, Camera.ViewportSize.Y / 2)
+        FOVCircle.Visible = true 
+    else
+        FOVCircle.Visible = false 
+    end
+
+
+    if isSnaplineEnabled then
+        updateSnapline()
+    else
+        Snapline.Visible = false
+    end
+end)
+    tab.newButton("Esp", "", function()
+if (not _G.Loaded) then
+    _G.Loaded = true
+    local ReplicatedStorage = game:GetService("ReplicatedStorage")
+    local RunService = game:GetService("RunService")
+    local Items = ReplicatedStorage:WaitForChild("HandModels")
+    local CoreGui = game:GetService("CoreGui")
+    local CurrentCamera = workspace.CurrentCamera
+    
+    -- Correctly reference the 'Const' folder and the 'Ignore' folder within it
+    local ConstFolder = workspace:WaitForChild("Const")
+    local IgnoreFolder = ConstFolder:WaitForChild("Ignore")  -- Accessing the 'Ignore' folder inside 'Const'
+    
+    local SleepAnimationId = "rbxassetid://13280887764"
+    local HasESP = {}
+
+    -- Initialize ESP flags if not set already
+    if not _G.Flags then
+        _G.Flags = {
+            ESP = {
+                DistanceLimit = 1000,
+                Box = true,
+                Distance = true,
+                Name = true,
+                Weapon = true,
+                Sleepers = false,
+            }
+        }
+    end
+
+    -- Cache player's model parts size to avoid recalculating every frame
+    local OriginalSizes = {}
+    for i,v in pairs(ReplicatedStorage.Shared.entities.Player.Model:GetChildren()) do
+        if v:IsA("BasePart") then
+            OriginalSizes[v.Name] = v.Size
+        end
+    end
+
+    -- Add "RealName" attributes to hand models
+    for i,v in pairs(Items:GetChildren()) do
+        v:SetAttribute("RealName", v.Name)
+    end
+
+    -- Check if player is sleeping
+    function IsSleeping(Player)
+        if not Player.AnimationController then return false end  -- Check if AnimationController exists
+        local Animations = Player.AnimationController:GetPlayingAnimationTracks()
+        for i,v in pairs(Animations) do
+            if v.IsPlaying and v.Animation.AnimationId == SleepAnimationId then
+                return true
+            end
+        end
+        return false
+    end
+
+    -- Create a BillboardGui with the required elements
+    function CreateESP()
+        local BillboardGui = Instance.new("BillboardGui")
+        local Box = Instance.new("Frame")
+        local PlayerName = Instance.new("TextLabel")
+        local PlayerWeapon = Instance.new("TextLabel")
+        local PlayerDistance = Instance.new("TextLabel")
+        local UIStroke = Instance.new("UIStroke")
+
+        -- Make sure BillboardGui is set up
+        BillboardGui.Parent = CoreGui
+        BillboardGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+        BillboardGui.Active = true
+        BillboardGui.AlwaysOnTop = true
+        BillboardGui.LightInfluence = 1.000
+        BillboardGui.Size = UDim2.new(500, 0, 800, 0)
+
+        -- Set up the Box (visual part of ESP)
+        Box.Name = "Box"
+        Box.Parent = BillboardGui
+        Box.AnchorPoint = Vector2.new(0.5, 0.5)
+        Box.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+        Box.BackgroundTransparency = 1.000
+        Box.BorderColor3 = Color3.fromRGB(0, 0, 0)
+        Box.BorderSizePixel = 0
+        Box.Position = UDim2.new(0.5, 0, 0.5, 0)
+        Box.Size = UDim2.new(0.00899999961, 0, 0.00899999961, 0)
+
+        -- Set up the stroke for the box
+        UIStroke.Name = "UIStroke"
+        UIStroke.Parent = Box
+        UIStroke.Thickness = 1
+        UIStroke.Color = Color3.fromRGB(0, 255, 0)
+        UIStroke.LineJoinMode = Enum.LineJoinMode.Miter
+
+        -- Set up the PlayerName text label
+        PlayerName.Name = "PlayerName"
+        PlayerName.Parent = BillboardGui
+        PlayerName.AnchorPoint = Vector2.new(0.5, 1)
+        PlayerName.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+        PlayerName.BackgroundTransparency = 1.010
+        PlayerName.BorderColor3 = Color3.fromRGB(0, 0, 0)
+        PlayerName.BorderSizePixel = 0
+        PlayerName.Position = UDim2.new(0.5, 0, 0.495499998, 0)
+        PlayerName.Size = UDim2.new(0, 100, 0, 10)
+        PlayerName.Font = Enum.Font.SourceSans
+        PlayerName.Text = "Player"
+        PlayerName.TextColor3 = Color3.fromRGB(0, 255, 8)
+        PlayerName.TextSize = 14.000
+        PlayerName.TextYAlignment = Enum.TextYAlignment.Bottom
+
+        -- Set up the PlayerWeapon text label
+        PlayerWeapon.Name = "PlayerWeapon"
+        PlayerWeapon.Parent = BillboardGui
+        PlayerWeapon.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+        PlayerWeapon.BackgroundTransparency = 1.010
+        PlayerWeapon.BorderColor3 = Color3.fromRGB(0, 0, 0)
+        PlayerWeapon.BorderSizePixel = 0
+        PlayerWeapon.Position = UDim2.new(0.504499972, 0, 0.495499998, 0)
+        PlayerWeapon.Size = UDim2.new(0, 100, 0, 10)
+        PlayerWeapon.Font = Enum.Font.SourceSans
+        PlayerWeapon.Text = "Weapon"
+        PlayerWeapon.TextColor3 = Color3.fromRGB(0, 255, 8)
+        PlayerWeapon.TextSize = 14.000
+        PlayerWeapon.TextXAlignment = Enum.TextXAlignment.Left
+        PlayerWeapon.TextYAlignment = Enum.TextYAlignment.Bottom
+        PlayerWeapon.Visible = false
+
+        -- Set up the PlayerDistance text label
+        PlayerDistance.Name = "PlayerDistance"
+        PlayerDistance.Parent = BillboardGui
+        PlayerDistance.AnchorPoint = Vector2.new(0.5, 0)
+        PlayerDistance.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+        PlayerDistance.BackgroundTransparency = 1.010
+        PlayerDistance.BorderColor3 = Color3.fromRGB(0, 0, 0)
+        PlayerDistance.BorderSizePixel = 0
+        PlayerDistance.Position = UDim2.new(0.5, 0, 0.504999995, 5)
+        PlayerDistance.Size = UDim2.new(0, 100, 0, 10)
+        PlayerDistance.Font = Enum.Font.SourceSans
+        PlayerDistance.Text = "500"
+        PlayerDistance.TextColor3 = Color3.fromRGB(0, 255, 8)
+        PlayerDistance.TextSize = 14.000
+        PlayerDistance.TextYAlignment = Enum.TextYAlignment.Bottom
+
+        -- Return the initialized BillboardGui
+        return BillboardGui
+    end
+
+    -- Get the weapon of the player
+    function PlayerWeapon(Player)
+        local Model = Player:FindFirstChildOfClass("Model")
+        return Model and Model:GetAttribute("RealName") or "None"
+    end
+
+    -- Check if the model is a player
+    function IsPlayer(Model)
+        return Model.ClassName == "Model" and Model:FindFirstChild("Torso") and Model.PrimaryPart ~= nil
+    end
+
+    -- Set the color of the ESP elements
+    function SetColor(Billboard, Color) 
+        -- Ensure the properties are valid before changing them
+        if Billboard and Billboard.PlayerName and Billboard.PlayerDistance and Billboard.PlayerWeapon then
+            Billboard.PlayerName.TextColor3 = Color
+            Billboard.PlayerDistance.TextColor3 = Color
+            Billboard.PlayerWeapon.TextColor3 = Color
+            Billboard.Box.UIStroke.Color = Color
+        end
+    end
+
+    -- Main loop to update ESPs
+    RunService.Heartbeat:Connect(function()
+        local ESP = _G.Flags.ESP
+        for _,v in pairs(workspace:GetChildren()) do
+            -- Ensure the model is a valid player and has a PrimaryPart
+            if (HasESP[v] or (IsPlayer(v) and v.PrimaryPart)) then
+                if (HasESP[v] == nil) then
+                    local Billboard = CreateESP()
+                    HasESP[v] = Billboard
+
+                    -- Only set Adornee if PrimaryPart is valid
+                    if v.PrimaryPart then
+                        Billboard.Adornee = v.PrimaryPart
+                    end
+                elseif (HasESP[v] ~= nil) then
+                    local Billboard = HasESP[v]
+                    local PrimaryPosition = v.PrimaryPart.Position
+                    local Origin = CurrentCamera.CFrame.Position
+                    local Distance = (Origin - PrimaryPosition).Magnitude
+                    local Sleeping = IsSleeping(v)
+
+                    -- If player is out of range or sleeping, disable the ESP
+                    if (Distance > ESP.DistanceLimit or (not ESP.Sleepers and Sleeping)) then
+                        Billboard.Enabled = false
+                    else
+                        Billboard.Enabled = true
+                        Billboard.Adornee = v.PrimaryPart
+
+                        -- Update visibility of ESP elements based on flags
+                        Billboard.Box.Visible = ESP.Box
+                        Billboard.PlayerDistance.Visible = ESP.Distance
+                        Billboard.PlayerName.Visible = ESP.Name
+                        Billboard.PlayerWeapon.Visible = ESP.Weapon
+
+                        -- Set the player's distance and weapon
+                        Billboard.PlayerDistance.Text = math.round(Distance) .. "s"
+                        Billboard.PlayerWeapon.Text = PlayerWeapon(v)
+
+                        -- Set player name if available
+                        if v.Head and v.Head.Nametag and v.Head.Nametag.tag.Text ~= "" then
+                            Billboard.PlayerName.Text = v.Head.Nametag.tag.Text
+                        end
+                    end
+                end
+            end
+        end
+    end)
+end
+end)
+tab.newToggle("Toggle hbe", "Toggle hbe (hitbox expander)", true, function(toggleState)
+    Hitbox = toggleState 
+end) 
+tab.newSlider("hitbox size", "hitbox expander slider", 10, false, function(num)
+    headsize = num
+end)
+
+
+local function modifyPlayerHeads()
+    for i, v in next, game.Workspace:GetChildren() do
+        if v.Name == "Model" and v:FindFirstChild("Head") then
+            local head = v.Head
+            if head then
+                local success, _ = pcall(function()
+                    head.Size = Vector3.new(headsize, headsize, headsize)
+                    head.Transparency = 0.5
+                end)
+                if not success then
+                    warn("Failed to modify head for player:", v.Name)
+                end
+            end
+        end
+    end
+end
+
+
+game:GetService("RunService").RenderStepped:Connect(function()
+    if Hitbox then
+        modifyPlayerHeads()
+    end
+end)
+local tab = DrRayLibrary.newTab("Mics", "")
+tab.newButton("Pc crosshair", "", function()
+    local player = game.Players.LocalPlayer
+    local mouse = player:GetMouse()
+    local gui = Instance.new("ScreenGui")
+    local circle = Instance.new("Frame")
+    local stroke = Instance.new("UIStroke")
+
+
+    gui.Name = "CrosshairGui"
+    gui.Parent = player:WaitForChild("PlayerGui")
+
+
+    circle.Size = UDim2.new(0, 50, 0, 50)
+    circle.Position = UDim2.new(0, mouse.X - 25, 0, mouse.Y - 25)
+    circle.BackgroundTransparency = 1
+    circle.Parent = gui
+
+
+    stroke.Thickness = 2
+    stroke.Color = Color3.new(1, 0, 0)
+    stroke.Parent = circle
+
+
+    local uicorner = Instance.new("UICorner")
+    uicorner.CornerRadius = UDim.new(1, 0)
+    uicorner.Parent = circle
+
+
+    game:GetService("RunService").RenderStepped:Connect(function()
+        local x, y = mouse.X, mouse.Y
+        circle.Position = UDim2.new(0, x - circle.AbsoluteSize.X / 2, 0, y - circle.AbsoluteSize.Y / 2)
+    end)
+end)
+local Camera = game:GetService("Workspace").CurrentCamera  
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+
+local FOVCircle = Drawing.new("Circle")
+FOVCircle.Radius = 35 
+FOVCircle.Thickness = 2
+FOVCircle.Color = Color3.fromRGB(255, 0, 0)  
+FOVCircle.Filled = false
+FOVCircle.Transparency = 1
+FOVCircle.Position = Vector2.new(Camera.ViewportSize.X / 2, Camera.ViewportSize.Y / 2) 
+FOVCircle.Visible = false
+local PlusSign = Drawing.new("Text")
+PlusSign.Text = "+"  
+PlusSign.Size = 50  
+PlusSign.Position = Vector2.new(Camera.ViewportSize.X / 2 - 1, Camera.ViewportSize.Y / 2 - 25)  
+PlusSign.Color = Color3.fromRGB(255, 0, 0)  
+PlusSign.Center = true  
+PlusSign.Outline = true  
+PlusSign.OutlineColor = Color3.fromRGB(0, 0, 0)  
+PlusSign.Visible = false
+local function updateFOVCircle()
+    if Camera then  
+        local center = Vector2.new(Camera.ViewportSize.X / 2, Camera.ViewportSize.Y / 2)
+        FOVCircle.Position = center  
+        PlusSign.Position = center + Vector2.new(-1, -25)  
+    end
+end
+game:GetService("RunService").RenderStepped:Connect(updateFOVCircle)
+tab.newButton("Moblie crosshair", "", function()
+        local player = game.Players.LocalPlayer
+    local gui = Instance.new("ScreenGui")
+    local circle = Instance.new("Frame")
+    local stroke = Instance.new("UIStroke")
+    local horizontalLine = Instance.new("Frame")
+    local verticalLine = Instance.new("Frame")
+
+
+    gui.Name = "CrosshairGui"
+    gui.Parent = player:WaitForChild("PlayerGui")
+    gui.ResetOnSpawn = false 
+
+
+    circle.Size = UDim2.new(0, 45, 0, 45) 
+    circle.AnchorPoint = Vector2.new(0.5, 0.5)
+    circle.Position = UDim2.new(0.5, 0, 0.45, 0)
+    circle.BackgroundTransparency = 1 
+    circle.Parent = gui
+
+
+    stroke.Thickness = 1.5 
+    stroke.Color = Color3.new(1, 0, 0) 
+    stroke.Parent = circle
+
+
+    local uicorner = Instance.new("UICorner")
+    uicorner.CornerRadius = UDim.new(1, 0) 
+    uicorner.Parent = circle
+  
+    horizontalLine.Size = UDim2.new(0, 20, 0, 2)
+    horizontalLine.AnchorPoint = Vector2.new(0.5, 0.5)
+    horizontalLine.Position = UDim2.new(0.5, 0, 0.45, 0)
+    horizontalLine.BackgroundColor3 = Color3.new(1, 0, 0)
+    horizontalLine.BorderSizePixel = 0
+    horizontalLine.Parent = gui
+  
+    verticalLine.Size = UDim2.new(0, 2, 0, 20)
+    verticalLine.AnchorPoint = Vector2.new(0.5, 0.5)
+    verticalLine.Position = UDim2.new(0.5, 0, 0.45, 0)
+    verticalLine.BackgroundColor3 = Color3.new(1, 0, 0)
+    verticalLine.BorderSizePixel = 0
+    verticalLine.Parent = gui
+
+
+    gui:GetPropertyChangedSignal("AbsoluteSize"):Connect(function()
+        circle.Position = UDim2.new(0.5, 0, 0.45, 0) 
+        horizontalLine.Position = UDim2.new(0.5, 0, 0.45, 0) 
+        verticalLine.Position = UDim2.new(0.5, 0, 0.45, 0) 
+    end)
+end)
+tab.newButton("arm changer", "will change skin color of arms", function()
+    local function setArmProperties(property, value)
+        local armParts = {"LeftUpperArm", "LeftLowerArm", "LeftHand", "RightUpperArm", "RightLowerArm", "RightHand"}
+        for _, partName in ipairs(armParts) do
+            game:GetService("Workspace").Ignore.FPSArms[partName][property] = value
+        end
+    end
+    setArmProperties("Color", Color3.fromRGB(1, 0, 0)) 
+    setArmProperties("Material", "ForceField") 
+    setArmProperties("TextureID", "rbxassetid://9305457875")
+
+
+    local function changeArmsToForceField(player)
+        local fpsArms = workspace:FindFirstChild("Ignore")
+        if not fpsArms then
+            warn("Workspace.Ignore not found")
+            return
+        end
+
+
+        local fakeArms = fpsArms:FindFirstChild("FPSArms"):FindFirstChild("Fake")
+        if not fakeArms then
+            warn("FPSArms.Fake not found")
+            return
+        end
+        for _, partName in ipairs({"c_LeftLowerArm", "c_RightLowerArm"}) do
+            local armPart = fakeArms:FindFirstChild(partName)
+            if armPart and armPart:IsA("BasePart") then
+                armPart.Material = Enum.Material.ForceField
+                armPart.Color = Color3.new(1, 0, 0)
+            else
+                warn(partName .. " not found in FPSArms.Fake")
+            end
+        end
+    end
+
+
+    local player = game.Players.LocalPlayer 
+    changeArmsToForceField(player)
+end)
+local Lighting = game:GetService("Lighting")
+local RunService = game:GetService("RunService")
+
+
+local ambientenabled = true 
+local originalAmbient = Lighting.Ambient 
+
+
+local function toggleAmbient()
+    if ambientenabled then
+        Lighting.Ambient = Color3.fromRGB(255, 255, 255) 
+        print("Ambient set to white")
+    else
+        Lighting.Ambient = originalAmbient 
+        print("Ambient reverted to:", originalAmbient)
+    end
+end
+
+
+RunService.RenderStepped:Connect(function()
+    if ambientenabled and Lighting.Ambient ~= Color3.fromRGB(255, 255, 255) then
+        Lighting.Ambient = Color3.fromRGB(255, 255, 255)
+    elseif not ambientenabled and Lighting.Ambient ~= originalAmbient then
+        Lighting.Ambient = originalAmbient
+    end
+end)
+
+
+tab.newToggle("Toggle Ambient Light", "Toggle ambient lighting on/off", true, function(toggleState)
+    print("Toggle state changed:", toggleState)
+    ambientenabled = toggleState  
+    toggleAmbient()  
+end)
+local tab = DrRayLibrary.newTab("Hitsounds", "ImageIdHere")
+tab.newButton("dink", "dink hitsound", function()
+game:GetService("SoundService").PlayerHitHeadshot.EqualizerSoundEffect.HighGain = -1.5
+game:GetService("SoundService").PlayerHitHeadshot.SoundId =  "rbxassetid://8726881116"
+end)
+tab.newButton("rust", "rust hitsound", function()
+game:GetService("SoundService").PlayerHitHeadshot.EqualizerSoundEffect.HighGain = -1.5
+game:GetService("SoundService").PlayerHitHeadshot.SoundId = "rbxassetid://4764109000"
+-- hello skid don't even thing about leaking
+print ("sigma.gg loaded enjoy")
+print (
