@@ -13,7 +13,7 @@ local workspace,camera = cloneref(game:GetService("Workspace")), workspace.Curre
 local UIS, RS, ReplicatedStorage = cloneref(game:GetService("UserInputService")), cloneref(game:GetService("RunService")), cloneref(game:GetService("ReplicatedStorage"))
 local Fov, Sline = Drawing.new("Circle"), Drawing.new("Line")
 local screenSize = camera.ViewportSize
-local screenCenter = Vector2.new(screenSize.X / 1.8, screenSize.Y / 2)
+local screenCenter = Vector2.new(screenSize.X / 2, screenSize.Y / 2)
 Fov.Position = screenCenter Fov.Radius = 150 Fov.Color = Color3.fromRGB(255, 0, 255) Fov.Visible = true Sline.Color = Color3.fromRGB(255, 255, 255) Sline.Thickness = 1 Sline.Visible = true Sline.ZIndex = 1
 local getclosest = function() local closestModel, closestData = nil, nil local closestMagnitude = math.huge local camera = workspace.CurrentCamera for _, v in pairs(debug.getupvalue(modules.Player.GetPlayerModel, 1) or {}) do if v.model:FindFirstChild("Head") and not v.sleeping then local pos, onScreen = camera:WorldToViewportPoint(v.model:GetPivot().Position) if onScreen then local magnitude = (Vector2.new(pos.X, pos.Y) - screenCenter).Magnitude local playerDistance = (workspace.Ignore.LocalCharacter.Middle:GetPivot().Position - v.model:GetPivot().Position).Magnitude if magnitude < Fov.Radius and playerDistance <= 9999 and magnitude < closestMagnitude then closestMagnitude = magnitude closestModel = v.model closestData = v end end end end return closestModel, closestData end
 game:GetService("RunService").RenderStepped:Connect(function() getgenv().SilentTarget = getclosest() if getgenv().SilentTarget and getgenv().SilentTarget:FindFirstChild("Head") then local head_pos = getgenv().SilentTarget.Head.Position local screenPos, onScreen = camera:WorldToViewportPoint(head_pos) if onScreen then Sline.From = screenCenter Sline.To = Vector2.new(screenPos.X, screenPos.Y) Sline.Visible = true else Sline.Visible = false end else Sline.Visible = false end end)
@@ -94,15 +94,101 @@ workspace.ChildAdded:Connect(function(child)
     end
 end)
 end)
+-- tc esp
+local HighlightColor = Color3.fromRGB(255, 255, 100)
+--
+function highlightBaseParts()
+    for _, model in ipairs(workspace:GetDescendants()) do
+        if model:IsA("Model") and model.PrimaryPart and model.PrimaryPart.Name == "Base" then
+            if not model:FindFirstChild("BaseHighlight") then
+                local highlight = Instance.new("Highlight")
+                highlight.Name = "BaseHighlight"
+                highlight.FillColor = HighlightColor
+                highlight.OutlineColor = HighlightColor
+                highlight.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
+                highlight.Adornee = model
+                highlight.Parent = model
+            end
+        end
+    end
+end
+--
+highlightBaseParts()
+--
+workspace.DescendantAdded:Connect(function(descendant)
+    if descendant:IsA("Model") and descendant.PrimaryPart and descendant.PrimaryPart.Name == "Base" then
+        task.wait(0.1)
+        highlightBaseParts()
+    end
+end)
+-- ore esp
+tab.newButton("ore esp", "", function()
+local HighlightColor = Color3.fromRGB(100, 200, 255)
+local LastChecked = 0
+local CheckInterval = 1 
+local highlightedParts = {}  
+--
+local function highlightLimestoneParts()
+    local currentTime = tick()
+    --
+    if currentTime - LastChecked < CheckInterval then
+        return
+    end
+--
+    LastChecked = currentTime
+--
+  for _, instance in ipairs(workspace:GetDescendants()) do
+        if instance:IsA("BasePart") and instance.Material == Enum.Material.Limestone then
+            if not highlightedParts[instance] then
+                local highlight = Instance.new("Highlight")
+                highlight.Name = "LimestoneHighlight"
+                highlight.FillColor = HighlightColor
+                highlight.OutlineColor = HighlightColor
+                highlight.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
+                highlight.Adornee = instance
+                highlight.Parent = instance
+--
+                highlightedParts[instance] = highlight
+            end
+        end
+    end
+end
+--
+highlightLimestoneParts()
+    --
+workspace.DescendantAdded:Connect(function(descendant)
+--  
+    if descendant:IsA("BasePart") and descendant.Material == Enum.Material.Limestone then
+        if not highlightedParts[descendant] then
+            local highlight = Instance.new("Highlight")
+            highlight.Name = "LimestoneHighlight"
+            highlight.FillColor = HighlightColor
+            highlight.OutlineColor = HighlightColor
+            highlight.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
+            highlight.Adornee = descendant
+            highlight.Parent = descendant
+ --         
+            highlightedParts[descendant] = highlight
+        end
+    end
+end)
 -- Hitsounds
 local tab = DrRayLibrary.newTab("Hitsounds", "ImageIdHere")
 tab.newButton("dink", "dink hitsound", function()
 game:GetService("SoundService").PlayerHitHeadshot.EqualizerSoundEffect.HighGain = -1.5
 game:GetService("SoundService").PlayerHitHeadshot.SoundId =  "rbxassetid://8726881116"
 end)
-tab.newButton("rust", "rust hitsound", function()
+    --
+tab.newButton("Defualt Headshot Hit", "", function()
 game:GetService("SoundService").PlayerHitHeadshot.EqualizerSoundEffect.HighGain = -1.5
+game:GetService("SoundService").PlayerHitHeadshot.SoundId =  "rbxassetid://9119561046"
 end)
+    --
+tab.newButton("rust", "", function()
+game:GetService("SoundService").PlayerHitHeadshot.EqualizerSoundEffect.HighGain = -1.5
+game:GetService("SoundService").PlayerHitHeadshot.SoundId =  "rbxassetid://1255040462"
+end)
+
 -- Print the name
 for _, line in ipairs({
   "█████████████",
