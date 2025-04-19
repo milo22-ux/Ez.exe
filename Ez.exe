@@ -121,6 +121,7 @@ workspace.DescendantAdded:Connect(function(descendant)
         highlightBaseParts()
     end
 end)
+end)
 -- ore esp
 tab.newButton("ore esp", "", function()
 local HighlightColor = Color3.fromRGB(100, 200, 255)
@@ -171,6 +172,7 @@ workspace.DescendantAdded:Connect(function(descendant)
             highlightedParts[descendant] = highlight
         end
     end
+end)
 end)
 -- Hitsounds
 local tab = DrRayLibrary.newTab("Hitsounds", "ImageIdHere")
