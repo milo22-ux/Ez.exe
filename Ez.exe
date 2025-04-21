@@ -95,6 +95,7 @@ workspace.ChildAdded:Connect(function(child)
 end)
 end)
 -- tc esp
+tab.newButton("tc esp", "yellow", function()
 local HighlightColor = Color3.fromRGB(255, 255, 100)
 --
 function highlightBaseParts()
@@ -123,7 +124,7 @@ workspace.DescendantAdded:Connect(function(descendant)
 end)
 end)
 -- ore esp
-tab.newButton("ore esp", "", function()
+tab.newButton("ore esp", "blue", function()
 local HighlightColor = Color3.fromRGB(100, 200, 255)
 local LastChecked = 0
 local CheckInterval = 1 
