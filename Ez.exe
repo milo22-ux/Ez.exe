@@ -251,40 +251,6 @@ tab.newToggle("Xray toggle", "", false, function(toggleState)
         end
     end
 end)
--- fov changer
-local varsglobal = {
-    visuals = {
-        FovChanger = fales,
-        FovAdd = 120,
-        OldFov = workspace.CurrentCamera.FieldOfView,
-        ZoomAmt = 0,
-        FovZoom = false,
-    },
-}
---
-local function updateFOV()
-    if varsglobal.visuals.FovChanger then
-        workspace.CurrentCamera.FieldOfView = varsglobal.visuals.OldFov + varsglobal.visuals.FovAdd
-    else
-        workspace.CurrentCamera.FieldOfView = varsglobal.visuals.OldFov
-    end
-end
---
-game:GetService("RunService").RenderStepped:Connect(updateFOV)
---
-tab.newToggle("Toggle fov Changer", "", true, function(toggleState)
-    varsglobal.visuals.FovChanger = toggleState
-    if toggleState then
-        print("FOV Changer On")
-    else
-        print("FOV Changer Off")
-    end
-end)
---
-tab.newSlider("Adjust fov", "", 120, true, function(value)
-    varsglobal.visuals.FovAdd = value
-    print("FOV Add set to: " .. value)
-end)
 -- dw lil kid ik you skid
     local tab = DrRayLibrary.newTab("visuals 2", "ImageIdHere")
 --
