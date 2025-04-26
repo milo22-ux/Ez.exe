@@ -223,8 +223,15 @@ rs.RenderStepped:Connect(function()
     UpdateESP()
 end)
 end)
+--
+workspace.ChildAdded:Connect(function(child)
+    if child:FindFirstChild("Head") then
+        createHighlight(child)
+    end
+end)
+end)
 -- Xray
-local CurrentSliderValue = 0.5
+local CurrentSliderValue = 0.5 
 --
 tab.newSlider("xray transparency", "", 100, false, function(num)
     CurrentSliderValue = num / 100
@@ -248,7 +255,7 @@ end)
 -- fov changer
 local varsglobal = {
     visuals = {
-        FovChanger = false,
+        FovChanger = fales,
         FovAdd = 120,
         OldFov = workspace.CurrentCamera.FieldOfView,
         ZoomAmt = 0,
@@ -279,9 +286,10 @@ tab.newSlider("Adjust fov", "", 120, true, function(value)
     varsglobal.visuals.FovAdd = value
     print("FOV Add set to: " .. value)
 end)
+-- dw lil kid ik you skid
     local tab = DrRayLibrary.newTab("visuals 2", "ImageIdHere")
 --
-    tab.newToggle("Military Crates Toggle", "Toggle Military Crates ESP", true, function(toggleState)
+tab.newToggle("Military Crates Toggle", "Toggle Military Crates ESP", true, function(toggleState)
     if toggleState then
         local function onPartAdded(part)
             if part:IsA("Part") and part.BrickColor == BrickColor.new("Linen") and part.Material == Enum.Material.WoodPlanks then
@@ -302,6 +310,7 @@ end)
 --
         workspace.DescendantAdded:Connect(onPartAdded)
     else
+        --
         for _, v in ipairs(workspace:GetDescendants()) do
             if v.Name == "MilitaryCrate" then
                 v:Destroy()
@@ -343,6 +352,7 @@ tab.newToggle("Part Crates Toggle", "Toggle Part Crates ESP", true, function(tog
 --
         workspace.DescendantAdded:Connect(onPartAdded)
     else
+        --
         for _, v in ipairs(workspace:GetDescendants()) do
             if v.Name == "PartCrate" then
                 v:Destroy()
@@ -350,7 +360,7 @@ tab.newToggle("Part Crates Toggle", "Toggle Part Crates ESP", true, function(tog
         end
     end
 end)
---
+-- 
 tab.newToggle("Stone ESP Toggle", "Toggle Stone ESP", true, function(toggleState)
     if toggleState then
         local function adornStoneOre(part)
@@ -380,6 +390,7 @@ tab.newToggle("Stone ESP Toggle", "Toggle Stone ESP", true, function(toggleState
 --
         workspace.DescendantAdded:Connect(onPartAdded)
     else
+        --
         for _, v in ipairs(workspace:GetDescendants()) do
             if v.Name == "Stone" then
                 v:Destroy()
@@ -387,7 +398,7 @@ tab.newToggle("Stone ESP Toggle", "Toggle Stone ESP", true, function(toggleState
         end
     end
 end)
---
+-- 
 tab.newToggle("Iron ESP Toggle", "Toggle Iron ESP", true, function(toggleState)
     if toggleState then
         local parts = workspace:GetDescendants()
@@ -421,6 +432,7 @@ tab.newToggle("Iron ESP Toggle", "Toggle Iron ESP", true, function(toggleState)
 --
         workspace.DescendantAdded:Connect(onPartAdded)
     else
+        -- 
         for _, v in ipairs(workspace:GetDescendants()) do
             if v.Name == "Iron" then
                 v:Destroy()
@@ -428,7 +440,7 @@ tab.newToggle("Iron ESP Toggle", "Toggle Iron ESP", true, function(toggleState)
         end
     end
 end)
---
+-- 
 tab.newToggle("Nitrate ESP Toggle", "Toggle Nitrate ESP", true, function(toggleState)
     if toggleState then
         local parts = workspace:GetDescendants()
@@ -445,7 +457,7 @@ tab.newToggle("Nitrate ESP Toggle", "Toggle Nitrate ESP", true, function(toggleS
                 NitrateEsp.Parent = workspace
             end
         end
---
+  --      
         local function onPartAdded(part)
             if part:IsA("MeshPart") and part.BrickColor == BrickColor.new("Institutional white") and part.Material == Enum.Material.Slate then
                 local UpdateNitrateEsp = Instance.new("BoxHandleAdornment")
@@ -469,11 +481,13 @@ tab.newToggle("Nitrate ESP Toggle", "Toggle Nitrate ESP", true, function(toggleS
         end
     end
 end)
+--
 -- Hitsounds
+local tab = DrRayLibrary.newTab("hitsounds", "ImageIdHere")
 local SoundService = game:GetService("SoundService")
 --
 local sounds = {
-    ["Default Headshot"] = "rbxassetid://9119561046",
+    ["Defualt Headshot"] = "rbxassetid://9119561046",
     ["Defualt Body"] = "rbxassetid://9114487369",
     Neverlose = "rbxassetid://8726881116",
     Gamesense = "rbxassetid://4817809188",
@@ -618,18 +632,7 @@ for name, data in pairs(SkyBoxes) do
     end
   end)
 end
--- Print the name and text label
-local CustomTopText = Drawing.new("Text")
-CustomTopText.Text = "                                                         Ez bans.exe[Public] - https://discord.gg/nUPQCZhv8g"
-CustomTopText.Visible = true
-CustomTopText.Transparency = 1
-CustomTopText.Size = 15
-CustomTopText.Outline = true
-CustomTopText.Center = true
-CustomTopText.Font = 3
-CustomTopText.Color = Color3.fromRGB(255, 255, 255)
-CustomTopText.Position = Vector2.new(Camera.ViewportSize.X / 1.8, 0)
---
+-- Print the name
 for _, line in ipairs({
   "█████████████",
   "█▄─▄▄─█░▄▄░▄█",
