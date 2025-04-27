@@ -266,110 +266,109 @@ end)
 end)
 --
 tab.newButton("name and distance", "esp", function()
-local modules = { ["Player"] = {} }
-local ESP_Objects = {}
-local cam = workspace.CurrentCamera
-local uis = game:GetService("UserInputService")
-local rs = game:GetService("RunService")
---
-for _, v in pairs(getgc(true)) do
-    if typeof(v) == "function" and islclosure(v) then
-        local info = debug.getinfo(v)
-        local name = string.match(info.short_src, "%.([%w_]+)$")
-        if name and modules[name] and info.name then
-            modules[name][info.name] = info.func
+    local modules = { ["Player"] = {} }
+    local ESP_Objects = {}
+    local cam = workspace.CurrentCamera
+    local uis = game:GetService("UserInputService")
+    local rs = game:GetService("RunService")
+    --
+    for _, v in pairs(getgc(true)) do
+        if typeof(v) == "function" and islclosure(v) then
+            local info = debug.getinfo(v)
+            local name = string.match(info.short_src, "%.([%w_]+)$")
+            if name and modules[name] and info.name then
+                modules[name][info.name] = info.func
+            end
         end
     end
-end
---
-local function Create(className, properties)
-    local success, object = pcall(Drawing.new, className)
-    if not success or not object then return nil end
-    for prop, value in next, properties or {} do
-        pcall(function() object[prop] = value end)
+    --
+    local function Create(className, properties)
+        local success, object = pcall(Drawing.new, className)
+        if not success or not object then return nil end
+        for prop, value in next, properties or {} do
+            pcall(function() object[prop] = value end)
+        end
+        return object
     end
-    return object
-end
---
-local function GetPlayers()
-    local players = {}
-    for _, v in next, debug.getupvalue(modules.Player.GetPlayerModel, 1) do
-        if v and v.model and v.model:FindFirstChild("Head") and not v.sleeping then
-            table.insert(players, v)
+    -- 
+    local function GetPlayers()
+        local players = {}
+        for _, v in next, debug.getupvalue(modules.Player.GetPlayerModel, 1) do
+            if v and v.model and v.model:FindFirstChild("Head") and not v.sleeping then
+                table.insert(players, v)
+            end
+        end
+        return players
+    end
+    -- 
+    local function SetupESP(player)
+        ESP_Objects[player.id] = Create("Text", {
+            Text = ": Player :",
+            Size = 17,
+            Color = Color3.fromRGB(255, 255, 255),
+            Outline = true,
+            OutlineColor = Color3.fromRGB(0, 0, 0),
+            Center = true,
+            Visible = false
+        })
+    end
+    --
+    local function HideESP(esp)
+        if esp then
+            esp.Visible = false
         end
     end
-    return players
-end
---
-local function SetupESP(player)
-    ESP_Objects[player.id] = Create("Text", {
-        Text = ": Player :",
-        Size = 17,
-        Color = Color3.fromRGB(255, 255, 255),
-        Outline = true,
-        OutlineColor = Color3.fromRGB(0, 0, 0),
-        Center = true,
-        Visible = false
-    })
-end
---
-local function HideESP(esp)
-    if esp then
-        esp.Visible = false
+    --
+    local function UpdatePosition(esp, part)
+        local pos, onScreen = cam:WorldToViewportPoint(part.Position)
+        esp.Position = Vector2.new(pos.X, pos.Y)
+        esp.Visible = onScreen
+        if onScreen then
+            UpdateText(esp, part)
+        end
     end
-end
---
-local function UpdatePosition(esp, part)
-    local pos, onScreen = cam:WorldToViewportPoint(part.Position)
-    esp.Position = Vector2.new(pos.X, pos.Y)
-    esp.Visible = onScreen
-    if onScreen then
-        UpdateText(esp, part)
+    -- 
+    function UpdateText(esp, part)
+        esp.Text = "Player [ " .. math.floor((cam.CFrame.Position - part.Position).Magnitude) .. " ]"
     end
-end
+    -- 
+    local function UpdateESP()
+        local players = GetPlayers()
+        local playerIds = {}
 --
-function UpdateText(esp, part)
-    esp.Text = "Player [ " .. math.floor((cam.CFrame.Position - part.Position).Magnitude) .. " ]"
-end
---
-local function UpdateESP()
-    local players = GetPlayers()
-    local playerIds = {}
+        for _, v in next, players do
+            playerIds[v.id] = true
+            if not ESP_Objects[v.id] then
+                SetupESP(v)
+            end
+ --           
+            local esp = ESP_Objects[v.id]
+            local head = v.model:FindFirstChild("Head") or v.model:FindFirstChild("Torso")
+            if head then
+                UpdatePosition(esp, head)
+            else
+                HideESP(esp)
+            end
+        end
+        --
+        for id, esp in next, ESP_Objects do
+            if not playerIds[id] then
+                HideESP(esp)
+                ESP_Objects[id] = nil
+            end
+        end
+    end
+    -- 
+    rs.RenderStepped:Connect(function()
+        UpdateESP()
+    end)
 
-    for _, v in next, players do
-        playerIds[v.id] = true
-        if not ESP_Objects[v.id] then
-            SetupESP(v)
-        end
---
-        local esp = ESP_Objects[v.id]
-        local head = v.model:FindFirstChild("Head") or v.model:FindFirstChild("Torso")
-        if head then
-            UpdatePosition(esp, head)
-        else
-            HideESP(esp)
-        end
-    end
---
-    for id, esp in next, ESP_Objects do
-        if not playerIds[id] then
-            HideESP(esp)
-            ESP_Objects[id] = nil
-        end
-    end
-end
---
-rs.RenderStepped:Connect(function()
-    UpdateESP()
-end)
-end)
---
+end) 
 workspace.ChildAdded:Connect(function(child)
     if child:FindFirstChild("Head") then
-        createHighlight(child)
+        createHighlight(child) 
     end
-end)
-end)
+end)  -- 
 -- Xray
 local CurrentSliderValue = 0.5 
 --
