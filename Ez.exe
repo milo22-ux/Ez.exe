@@ -70,60 +70,201 @@ game:GetService("RunService").RenderStepped:Connect(function()
 end)
 -- Visuals
 local tab = DrRayLibrary.newTab("visuals", "ImageIdHere")
-tab.newButton("esp", "", function()
-    local BoxESP = {}
-function BoxESP.Create(Player)
-    local Box = Drawing.new("Square")
-    Box.Visible = false
-    Box.Color = Color3.fromRGB(194, 17, 17)
-    Box.Filled = false
-    Box.Transparency = 0.50
-    Box.Thickness = 3
+tab.newButton("esp", "boxes", function()
+local plr = game.Players.LocalPlayer
+local camera = game.Workspace.CurrentCamera
 --
-    local Updater
+for i, v in pairs(game.Players:GetChildren()) do
+    local Top = Drawing.new("Line")
+    Top.Visible = false
+    Top.From = Vector2.new(0, 0)
+    Top.To = Vector2.new(200, 200)
+    Top.Color = Color3.fromRGB(255, 0, 0)
+    Top.Thickness = 2
+    Top.Transparency = 1
 --
-    local function UpdateBox()
-        if Player and Player:IsA("Model") and Player:FindFirstChild("HumanoidRootPart") and Player:FindFirstChild("Head") then
-            local Target2dPosition, IsVisible = workspace.CurrentCamera:WorldToViewportPoint(Player.HumanoidRootPart.Position)
-            local scale_factor = 1 / (Target2dPosition.Z * math.tan(math.rad(workspace.CurrentCamera.FieldOfView * 0.5)) * 2) * 100
-            local width, height = math.floor(40 * scale_factor), math.floor(62 * scale_factor)
+    local Bottom = Drawing.new("Line")
+    Bottom.Visible = false
+    Bottom.From = Vector2.new(0, 0)
+    Bottom.To = Vector2.new(200, 200)
+    Bottom.Color = Color3.fromRGB(255, 0, 0)
+    Bottom.Thickness = 2
+    Bottom.Transparency = 1
 --
-            Box.Visible = IsVisible
-            Box.Size = Vector2.new(width, height)
-            Box.Position = Vector2.new(Target2dPosition.X - Box.Size.X / 2, Target2dPosition.Y - Box.Size.Y / 2)
-        else
-            Box.Visible = false
-            if not Player then
-                Box:Remove()
-                Updater:Disconnect()
+    local Left = Drawing.new("Line")
+    Left.Visible = false
+    Left.From = Vector2.new(0, 0)
+    Left.To = Vector2.new(200, 200)
+    Left.Color = Color3.fromRGB(255, 0, 0)
+    Left.Thickness = 2
+    Left.Transparency = 1
+--
+    local Right = Drawing.new("Line")
+    Right.Visible = false
+    Right.From = Vector2.new(0, 0)
+    Right.To = Vector2.new(200, 200)
+    Right.Color = Color3.fromRGB(255, 0, 0)
+    Right.Thickness = 2
+    Right.Transparency = 1
+--
+    function ESP()
+        local connection
+        connection = game:GetService("RunService").RenderStepped:Connect(function()
+            if v.Character ~= nil and v.Character:FindFirstChild("HumanoidRootPart") ~= nil and v.Name ~= plr.Name  and v.Character.Humanoid.Health > 0 then 
+                local ScreenPos, OnScreen = camera:WorldToViewportPoint(v.Character.HumanoidRootPart.Position)
+                if OnScreen then
+                    local Scale = v.Character.Head.Size.Y/2
+                    local Size = Vector3.new(2, 3, 0) * (Scale * 2)
+                    local humpos = camera:WorldToViewportPoint(v.Character.HumanoidRootPart.Position)
+                    local TL = camera:WorldToViewportPoint((v.Character.HumanoidRootPart.CFrame * CFrame.new(Size.X, Size.Y, 0)).p)
+                    local TR = camera:WorldToViewportPoint((v.Character.HumanoidRootPart.CFrame * CFrame.new(-Size.X, Size.Y, 0)).p)
+                    local BL = camera:WorldToViewportPoint((v.Character.HumanoidRootPart.CFrame * CFrame.new(Size.X, -Size.Y, 0)).p)
+                    local BR = camera:WorldToViewportPoint((v.Character.HumanoidRootPart.CFrame * CFrame.new(-Size.X, -Size.Y, 0)).p)
+--
+                    Top.From = Vector2.new(TL.X, TL.Y)
+                    Top.To = Vector2.new(TR.X, TR.Y)
+--
+                    Left.From = Vector2.new(TL.X, TL.Y)
+                    Left.To = Vector2.new(BL.X, BL.Y)
+--
+                    Right.From = Vector2.new(TR.X, TR.Y)
+                    Right.To = Vector2.new(BR.X, BR.Y)
+--
+                    Bottom.From = Vector2.new(BL.X, BL.Y)
+                    Bottom.To = Vector2.new(BR.X, BR.Y)
+--
+                    if v.TeamColor == plr.TeamColor then
+                        Top.Color = Color3.fromRGB(0, 255, 0)
+                        Left.Color = Color3.fromRGB(0, 255, 0)
+                        Bottom.Color = Color3.fromRGB(0, 255, 0)
+                        Right.Color = Color3.fromRGB(0, 255, 0)
+                    else 
+                        Top.Color = Color3.fromRGB(255, 0, 0)
+                        Left.Color = Color3.fromRGB(255, 0, 0)
+                        Bottom.Color = Color3.fromRGB(255, 0, 0)
+                        Right.Color = Color3.fromRGB(255, 0, 0)
+                    end
+--
+                    Top.Visible = true
+                    Left.Visible = true
+                    Bottom.Visible = true
+                    Right.Visible = true
+                else 
+                    Top.Visible = false
+                    Left.Visible = false
+                    Bottom.Visible = false
+                    Right.Visible = false
+                end
+            else 
+                Top.Visible = false
+                Left.Visible = false
+                Bottom.Visible = false
+                Right.Visible = false
+                if game.Players:FindFirstChild(v.Name) == nil then
+                    connection:Disconnect()
+                end
             end
-        end
+        end)
     end
---
-    Updater = game:GetService("RunService").RenderStepped:Connect(UpdateBox)
---
-    return Box
+    coroutine.wrap(ESP)()
 end
 --
-local Boxes = {}
+game.Players.PlayerAdded:Connect(function(newplr) --Parameter gets the new player that has been added
+    local Top = Drawing.new("Line")
+    Top.Visible = false
+    Top.From = Vector2.new(0, 0)
+    Top.To = Vector2.new(200, 200)
+    Top.Color = Color3.fromRGB(255, 0, 0)
+    Top.Thickness = 2
+    Top.Transparency = 1
 --
-local function EnableBoxESP()
-    for _, Player in pairs(game:GetService("Workspace"):GetChildren()) do
-        if Player:IsA("Model") and Player:FindFirstChild("HumanoidRootPart") and Player:FindFirstChild("Head") then
-            local Box = BoxESP.Create(Player)
-            table.insert(Boxes, Box)
-        end
-    end
-end
+    local Bottom = Drawing.new("Line")
+    Bottom.Visible = false
+    Bottom.From = Vector2.new(0, 0)
+    Bottom.To = Vector2.new(200, 200)
+    Bottom.Color = Color3.fromRGB(255, 0, 0)
+    Bottom.Thickness = 2
+    Bottom.Transparency = 1
 --
-game.Workspace.DescendantAdded:Connect(function(i)
-    if i:IsA("Model") and i:FindFirstChild("HumanoidRootPart") and i:FindFirstChild("Head") then
-        local Box = BoxESP.Create(i)
-        table.insert(Boxes, Box)
+    local Left = Drawing.new("Line")
+    Left.Visible = false
+    Left.From = Vector2.new(0, 0)
+    Left.To = Vector2.new(200, 200)
+    Left.Color = Color3.fromRGB(255, 0, 0)
+    Left.Thickness = 2
+    Left.Transparency = 1
+--
+    local Right = Drawing.new("Line")
+    Right.Visible = false
+    Right.From = Vector2.new(0, 0)
+    Right.To = Vector2.new(200, 200)
+    Right.Color = Color3.fromRGB(255, 0, 0)
+    Right.Thickness = 2
+    Right.Transparency = 1
+--
+    function ESP()
+        local connection
+        connection = game:GetService("RunService").RenderStepped:Connect(function()
+            if newplr.Character ~= nil and newplr.Character:FindFirstChild("HumanoidRootPart") ~= nil and newplr.Name ~= plr.Name  and newplr.Character.Humanoid.Health > 0 then
+                local ScreenPos, OnScreen = camera:WorldToViewportPoint(newplr.Character.HumanoidRootPart.Position)
+                if OnScreen then
+                    local Scale = newplr.Character.Head.Size.Y/2
+                    local Size = Vector3.new(2, 3, 0) * (Scale * 2)
+                    local humpos = camera:WorldToViewportPoint(newplr.Character.HumanoidRootPart.Position)
+                    local TL = camera:WorldToViewportPoint((newplr.Character.HumanoidRootPart.CFrame * CFrame.new(Size.X, Size.Y, 0)).p)
+                    local TR = camera:WorldToViewportPoint((newplr.Character.HumanoidRootPart.CFrame * CFrame.new(-Size.X, Size.Y, 0)).p)
+                    local BL = camera:WorldToViewportPoint((newplr.Character.HumanoidRootPart.CFrame * CFrame.new(Size.X, -Size.Y, 0)).p)
+                    local BR = camera:WorldToViewportPoint((newplr.Character.HumanoidRootPart.CFrame * CFrame.new(-Size.X, -Size.Y, 0)).p)
+--
+                    Top.From = Vector2.new(TL.X, TL.Y)
+                    Top.To = Vector2.new(TR.X, TR.Y)
+--
+                    Left.From = Vector2.new(TL.X, TL.Y)
+                    Left.To = Vector2.new(BL.X, BL.Y)
+--
+                    Right.From = Vector2.new(TR.X, TR.Y)
+                    Right.To = Vector2.new(BR.X, BR.Y)
+--
+                    Bottom.From = Vector2.new(BL.X, BL.Y)
+                    Bottom.To = Vector2.new(BR.X, BR.Y)
+
+                    if newplr.TeamColor == plr.TeamColor then
+                        Top.Color = Color3.fromRGB(0, 255, 0)
+                        Left.Color = Color3.fromRGB(0, 255, 0)
+                        Bottom.Color = Color3.fromRGB(0, 255, 0)
+                        Right.Color = Color3.fromRGB(0, 255, 0)
+                    else 
+                        Top.Color = Color3.fromRGB(255, 0, 0)
+                        Left.Color = Color3.fromRGB(255, 0, 0)
+                        Bottom.Color = Color3.fromRGB(255, 0, 0)
+                        Right.Color = Color3.fromRGB(255, 0, 0)
+                    end
+--
+                    Top.Visible = true
+                    Left.Visible = true
+                    Bottom.Visible = true
+                    Right.Visible = true
+                else 
+                    Top.Visible = false
+                    Left.Visible = false
+                    Bottom.Visible = false
+                    Right.Visible = false
+                end
+            else 
+                Top.Visible = false
+                Left.Visible = false
+                Bottom.Visible = false
+                Right.Visible = false
+                if game.Players:FindFirstChild(newplr.Name) == nil then
+                    connection:Disconnect()
+                end
+            end
+        end)
     end
+    coroutine.wrap(ESP)()
+end)
 end)
 --
-EnableBoxESP()
 tab.newButton("name and distance", "esp", function()
 local modules = { ["Player"] = {} }
 local ESP_Objects = {}
@@ -250,6 +391,40 @@ tab.newToggle("Xray toggle", "", false, function(toggleState)
             end
         end
     end
+end)
+-- fov changer
+local varsglobal = {
+    visuals = {
+        FovChanger = fales,
+        FovAdd = 120,
+        OldFov = workspace.CurrentCamera.FieldOfView,
+        ZoomAmt = 0,
+        FovZoom = false,
+    },
+}
+--
+local function updateFOV()
+    if varsglobal.visuals.FovChanger then
+        workspace.CurrentCamera.FieldOfView = varsglobal.visuals.OldFov + varsglobal.visuals.FovAdd
+    else
+        workspace.CurrentCamera.FieldOfView = varsglobal.visuals.OldFov
+    end
+end
+--
+game:GetService("RunService").RenderStepped:Connect(updateFOV)
+--
+tab.newToggle("Toggle fov Changer", "", true, function(toggleState)
+    varsglobal.visuals.FovChanger = toggleState
+    if toggleState then
+        print("FOV Changer On")
+    else
+        print("FOV Changer Off")
+    end
+end)
+--
+tab.newSlider("Adjust fov", "", 120, true, function(value)
+    varsglobal.visuals.FovAdd = value
+    print("FOV Add set to: " .. value)
 end)
 -- dw lil kid ik you skid
     local tab = DrRayLibrary.newTab("visuals 2", "ImageIdHere")
