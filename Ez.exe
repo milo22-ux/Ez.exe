@@ -393,27 +393,350 @@ tab.newToggle("Xray toggle", "", false, function(toggleState)
 end)
 -- dw lil kid ik you skid
     local tab = DrRayLibrary.newTab("visuals 2", "ImageIdHere")
+-- 
+tab.newToggle("cardboard boxes", "Toggle cardboard boxes ESP", true, function(toggleState)
+    --
+    local espObjects = {}
+    -- 
+    local function createEsp(part)
+        if part:IsA("UnionOperation") and part.BrickColor == BrickColor.new("Cashmere") and part.Material == Enum.Material.Plastic then
+            local PartCrateEsp = Instance.new("BoxHandleAdornment")
+            PartCrateEsp.Adornee = part
+            PartCrateEsp.AlwaysOnTop = true
+            PartCrateEsp.ZIndex = 0
+            PartCrateEsp.Size = part.Size
+            PartCrateEsp.Name = "PartCrate"
+            PartCrateEsp.Transparency = 0.3
+            PartCrateEsp.Color = BrickColor.new("Bright yellow")
+            PartCrateEsp.Parent = workspace
+            -- 
+            espObjects[part] = PartCrateEsp
+        end
+    end
+    --
+    local function removeEsp(part)
+        if espObjects[part] then
+            espObjects[part]:Destroy()
+            espObjects[part] = nil
+        end
+    end
 --
-tab.newToggle("Military Crates Toggle", "Toggle Military Crates ESP", true, function(toggleState)
     if toggleState then
+        -- 
+        local parts = workspace:GetDescendants()
+        for _, part in ipairs(parts) do
+            createEsp(part)
+        end
+        --
         local function onPartAdded(part)
-            if part:IsA("Part") and part.BrickColor == BrickColor.new("Linen") and part.Material == Enum.Material.WoodPlanks then
-                local parent = part.Parent
-                if parent and parent:IsA("Model") and #parent:GetChildren() == 2 then
-                    local MilitaryEsp = Instance.new("BoxHandleAdornment")
-                    MilitaryEsp.Adornee = part
-                    MilitaryEsp.AlwaysOnTop = true
-                    MilitaryEsp.ZIndex = 0
-                    MilitaryEsp.Size = part.Size
-                    MilitaryEsp.Name = "MilitaryCrate"
-                    MilitaryEsp.Transparency = 0.3
-                    MilitaryEsp.Color = BrickColor.new("Dark Royal blue")
-                    MilitaryEsp.Parent = workspace
-                end
-            end
+            createEsp(part)
         end
 --
         workspace.DescendantAdded:Connect(onPartAdded)
     else
         --
-        for _, v in ipairs(workspa
+        for part, esp in pairs(espObjects) do
+            removeEsp(part)
+        end
+        -- 
+        workspace.DescendantAdded:Disconnect()
+    end
+end)
+-- 
+tab.newToggle("Stone ESP Toggle", "Toggle Stone ESP", true, function(toggleState)
+    local espObjects = {}
+--
+    local function adornStoneOre(part)
+        if part:IsA("MeshPart") and part.BrickColor == BrickColor.new("Flint") and part.Material == Enum.Material.Limestone then
+            local parent = part.Parent
+            if parent and parent:IsA("Model") and #parent:GetChildren() == 1 then
+                local StoneEsp = Instance.new("BoxHandleAdornment")
+                StoneEsp.Adornee = part
+                StoneEsp.AlwaysOnTop = true
+                StoneEsp.ZIndex = 0
+                StoneEsp.Size = part.Size
+                StoneEsp.Name = "Stone"
+                StoneEsp.Transparency = 0.3
+                StoneEsp.Color = BrickColor.new("Grey")
+                StoneEsp.Parent = workspace
+                espObjects[part] = StoneEsp
+            end
+        end
+    end
+--
+    local function removeEsp(part)
+        if espObjects[part] then
+            espObjects[part]:Destroy()
+            espObjects[part] = nil
+        end
+    end
+--
+    if toggleState then
+        local parts = workspace:GetDescendants()
+        for _, part in ipairs(parts) do
+            adornStoneOre(part)
+        end
+--
+        local function onPartAdded(part)
+            adornStoneOre(part)
+        end
+--
+        workspace.DescendantAdded:Connect(onPartAdded)
+    else
+        for part, esp in pairs(espObjects) do
+            removeEsp(part)
+        end
+--
+        workspace.DescendantAdded:Disconnect()
+    end
+end)
+-- 
+tab.newToggle("Iron ESP Toggle", "Toggle Iron ESP", true, function(toggleState)
+    local espObjects = {}
+--
+    local function adornIronOre(part)
+        if part:IsA("MeshPart") and part.BrickColor == BrickColor.new("Burlap") and part.Material == Enum.Material.Slate then
+            local IronEsp = Instance.new("BoxHandleAdornment")
+            IronEsp.Adornee = part
+            IronEsp.AlwaysOnTop = true
+            IronEsp.ZIndex = 0
+            IronEsp.Size = part.Size
+            IronEsp.Name = "Iron"
+            IronEsp.Transparency = 0.3
+            IronEsp.Color = BrickColor.new("Burlap")
+            IronEsp.Parent = workspace
+            espObjects[part] = IronEsp
+        end
+    end
+--
+    local function removeEsp(part)
+        if espObjects[part] then
+            espObjects[part]:Destroy()
+            espObjects[part] = nil
+        end
+    end
+--
+    if toggleState then
+        local parts = workspace:GetDescendants()
+        for _, part in ipairs(parts) do
+            adornIronOre(part)
+        end
+--
+        local function onPartAdded(part)
+            adornIronOre(part)
+        end
+--
+        workspace.DescendantAdded:Connect(onPartAdded)
+    else
+        for part, esp in pairs(espObjects) do
+            removeEsp(part)
+        end
+    end
+end)
+--
+tab.newToggle("Nitrate ESP Toggle", "Toggle Nitrate ESP", true, function(toggleState)
+    local espObjects = {}
+--
+    local function adornNitrateOre(part)
+        if part:IsA("MeshPart") and part.BrickColor == BrickColor.new("Institutional white") and part.Material == Enum.Material.Slate then
+            local NitrateEsp = Instance.new("BoxHandleAdornment")
+            NitrateEsp.Adornee = part
+            NitrateEsp.AlwaysOnTop = true
+            NitrateEsp.ZIndex = 0
+            NitrateEsp.Size = part.Size
+            NitrateEsp.Name = "Nitrate"
+            NitrateEsp.Transparency = 0.3
+            NitrateEsp.Color = BrickColor.new("Institutional white")
+            NitrateEsp.Parent = workspace
+            espObjects[part] = NitrateEsp
+        end
+    end
+--
+    local function removeEsp(part)
+        if espObjects[part] then
+            espObjects[part]:Destroy()
+            espObjects[part] = nil
+        end
+    end
+--
+    if toggleState then
+        local parts = workspace:GetDescendants()
+        for _, part in ipairs(parts) do
+            adornNitrateOre(part)
+        end
+--
+        local function onPartAdded(part)
+            adornNitrateOre(part)
+        end
+--
+        workspace.DescendantAdded:Connect(onPartAdded)
+    else
+        for part, esp in pairs(espObjects) do
+            removeEsp(part)
+        end
+    end
+end)
+--
+-- Hitsounds
+local tab = DrRayLibrary.newTab("hitsounds", "ImageIdHere")
+local SoundService = game:GetService("SoundService")
+--
+local sounds = {
+    ["Defualt Headshot"] = "rbxassetid://9119561046",
+    ["Defualt Body"] = "rbxassetid://9114487369",
+    Neverlose = "rbxassetid://8726881116",
+    Gamesense = "rbxassetid://4817809188",
+    One = "rbxassetid://7380502345",
+    Bell = "rbxassetid://6534947240",
+    Rust = "rbxassetid://1255040462",
+    TF2 = "rbxassetid://2868331684",
+    Slime = "rbxassetid://6916371803",
+    ["Among Us"] = "rbxassetid://5700183626",
+    Minecraft = "rbxassetid://4018616850",
+    ["CS:GO"] = "rbxassetid://6937353691",
+    Saber = "rbxassetid://8415678813",
+    Baimware = "rbxassetid://3124331820",
+    Osu = "rbxassetid://7149255551",
+    ["TF2 Critical"] = "rbxassetid://296102734",
+    Bat = "rbxassetid://3333907347",
+    ["Call of Duty"] = "rbxassetid://5952120301",
+    Bubble = "rbxassetid://6534947588",
+    Pick = "rbxassetid://1347140027",
+    Pop = "rbxassetid://198598793",
+    Bruh = "rbxassetid://4275842574",
+    Bamboo = "rbxassetid://3769434519",
+    Crowbar = "rbxassetid://546410481",
+    Weeb = "rbxassetid://6442965016",
+    Beep = "rbxassetid://8177256015",
+    Bambi = "rbxassetid://8437203821",
+    Stone = "rbxassetid://3581383408",
+    ["Old Fatality"] = "rbxassetid://6607142036",
+    Click = "rbxassetid://8053704437",
+    Ding = "rbxassetid://7149516994",
+    Snow = "rbxassetid://6455527632",
+    Laser = "rbxassetid://7837461331",
+    Mario = "rbxassetid://2815207981",
+    Steve = "rbxassetid://4965083997",
+}
+local currentSound = nil
+--
+local function ApplySound(assetId)
+    if not SoundService:FindFirstChild("PlayerHitHeadshot") then
+        warn("SoundService.PlayerHitHeadshot not found!")
+        return
+    end
+    local headshotSound = SoundService.PlayerHitHeadshot
+    headshotSound.SoundId = assetId
+    headshotSound.Volume = 5
+    headshotSound.Pitch = 1
+--
+    local equalizer = headshotSound:FindFirstChildWhichIsA("EqualizerSoundEffect")
+    if equalizer then
+        equalizer.HighGain = -1.5
+    end
+end
+--
+local function ResetSound()
+    if not SoundService:FindFirstChild("PlayerHitHeadshot") then
+        return
+    end
+    local headshotSound = SoundService.PlayerHitHeadshot
+    headshotSound.SoundId = "rbxassetid://9119561046" -- Default headshot sound
+    headshotSound.Volume = 1
+    headshotSound.Pitch = 1
+--
+    local equalizer = headshotSound:FindFirstChildWhichIsA("EqualizerSoundEffect")
+    if equalizer then
+        equalizer.HighGain = 0
+    end
+end
+--
+for name, assetId in pairs(sounds) do
+    tab.newToggle(name, "Toggle " .. name .. " sound on/off", false, function(toggleState)
+        if toggleState then
+            currentSound = assetId
+            ApplySound(assetId)
+            print("Enabled sound:", name)
+        else
+            if currentSound == assetId then
+                ResetSound()
+                print("Reset sound back to default")
+            end
+        end
+    end)
+end
+-- sky boxes
+local tab = DrRayLibrary.newTab("sky box", "ImageIdHere")
+local Lighting = game:GetService("Lighting")
+--
+local Sky = Instance.new("Sky")
+Sky.Name = "CustomSky"
+Sky.Parent = Lighting
+--
+local SkyBoxes = {
+  ["Standard"] = {
+    ["SkyboxBk"] = Sky.SkyboxBk, ["SkyboxDn"] = Sky.SkyboxDn,
+    ["SkyboxFt"] = Sky.SkyboxFt, ["SkyboxLf"] = Sky.SkyboxLf,
+    ["SkyboxRt"] = Sky.SkyboxRt, ["SkyboxUp"] = Sky.SkyboxUp
+  },
+  ["Among Us"] = {
+    ["SkyboxBk"] = "rbxassetid://5752463190", ["SkyboxDn"] = "rbxassetid://5752463190",
+    ["SkyboxFt"] = "rbxassetid://5752463190", ["SkyboxLf"] = "rbxassetid://5752463190",
+    ["SkyboxRt"] = "rbxassetid://5752463190", ["SkyboxUp"] = "rbxassetid://5752463190"
+  },
+  ["Spongebob"] = {
+    ["SkyboxBk"]="rbxassetid://277099484", ["SkyboxDn"]="rbxassetid://277099500",
+    ["SkyboxFt"]="rbxassetid://277099554", ["SkyboxLf"]="rbxassetid://277099531",
+    ["SkyboxRt"]="rbxassetid://277099589", ["SkyboxUp"]="rbxassetid://277101591"
+  },
+  ["Deep Space"] = {
+    ["SkyboxBk"]="rbxassetid://159248188", ["SkyboxDn"]="rbxassetid://159248183",
+    ["SkyboxFt"]="rbxassetid://159248187", ["SkyboxLf"]="rbxassetid://159248173",
+    ["SkyboxRt"]="rbxassetid://159248192", ["SkyboxUp"]="rbxassetid://159248176"
+  },
+  ["Winter"] = {
+    ["SkyboxBk"]="rbxassetid://510645155", ["SkyboxDn"]="rbxassetid://510645130",
+    ["SkyboxFt"]="rbxassetid://510645179", ["SkyboxLf"]="rbxassetid://510645117",
+    ["SkyboxRt"]="rbxassetid://510645146", ["SkyboxUp"]="rbxassetid://510645195"
+  },
+  ["Clouded Sky"] = {
+    ["SkyboxBk"]="rbxassetid://252760981", ["SkyboxDn"]="rbxassetid://252763035",
+    ["SkyboxFt"]="rbxassetid://252761439", ["SkyboxLf"]="rbxassetid://252760980",
+    ["SkyboxRt"]="rbxassetid://252760986", ["SkyboxUp"]="rbxassetid://252762652"
+  }
+}
+--
+local currentSky = nil
+--
+local function setSkybox(data)
+  for face, id in pairs(data) do
+    Sky[face] = id
+  end
+end
+--
+for name, data in pairs(SkyBoxes) do
+  tab.newToggle(name, "Enable " .. name .. " skybox", false, function(state)
+    if state then
+      setSkybox(data)
+      currentSky = name
+    elseif currentSky == name then
+      for _, face in pairs({"SkyboxBk", "SkyboxDn", "SkyboxFt", "SkyboxLf", "SkyboxRt", "SkyboxUp"}) do
+        Sky[face] = ""
+      end
+      currentSky = nil
+    end
+  end)
+end
+-- Print the name
+for _, line in ipairs({
+  "█████████████",
+  "█▄─▄▄─█░▄▄░▄█",
+  "██─▄█▀██▀▄█▀█",
+  "▀▄▄▄▄▄▀▄▄▄▄▄▀",
+  "█████████████████████████████████████████████████",
+  "█▄─▄─▀██▀▄─██▄─▀█▄─▄█─▄▄▄▄█████▄─▄▄─█▄─▀─▄█▄─▄▄─█",
+  "██─▄─▀██─▀─███─█▄▀─██▄▄▄▄─█░░███─▄█▀██▀─▀███─▄█▀█",
+  "▀▄▄▄▄▀▀▄▄▀▄▄▀▄▄▄▀▀▄▄▀▄▄▄▄▄▀▄▄▀▀▄▄▄▄▄▀▄▄█▄▄▀▄▄▄▄▄▀"
+}) do
+    warn(line)
+end
