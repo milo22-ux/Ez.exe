@@ -283,41 +283,7 @@ workspace.ChildAdded:Connect(function(child)
         createHighlight(child) 
     end
 end)
-    -- long neck
-local longneck = {
-    LongNeckEnabled = false,
-    UpperLimitDefault = 3,
-    LowerLimitDefault = 1.75,
-    CurrentSliderValue = 1.75,
-}
---
-tab.newToggle("Long Neck Toggle", "Enable or disable long neck", true, function(toggleState)
-    longneck.LongNeckEnabled = toggleState
-    if toggleState then
-        game:GetService("Workspace").Ignore.LocalCharacter.Bottom.PrismaticConstraint.UpperLimit = longneck.CurrentSliderValue
-        game:GetService("Workspace").Ignore.LocalCharacter.Bottom.PrismaticConstraint.LowerLimit = longneck.CurrentSliderValue
-    else
-        game:GetService("Workspace").Ignore.LocalCharacter.Bottom.PrismaticConstraint.UpperLimit = longneck.UpperLimitDefault
-        game:GetService("Workspace").Ignore.LocalCharacter.Bottom.PrismaticConstraint.LowerLimit = longneck.LowerLimitDefault
-    end
-end)
---
-tab.newSlider("Neck Length", "Adjust neck length", 6, false, function(num)
-    longneck.CurrentSliderValue = num
-    if longneck.LongNeckEnabled then
-        game:GetService("Workspace").Ignore.LocalCharacter.Bottom.PrismaticConstraint.UpperLimit = num
-        game:GetService("Workspace").Ignore.LocalCharacter.Bottom.PrismaticConstraint.LowerLimit = num
-    end
-end)
 -- Xray
-local antihitbox
-antihitbox = hookmetamethod(game, "__newindex", function(self, key, value)
-    if not checkcaller() and key == "Size" and self.Name == "Head" then
-        return Vector3.new(1.67225, 0.835624, 0.835624)
-    end
-    return antihitbox(self, key, value)
-end)
---
 local antixray
 antixray = hookmetamethod(game, "__newindex", function(self, key, value)
     if not checkcaller() and key == "Transparency" and self.Name == "Hitbox" then
@@ -340,191 +306,139 @@ tab.newToggle("Xray Toggle", "Toggle visibility of player hitboxes", false, func
     end
 end)
 -- dw lil kid ik you skid
-    local tab = DrRayLibrary.newTab("visuals 2", "ImageIdHere")
--- 
-tab.newToggle("cardboard boxes", "Toggle cardboard boxes ESP", true, function(toggleState)
-    --
-    local espObjects = {}
-    -- 
-    local function createEsp(part)
-        if part:IsA("UnionOperation") and part.BrickColor == BrickColor.new("Cashmere") and part.Material == Enum.Material.Plastic then
-            local PartCrateEsp = Instance.new("BoxHandleAdornment")
-            PartCrateEsp.Adornee = part
-            PartCrateEsp.AlwaysOnTop = true
-            PartCrateEsp.ZIndex = 0
-            PartCrateEsp.Size = part.Size
-            PartCrateEsp.Name = "PartCrate"
-            PartCrateEsp.Transparency = 0.3
-            PartCrateEsp.Color = BrickColor.new("Bright yellow")
-            PartCrateEsp.Parent = workspace
-            -- 
-            espObjects[part] = PartCrateEsp
-        end
+    local tab = DrRayLibrary.newTab("extra", "ImageIdHere")
+local ScreenGui = Instance.new("ScreenGui")
+local AutoRunButton = Instance.new("TextButton")
+local Frame = Instance.new("Frame")
+
+ScreenGui.Parent = game:GetService("CoreGui")
+ScreenGui.Name = "AutoRunGui"
+
+Frame.Size = UDim2.new(0, 100, 0, 80)
+Frame.Position = UDim2.new(0, 10, 1, -150)
+Frame.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+Frame.Active = true
+Frame.Draggable = true
+Frame.Parent = ScreenGui
+
+AutoRunButton.Size = UDim2.new(1, 0, 1, 0)
+AutoRunButton.Text = "Auto slide jump run"
+AutoRunButton.Parent = Frame
+AutoRunButton.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+AutoRunButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+AutoRunButton.BorderSizePixel = 0
+
+Frame.Visible = false
+
+tab.newToggle("Slide Jump Toggle", "Toggle slide jump UI", true, function(toggleState)
+    Frame.Visible = toggleState
+end)
+
+local isAutoRunning = false
+local stopAutoRun = false
+
+local function AutoRunAndJumpCrouch()
+    while isAutoRunning do
+        if stopAutoRun then break end
+        keypress(0x57)
+        keypress(0x10)
+        task.wait(0.05)
+        keypress(0x43)
+        keypress(0x20)
+        keyrelease(0x20)
+        task.wait(0.5)
+        keyrelease(0x43)
+        keyrelease(0x10)
+        wait(1.2)
     end
-    --
-    local function removeEsp(part)
-        if espObjects[part] then
-            espObjects[part]:Destroy()
-            espObjects[part] = nil
-        end
-    end
---
-    if toggleState then
-        -- 
-        local parts = workspace:GetDescendants()
-        for _, part in ipairs(parts) do
-            createEsp(part)
-        end
-        --
-        local function onPartAdded(part)
-            createEsp(part)
-        end
---
-        workspace.DescendantAdded:Connect(onPartAdded)
+end
+
+AutoRunButton.MouseButton1Click:Connect(function()
+    if not isAutoRunning then
+        isAutoRunning = true
+        stopAutoRun = false
+        AutoRunButton.Text = "Stop slide jump run"
+        task.spawn(AutoRunAndJumpCrouch)
     else
-        --
-        for part, esp in pairs(espObjects) do
-            removeEsp(part)
-        end
-        -- 
-        workspace.DescendantAdded:Disconnect()
+        isAutoRunning = false
+        stopAutoRun = true
+        keyrelease(0x57)
+        keyrelease(0x10)
+        keyrelease(0x43)
+        AutoRunButton.Text = "Auto slide jump run"
     end
 end)
--- 
-tab.newToggle("Stone ESP Toggle", "Toggle Stone ESP", true, function(toggleState)
-    local espObjects = {}
---
-    local function adornStoneOre(part)
-        if part:IsA("MeshPart") and part.BrickColor == BrickColor.new("Flint") and part.Material == Enum.Material.Limestone then
-            local parent = part.Parent
-            if parent and parent:IsA("Model") and #parent:GetChildren() == 1 then
-                local StoneEsp = Instance.new("BoxHandleAdornment")
-                StoneEsp.Adornee = part
-                StoneEsp.AlwaysOnTop = true
-                StoneEsp.ZIndex = 0
-                StoneEsp.Size = part.Size
-                StoneEsp.Name = "Stone"
-                StoneEsp.Transparency = 0.3
-                StoneEsp.Color = BrickColor.new("Grey")
-                StoneEsp.Parent = workspace
-                espObjects[part] = StoneEsp
-            end
+
+local function createDraggableButton(name, position, callback)
+    local gui = Instance.new("ScreenGui")
+    local button = Instance.new("TextButton")
+    local dragging, dragInput, dragStart, startPos
+
+    gui.Parent = game.CoreGui
+    gui.Name = name .. "Gui"
+    gui.ResetOnSpawn = false
+
+    button.Parent = gui
+    button.Size = UDim2.new(0, 100, 0, 30)
+    button.Position = position
+    button.BackgroundColor3 = Color3.fromRGB(80, 80, 80)
+    button.TextColor3 = Color3.new(1, 1, 1)
+    button.Text = name
+    button.Visible = false
+
+    button.InputBegan:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 then
+            dragging = true
+            dragStart = input.Position
+            startPos = button.Position
+            input.Changed:Connect(function()
+                if input.UserInputState == Enum.UserInputState.End then
+                    dragging = false
+                end
+            end)
         end
-    end
---
-    local function removeEsp(part)
-        if espObjects[part] then
-            espObjects[part]:Destroy()
-            espObjects[part] = nil
+    end)
+
+    button.InputChanged:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseMovement then
+            dragInput = input
         end
-    end
---
-    if toggleState then
-        local parts = workspace:GetDescendants()
-        for _, part in ipairs(parts) do
-            adornStoneOre(part)
+    end)
+
+    game:GetService("UserInputService").InputChanged:Connect(function(input)
+        if input == dragInput and dragging then
+            local delta = input.Position - dragStart
+            button.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
         end
---
-        local function onPartAdded(part)
-            adornStoneOre(part)
-        end
---
-        workspace.DescendantAdded:Connect(onPartAdded)
-    else
-        for part, esp in pairs(espObjects) do
-            removeEsp(part)
-        end
---
-        workspace.DescendantAdded:Disconnect()
-    end
-end)
--- 
-tab.newToggle("Iron ESP Toggle", "Toggle Iron ESP", true, function(toggleState)
-    local espObjects = {}
---
-    local function adornIronOre(part)
-        if part:IsA("MeshPart") and part.BrickColor == BrickColor.new("Burlap") and part.Material == Enum.Material.Slate then
-            local IronEsp = Instance.new("BoxHandleAdornment")
-            IronEsp.Adornee = part
-            IronEsp.AlwaysOnTop = true
-            IronEsp.ZIndex = 0
-            IronEsp.Size = part.Size
-            IronEsp.Name = "Iron"
-            IronEsp.Transparency = 0.3
-            IronEsp.Color = BrickColor.new("Burlap")
-            IronEsp.Parent = workspace
-            espObjects[part] = IronEsp
-        end
-    end
---
-    local function removeEsp(part)
-        if espObjects[part] then
-            espObjects[part]:Destroy()
-            espObjects[part] = nil
-        end
-    end
---
-    if toggleState then
-        local parts = workspace:GetDescendants()
-        for _, part in ipairs(parts) do
-            adornIronOre(part)
-        end
---
-        local function onPartAdded(part)
-            adornIronOre(part)
-        end
---
-        workspace.DescendantAdded:Connect(onPartAdded)
-    else
-        for part, esp in pairs(espObjects) do
-            removeEsp(part)
-        end
+    end)
+
+    button.MouseButton1Click:Connect(callback)
+
+    return button
+end
+
+
+local lootButton = createDraggableButton("Loot All", UDim2.new(0, 100, 1, -100), function()
+    for i = 1, 20 do
+        game:GetService("Players").LocalPlayer.RemoteEvent:FireServer(12, i, true)
+        wait(0.03)
     end
 end)
---
-tab.newToggle("Nitrate ESP Toggle", "Toggle Nitrate ESP", true, function(toggleState)
-    local espObjects = {}
---
-    local function adornNitrateOre(part)
-        if part:IsA("MeshPart") and part.BrickColor == BrickColor.new("Institutional white") and part.Material == Enum.Material.Slate then
-            local NitrateEsp = Instance.new("BoxHandleAdornment")
-            NitrateEsp.Adornee = part
-            NitrateEsp.AlwaysOnTop = true
-            NitrateEsp.ZIndex = 0
-            NitrateEsp.Size = part.Size
-            NitrateEsp.Name = "Nitrate"
-            NitrateEsp.Transparency = 0.3
-            NitrateEsp.Color = BrickColor.new("Institutional white")
-            NitrateEsp.Parent = workspace
-            espObjects[part] = NitrateEsp
-        end
-    end
---
-    local function removeEsp(part)
-        if espObjects[part] then
-            espObjects[part]:Destroy()
-            espObjects[part] = nil
-        end
-    end
---
-    if toggleState then
-        local parts = workspace:GetDescendants()
-        for _, part in ipairs(parts) do
-            adornNitrateOre(part)
-        end
---
-        local function onPartAdded(part)
-            adornNitrateOre(part)
-        end
---
-        workspace.DescendantAdded:Connect(onPartAdded)
-    else
-        for part, esp in pairs(espObjects) do
-            removeEsp(part)
-        end
+
+tab.newToggle("Loot All Toggle", "Show/hide Loot All button", false, function(toggleState)
+    lootButton.Visible = toggleState
+end)
+
+local depositButton = createDraggableButton("Deposit All", UDim2.new(0, 210, 1, -100), function()
+    for i = 1, 20 do
+        game:GetService("Players").LocalPlayer.RemoteEvent:FireServer(12, i, false)
+        wait(0.03)
     end
 end)
---
+
+tab.newToggle("Deposit All Toggle", "Show/hide Deposit All button", false, function(toggleState)
+    depositButton.Visible = toggleState
+end)
 -- Hitsounds
 local tab = DrRayLibrary.newTab("hitsounds", "ImageIdHere")
 local SoundService = game:GetService("SoundService")
