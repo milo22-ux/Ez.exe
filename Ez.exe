@@ -309,21 +309,6 @@ tab.newSlider("Neck Length", "Adjust neck length", 6, false, function(num)
         game:GetService("Workspace").Ignore.LocalCharacter.Bottom.PrismaticConstraint.LowerLimit = num
     end
 end)
-    --no grass
-local EnviromentEnabled = true
---
-CreateToggle({
-    Name = "Remove Grass",
-    CurrentValue = false,
-    Flag = "GrassToggle",
-    Callback = function(toggleState)
-        print(toggleState and "On" or "Off")
---
-        if EnviromentEnabled then
-            sethiddenproperty(game.Workspace.Terrain, "Decoration", not toggleState)
-        end
-    end
-})
 -- Xray
 local antihitbox
 antihitbox = hookmetamethod(game, "__newindex", function(self, key, value)
