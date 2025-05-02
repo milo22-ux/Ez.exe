@@ -68,203 +68,116 @@ game:GetService("RunService").RenderStepped:Connect(function()
         modifyPlayerHeads()
     end
 end)
+local deleteWallsEnabled = true
+
+local Mouse = game.Players.LocalPlayer:GetMouse()
+
+Mouse.Button1Down:Connect(function()
+    if deleteWallsEnabled then
+        if not Mouse.Target then return end
+
+        local targetName = Mouse.Target.Name
+        local allowedNames = {
+            "Hitbox", "LeftWall", "RightWall",
+            "LeftHinge", "Prim", "RightHinge"
+        }
+
+        for _, name in ipairs(allowedNames) do
+            if targetName == name then
+                Mouse.Target:Destroy()
+                break
+            end
+        end
+    end
+end)
+
+tab.newToggle("Delete Walls", "Enable/disable wall deletion on click", true, function(toggleState)
+    deleteWallsEnabled = toggleState
+end)
 -- Visuals
 local tab = DrRayLibrary.newTab("visuals", "ImageIdHere")
 tab.newButton("esp", "boxes", function()
-local plr = game.Players.LocalPlayer
-local camera = game.Workspace.CurrentCamera
+local VisionCore = {};
+VisionCore.Modules = { ["Player"] = {} };
+VisionCore.ESP_Boxes = {};
+local Camera = workspace.CurrentCamera;
+local RunService = game:GetService("RunService");
 --
-for i, v in pairs(game.Players:GetChildren()) do
-    local Top = Drawing.new("Line")
-    Top.Visible = false
-    Top.From = Vector2.new(0, 0)
-    Top.To = Vector2.new(200, 200)
-    Top.Color = Color3.fromRGB(255, 0, 0)
-    Top.Thickness = 2
-    Top.Transparency = 1
---
-    local Bottom = Drawing.new("Line")
-    Bottom.Visible = false
-    Bottom.From = Vector2.new(0, 0)
-    Bottom.To = Vector2.new(200, 200)
-    Bottom.Color = Color3.fromRGB(255, 0, 0)
-    Bottom.Thickness = 2
-    Bottom.Transparency = 1
---
-    local Left = Drawing.new("Line")
-    Left.Visible = false
-    Left.From = Vector2.new(0, 0)
-    Left.To = Vector2.new(200, 200)
-    Left.Color = Color3.fromRGB(255, 0, 0)
-    Left.Thickness = 2
-    Left.Transparency = 1
---
-    local Right = Drawing.new("Line")
-    Right.Visible = false
-    Right.From = Vector2.new(0, 0)
-    Right.To = Vector2.new(200, 200)
-    Right.Color = Color3.fromRGB(255, 0, 0)
-    Right.Thickness = 2
-    Right.Transparency = 1
---
-    function ESP()
-        local connection
-        connection = game:GetService("RunService").RenderStepped:Connect(function()
-            if v.Character ~= nil and v.Character:FindFirstChild("HumanoidRootPart") ~= nil and v.Name ~= plr.Name  and v.Character.Humanoid.Health > 0 then 
-                local ScreenPos, OnScreen = camera:WorldToViewportPoint(v.Character.HumanoidRootPart.Position)
-                if OnScreen then
-                    local Scale = v.Character.Head.Size.Y/2
-                    local Size = Vector3.new(2, 3, 0) * (Scale * 2)
-                    local humpos = camera:WorldToViewportPoint(v.Character.HumanoidRootPart.Position)
-                    local TL = camera:WorldToViewportPoint((v.Character.HumanoidRootPart.CFrame * CFrame.new(Size.X, Size.Y, 0)).p)
-                    local TR = camera:WorldToViewportPoint((v.Character.HumanoidRootPart.CFrame * CFrame.new(-Size.X, Size.Y, 0)).p)
-                    local BL = camera:WorldToViewportPoint((v.Character.HumanoidRootPart.CFrame * CFrame.new(Size.X, -Size.Y, 0)).p)
-                    local BR = camera:WorldToViewportPoint((v.Character.HumanoidRootPart.CFrame * CFrame.new(-Size.X, -Size.Y, 0)).p)
---
-                    Top.From = Vector2.new(TL.X, TL.Y)
-                    Top.To = Vector2.new(TR.X, TR.Y)
---
-                    Left.From = Vector2.new(TL.X, TL.Y)
-                    Left.To = Vector2.new(BL.X, BL.Y)
---
-                    Right.From = Vector2.new(TR.X, TR.Y)
-                    Right.To = Vector2.new(BR.X, BR.Y)
---
-                    Bottom.From = Vector2.new(BL.X, BL.Y)
-                    Bottom.To = Vector2.new(BR.X, BR.Y)
---
-                    if v.TeamColor == plr.TeamColor then
-                        Top.Color = Color3.fromRGB(0, 255, 0)
-                        Left.Color = Color3.fromRGB(0, 255, 0)
-                        Bottom.Color = Color3.fromRGB(0, 255, 0)
-                        Right.Color = Color3.fromRGB(0, 255, 0)
-                    else 
-                        Top.Color = Color3.fromRGB(255, 0, 0)
-                        Left.Color = Color3.fromRGB(255, 0, 0)
-                        Bottom.Color = Color3.fromRGB(255, 0, 0)
-                        Right.Color = Color3.fromRGB(255, 0, 0)
-                    end
---
-                    Top.Visible = true
-                    Left.Visible = true
-                    Bottom.Visible = true
-                    Right.Visible = true
-                else 
-                    Top.Visible = false
-                    Left.Visible = false
-                    Bottom.Visible = false
-                    Right.Visible = false
-                end
-            else 
-                Top.Visible = false
-                Left.Visible = false
-                Bottom.Visible = false
-                Right.Visible = false
-                if game.Players:FindFirstChild(v.Name) == nil then
-                    connection:Disconnect()
-                end
-            end
-        end)
+for _, func in pairs(getgc(true)) do
+    if typeof(func) == "function" and islclosure(func) then
+        local info = debug.getinfo(func)
+        local name = string.match(info.short_src, "%.([%w_]+)$")
+        if name and VisionCore.Modules[name] and info.name then
+            VisionCore.Modules[name][info.name] = info.func
+        end
     end
-    coroutine.wrap(ESP)()
 end
 --
-game.Players.PlayerAdded:Connect(function(newplr) --Parameter gets the new player that has been added
-    local Top = Drawing.new("Line")
-    Top.Visible = false
-    Top.From = Vector2.new(0, 0)
-    Top.To = Vector2.new(200, 200)
-    Top.Color = Color3.fromRGB(255, 0, 0)
-    Top.Thickness = 2
-    Top.Transparency = 1
---
-    local Bottom = Drawing.new("Line")
-    Bottom.Visible = false
-    Bottom.From = Vector2.new(0, 0)
-    Bottom.To = Vector2.new(200, 200)
-    Bottom.Color = Color3.fromRGB(255, 0, 0)
-    Bottom.Thickness = 2
-    Bottom.Transparency = 1
---
-    local Left = Drawing.new("Line")
-    Left.Visible = false
-    Left.From = Vector2.new(0, 0)
-    Left.To = Vector2.new(200, 200)
-    Left.Color = Color3.fromRGB(255, 0, 0)
-    Left.Thickness = 2
-    Left.Transparency = 1
---
-    local Right = Drawing.new("Line")
-    Right.Visible = false
-    Right.From = Vector2.new(0, 0)
-    Right.To = Vector2.new(200, 200)
-    Right.Color = Color3.fromRGB(255, 0, 0)
-    Right.Thickness = 2
-    Right.Transparency = 1
---
-    function ESP()
-        local connection
-        connection = game:GetService("RunService").RenderStepped:Connect(function()
-            if newplr.Character ~= nil and newplr.Character:FindFirstChild("HumanoidRootPart") ~= nil and newplr.Name ~= plr.Name  and newplr.Character.Humanoid.Health > 0 then
-                local ScreenPos, OnScreen = camera:WorldToViewportPoint(newplr.Character.HumanoidRootPart.Position)
-                if OnScreen then
-                    local Scale = newplr.Character.Head.Size.Y/2
-                    local Size = Vector3.new(2, 3, 0) * (Scale * 2)
-                    local humpos = camera:WorldToViewportPoint(newplr.Character.HumanoidRootPart.Position)
-                    local TL = camera:WorldToViewportPoint((newplr.Character.HumanoidRootPart.CFrame * CFrame.new(Size.X, Size.Y, 0)).p)
-                    local TR = camera:WorldToViewportPoint((newplr.Character.HumanoidRootPart.CFrame * CFrame.new(-Size.X, Size.Y, 0)).p)
-                    local BL = camera:WorldToViewportPoint((newplr.Character.HumanoidRootPart.CFrame * CFrame.new(Size.X, -Size.Y, 0)).p)
-                    local BR = camera:WorldToViewportPoint((newplr.Character.HumanoidRootPart.CFrame * CFrame.new(-Size.X, -Size.Y, 0)).p)
---
-                    Top.From = Vector2.new(TL.X, TL.Y)
-                    Top.To = Vector2.new(TR.X, TR.Y)
---
-                    Left.From = Vector2.new(TL.X, TL.Y)
-                    Left.To = Vector2.new(BL.X, BL.Y)
---
-                    Right.From = Vector2.new(TR.X, TR.Y)
-                    Right.To = Vector2.new(BR.X, BR.Y)
---
-                    Bottom.From = Vector2.new(BL.X, BL.Y)
-                    Bottom.To = Vector2.new(BR.X, BR.Y)
-
-                    if newplr.TeamColor == plr.TeamColor then
-                        Top.Color = Color3.fromRGB(0, 255, 0)
-                        Left.Color = Color3.fromRGB(0, 255, 0)
-                        Bottom.Color = Color3.fromRGB(0, 255, 0)
-                        Right.Color = Color3.fromRGB(0, 255, 0)
-                    else 
-                        Top.Color = Color3.fromRGB(255, 0, 0)
-                        Left.Color = Color3.fromRGB(255, 0, 0)
-                        Bottom.Color = Color3.fromRGB(255, 0, 0)
-                        Right.Color = Color3.fromRGB(255, 0, 0)
-                    end
---
-                    Top.Visible = true
-                    Left.Visible = true
-                    Bottom.Visible = true
-                    Right.Visible = true
-                else 
-                    Top.Visible = false
-                    Left.Visible = false
-                    Bottom.Visible = false
-                    Right.Visible = false
-                end
-            else 
-                Top.Visible = false
-                Left.Visible = false
-                Bottom.Visible = false
-                Right.Visible = false
-                if game.Players:FindFirstChild(newplr.Name) == nil then
-                    connection:Disconnect()
-                end
-            end
-        end)
+function VisionCore:Create(className, properties)
+    local success, object = pcall(Drawing.new, className)
+    if not success or not object then return nil end
+    for prop, value in next, properties or {} do
+        pcall(function() object[prop] = value end)
     end
-    coroutine.wrap(ESP)()
-end)
-end)
+    return object
+end
 --
+function VisionCore:GetEntities()
+    local result = {}
+    for _, data in next, debug.getupvalue(VisionCore.Modules.Player.GetPlayerModel, 1) do
+        if data and data.model and data.model:FindFirstChild("Head") and not data.sleeping then
+            table.insert(result, data)
+        end
+    end
+    return result
+end
+--
+function VisionCore:SetupBox(entity)
+    VisionCore.ESP_Boxes[entity.id] = VisionCore:Create("Square", {
+        Thickness = 1,
+        Color = Color3.fromRGB(255, 255, 255), -- White box
+        Filled = false,
+        Visible = false
+    })
+end
+--
+function VisionCore:UpdateAllBoxes()
+    local entities = VisionCore:GetEntities()
+    local trackedIDs = {}
+    for _, ent in next, entities do
+        trackedIDs[ent.id] = true
+        if not VisionCore.ESP_Boxes[ent.id] then VisionCore:SetupBox(ent) end
+        local box = VisionCore.ESP_Boxes[ent.id]
+        local head = ent.model:FindFirstChild("Head") or ent.model:FindFirstChild("Torso")
+        if head then
+            VisionCore:UpdateBoxPosition(box, head)
+        else
+            VisionCore:HideBox(box)
+        end
+    end
+    for id, box in next, VisionCore.ESP_Boxes do
+        if not trackedIDs[id] then
+            VisionCore:HideBox(box)
+            VisionCore.ESP_Boxes[id] = nil
+        end
+    end
+end
+--
+function VisionCore:UpdateBoxPosition(box, part)
+    local screenPos, visible = Camera:WorldToViewportPoint(part.Position)
+    local size = 35
+    box.Size = Vector2.new(size, size)
+    box.Position = Vector2.new(screenPos.X - size / 2, screenPos.Y - size / 2)
+    box.Visible = visible
+end
+-- 
+function VisionCore:HideBox(box)
+    box.Visible = false
+end
+--
+RunService.RenderStepped:Connect(function()
+    VisionCore:UpdateAllBoxes()
+end)
 tab.newButton("name and distance", "esp", function()
     local modules = { ["Player"] = {} }
     local ESP_Objects = {}
@@ -368,26 +281,75 @@ workspace.ChildAdded:Connect(function(child)
     if child:FindFirstChild("Head") then
         createHighlight(child) 
     end
-end)  -- 
--- Xray
-local CurrentSliderValue = 0.5 
+end)
+    -- long neck
+local longneck = {
+    LongNeckEnabled = false,
+    UpperLimitDefault = 3,
+    LowerLimitDefault = 1.75,
+    CurrentSliderValue = 1.75,
+}
 --
-tab.newSlider("xray transparency", "", 100, false, function(num)
-    CurrentSliderValue = num / 100
+tab.newToggle("Long Neck Toggle", "Enable or disable long neck", true, function(toggleState)
+    longneck.LongNeckEnabled = toggleState
+    if toggleState then
+        game:GetService("Workspace").Ignore.LocalCharacter.Bottom.PrismaticConstraint.UpperLimit = longneck.CurrentSliderValue
+        game:GetService("Workspace").Ignore.LocalCharacter.Bottom.PrismaticConstraint.LowerLimit = longneck.CurrentSliderValue
+    else
+        game:GetService("Workspace").Ignore.LocalCharacter.Bottom.PrismaticConstraint.UpperLimit = longneck.UpperLimitDefault
+        game:GetService("Workspace").Ignore.LocalCharacter.Bottom.PrismaticConstraint.LowerLimit = longneck.LowerLimitDefault
+    end
 end)
 --
-tab.newToggle("Xray toggle", "", false, function(toggleState)
-    if toggleState then
-        for i, v in pairs(game:GetService("Workspace"):GetChildren()) do
-            if v:FindFirstChild("Hitbox") then
-                v.Hitbox.Transparency = CurrentSliderValue
-            end
+tab.newSlider("Neck Length", "Adjust neck length", 6, false, function(num)
+    longneck.CurrentSliderValue = num
+    if longneck.LongNeckEnabled then
+        game:GetService("Workspace").Ignore.LocalCharacter.Bottom.PrismaticConstraint.UpperLimit = num
+        game:GetService("Workspace").Ignore.LocalCharacter.Bottom.PrismaticConstraint.LowerLimit = num
+    end
+end)
+    --no grass
+local EnviromentEnabled = true
+--
+CreateToggle({
+    Name = "Remove Grass",
+    CurrentValue = false,
+    Flag = "GrassToggle",
+    Callback = function(toggleState)
+        print(toggleState and "On" or "Off")
+--
+        if EnviromentEnabled then
+            sethiddenproperty(game.Workspace.Terrain, "Decoration", not toggleState)
         end
-    else
-        for i, v in pairs(game:GetService("Workspace"):GetChildren()) do
-            if v:FindFirstChild("Hitbox") then
-                v.Hitbox.Transparency = 0
-            end
+    end
+})
+-- Xray
+local antihitbox
+antihitbox = hookmetamethod(game, "__newindex", function(self, key, value)
+    if not checkcaller() and key == "Size" and self.Name == "Head" then
+        return Vector3.new(1.67225, 0.835624, 0.835624)
+    end
+    return antihitbox(self, key, value)
+end)
+--
+local antixray
+antixray = hookmetamethod(game, "__newindex", function(self, key, value)
+    if not checkcaller() and key == "Transparency" and self.Name == "Hitbox" then
+        return 
+    end
+    return antixray(self, key, value)
+end)
+--
+local CurrentSliderValue = 0.5
+--
+tab.newSlider("Xray Transparency", "Adjust hitbox transparency", 100, false, function(val)
+    CurrentSliderValue = val / 100
+end)
+--
+tab.newToggle("Xray Toggle", "Toggle visibility of player hitboxes", false, function(state)
+    for _, v in pairs(game:GetService("Workspace"):GetChildren()) do
+        if v:FindFirstChild("Hitbox") then
+            v.Hitbox.Transparency = state and CurrentSliderValue or 0
         end
     end
 end)
@@ -740,3 +702,24 @@ for _, line in ipairs({
 }) do
     warn(line)
 end
+local TextLabel = Drawing.new("Text")
+TextLabel.Text = "Ez bans.exe - free - v2"
+TextLabel.Size = 24
+TextLabel.Center = true
+TextLabel.Outline = true
+TextLabel.Visible = true
+
+local viewportSize = game:GetService("Workspace").CurrentCamera.ViewportSize
+TextLabel.Position = Vector2.new(viewportSize.X / 2, 15)
+
+local RunService = game:GetService("RunService")
+local hue = 0
+
+RunService.RenderStepped:Connect(function()
+    hue = (hue + 0.01) % 1
+    local color = Color3.fromHSV(hue, 1, 1)
+    TextLabel.Color = color
+    
+    local newViewportSize = game:GetService("Workspace").CurrentCamera.ViewportSize
+    TextLabel.Position = Vector2.new(newViewportSize.X / 2, 15)
+end)
