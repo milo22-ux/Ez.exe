@@ -178,6 +178,7 @@ end
 RunService.RenderStepped:Connect(function()
     VisionCore:UpdateAllBoxes()
 end)
+end)
 tab.newButton("name and distance", "esp", function()
     local modules = { ["Player"] = {} }
     local ESP_Objects = {}
