@@ -186,14 +186,6 @@ rs.RenderStepped:Connect(function()
 end)
 end)
 -- Xray
-local antixray
-antixray = hookmetamethod(game, "__newindex", function(self, key, value)
-    if not checkcaller() and key == "Transparency" and self.Name == "Hitbox" then
-        return 
-    end
-    return antixray(self, key, value)
-end)
---
 local CurrentSliderValue = 0.5
 --
 tab.newSlider("Xray Transparency", "Adjust hitbox transparency", 100, false, function(val)
