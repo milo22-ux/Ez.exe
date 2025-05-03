@@ -68,32 +68,6 @@ game:GetService("RunService").RenderStepped:Connect(function()
         modifyPlayerHeads()
     end
 end)
-local deleteWallsEnabled = true
-
-local Mouse = game.Players.LocalPlayer:GetMouse()
-
-Mouse.Button1Down:Connect(function()
-    if deleteWallsEnabled then
-        if not Mouse.Target then return end
-
-        local targetName = Mouse.Target.Name
-        local allowedNames = {
-            "Hitbox", "LeftWall", "RightWall",
-            "LeftHinge", "Prim", "RightHinge"
-        }
-
-        for _, name in ipairs(allowedNames) do
-            if targetName == name then
-                Mouse.Target:Destroy()
-                break
-            end
-        end
-    end
-end)
-
-tab.newToggle("Delete Walls", "Enable/disable wall deletion on click", true, function(toggleState)
-    deleteWallsEnabled = toggleState
-end)
 -- Visuals
 local tab = DrRayLibrary.newTab("visuals", "ImageIdHere")
 tab.newButton("esp", "", function()
