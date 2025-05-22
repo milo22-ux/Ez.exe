@@ -33,7 +33,7 @@ local UIS, RS, ReplicatedStorage = cloneref(game:GetService("UserInputService"))
 -- Locals to call the ui
 local DrRayLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/AZYsGithub/DrRay-UI-Library/main/DrRay.lua"))()
 --
-local window = DrRayLibrary:Load("Ez bans.exe", "Default")
+local window = DrRayLibrary:Load("Vercore.xyz", "Default")
 -- Combat
 local tab = DrRayLibrary.newTab("Combat", "ImageIdHere")
 tab.newButton("silent aim", "", function()
@@ -440,19 +440,18 @@ for name, data in pairs(SkyBoxes) do
 end
 -- Print the name
 for _, line in ipairs({
-  "█████████████",
-  "█▄─▄▄─█░▄▄░▄█",
-  "██─▄█▀██▀▄█▀█",
-  "▀▄▄▄▄▄▀▄▄▄▄▄▀",
-  "█████████████████████████████████████████████████",
-  "█▄─▄─▀██▀▄─██▄─▀█▄─▄█─▄▄▄▄█████▄─▄▄─█▄─▀─▄█▄─▄▄─█",
-  "██─▄─▀██─▀─███─█▄▀─██▄▄▄▄─█░░███─▄█▀██▀─▀███─▄█▀█",
-  "▀▄▄▄▄▀▀▄▄▀▄▄▀▄▄▄▀▀▄▄▀▄▄▄▄▄▀▄▄▀▀▄▄▄▄▄▀▄▄█▄▄▀▄▄▄▄▄▀"
+"░▒▓█▓▒░░▒▓█▓▒░▒▓████████▓▒░▒▓███████▓▒░ ░▒▓██████▓▒░ ░▒▓██████▓▒░░▒▓███████▓▒░░▒▓████████▓▒░      ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓████████▓▒░ ",
+"░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░      ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░             ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░      ░▒▓█▓▒░ ",
+" ░▒▓█▓▒▒▓█▓▒░░▒▓█▓▒░      ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░      ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░             ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░    ░▒▓██▓▒░  ",
+" ░▒▓█▓▒▒▓█▓▒░░▒▓██████▓▒░ ░▒▓███████▓▒░░▒▓█▓▒░      ░▒▓█▓▒░░▒▓█▓▒░▒▓███████▓▒░░▒▓██████▓▒░         ░▒▓██████▓▒░ ░▒▓██████▓▒░   ░▒▓██▓▒",
+"░▒▓█▓▓█▓▒░ ░▒▓█▓▒░      ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░      ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░             ░▒▓█▓▒░░▒▓█▓▒░  ░▒▓█▓▒░    ░▒▓██▓▒░", 
+" ░▒▓█▓▓█▓▒░ ░▒▓█▓▒░      ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░      ░▒▓██▓▒░▒▓█▓▒░░▒▓█▓▒░  ░▒▓█▓▒░   ░▒▓█▓▒░",
+" ░▒▓██▓▒░  ░▒▓████████▓▒░▒▓█▓▒░░▒▓█▓▒░░▒▓██████▓▒░ ░▒▓██████▓▒░░▒▓█▓▒░░▒▓█▓▒░▒▓████████▓▒░▒▓██▓▒░▒▓█▓▒░░▒▓█▓▒░  ░▒▓█▓▒░   ░▒▓████████▓▒░ "
 }) do
-    warn(line)
+    print(line)
 end
 local TextLabel = Drawing.new("Text")
-TextLabel.Text = "Ez bans.exe - free - v2"
+TextLabel.Text = "Vercore.xyz - free - v2"
 TextLabel.Size = 24
 TextLabel.Center = true
 TextLabel.Outline = true
