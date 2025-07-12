@@ -1,0 +1,38 @@
+local key = getgenv().Key or getfenv().Key
+
+if not key or key == "" then
+    return warn("❌ No key found. Define global 'Key' before running.")
+end
+
+local API_URL = "https://whitelist-ofs2.vercel.app/api/vaildate?key="
+
+local function validateKey(k)
+    local success, response = pcall(function()
+        return game:HttpGet(API_URL .. k)
+    end)
+
+    if not success then
+        warn("❌ Request failed:", response)
+        return false, "REQUEST_ERROR"
+    end
+
+    if response == "OK" then
+        return true, "WHITELISTED"
+    elseif response == "EXPIRED" then
+        return false, "KEY_EXPIRED"
+    elseif response == "DENIED" then
+        return false, "NOT_WHITELISTED"
+    else
+        return false, "UNKNOWN_RESPONSE: " .. response
+    end
+end
+
+local valid, reason = validateKey(key)
+
+if not valid then
+    warn("❌ Access denied. Reason: " .. tostring(reason))
+    return 
+end
+
+print("✅ Whitelist passed! Running main script...")
+print("hi")
