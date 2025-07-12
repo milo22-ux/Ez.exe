@@ -1,7 +1,7 @@
-local key = getgenv().Key or getfenv().Key
+local key = rawget(getgenv(), "Key") or rawget(getfenv(0), "Key")
 
 if not key or key == "" then
-    return warn("❌ No key found. Define global 'Key' before running.")
+    return warn("❌ No key found. Define global 'Key' using getgenv().Key = \"YOUR_KEY\" before running.")
 end
 
 local API_URL = "https://whitelist-ofs2.vercel.app/api/vaildate?key="
@@ -31,8 +31,8 @@ local valid, reason = validateKey(key)
 
 if not valid then
     warn("❌ Access denied. Reason: " .. tostring(reason))
-    return 
+    return
 end
 
-print("✅ Whitelist passed! Running main script...")
+print("✅ Whitelist passed!")
 print("hi")
