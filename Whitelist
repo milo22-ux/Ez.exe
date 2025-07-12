@@ -1,38 +1,34 @@
 local key = rawget(getgenv(), "Key") or rawget(getfenv(0), "Key")
+local hwid = gethwid()
 
 if not key or key == "" then
-    return warn("❌ No key found. Define global 'Key' using getgenv().Key = \"YOUR_KEY\" before running.")
+    return warn("❌ No key found. Use: getgenv().Key = \"your_key\"")
 end
 
-local API_URL = "https://whitelist-ofs2.vercel.app/api/vaildate?key="
+if not hwid then
+    return warn("❌ HWID not found. Your executor must support gethwid().")
+end
 
-local function validateKey(k)
+local API_URL = "https://whitelist-ofs2.vercel.app/api/vaildate?key=" .. key .. "&hwid=" .. hwid
+
+local function validateKey()
     local success, response = pcall(function()
-        return game:HttpGet(API_URL .. k)
+        return game:HttpGet(API_URL)
     end)
 
     if not success then
-        warn("❌ Request failed:", response)
         return false, "REQUEST_ERROR"
     end
 
-    if response == "OK" then
-        return true, "WHITELISTED"
-    elseif response == "EXPIRED" then
-        return false, "KEY_EXPIRED"
-    elseif response == "DENIED" then
-        return false, "NOT_WHITELISTED"
-    else
-        return false, "UNKNOWN_RESPONSE: " .. response
-    end
+    if response == "OK" then return true, "WHITELISTED" end
+    return false, response
 end
 
-local valid, reason = validateKey(key)
-
+local valid, reason = validateKey()
 if not valid then
-    warn("❌ Access denied. Reason: " .. tostring(reason))
+    warn("❌ Access denied:", reason)
     return
 end
 
-print("✅ Whitelist passed!")
+print("✅ Whitelist passed.")
 print("hi")
