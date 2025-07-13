@@ -639,41 +639,6 @@ end)
 tab.newToggle("Auto Hold Button", "Toggle GUI for holding W + C", false, function(toggleState)
     button.Visible = toggleState
 end)
-  local _G = getfenv(0)
-_G.dev_class = {}
-local dev_class = _G.dev_class
---
-dev_class.settings = { destroy_replication = false }
-dev_class.hook_func = hookfunction
-dev_class.newc_closure = newcclosure
---
-local Vercore
-Vercore = dev_class.hook_func(game:GetService("Players").LocalPlayer.RemoteEvent.FireServer, dev_class.newc_closure(function(self, ...)
-    local args = { ... }
-    if args[1] == 1 and dev_class.settings.destroy_replication then
-        args[4] = math.huge
-    end
-    return Vercore(self, unpack(args))
-end))
---
-local DrawingInvisible = Drawing.new("Text")
-DrawingInvisible.Visible = false
-DrawingInvisible.Position = Vector2.new(10, 10)
-DrawingInvisible.Size = 20
-DrawingInvisible.Text = "Invisible"
-DrawingInvisible.Center = false
-DrawingInvisible.Outline = true
---
-local hue = 0
-game:GetService("RunService").RenderStepped:Connect(function()
-    hue = (hue + 1) % 360
-    DrawingInvisible.Color = Color3.fromHSV(hue / 360, 1, 1)
-end)
---
-tab.newToggle("Invis", "", false, function(toggleState)
-    dev_class.settings.destroy_replication = toggleState
-    DrawingInvisible.Visible = toggleState
-end)
 _G = getfenv(0)
 _G.dev_resolver = {}
 local d = _G.dev_resolver
