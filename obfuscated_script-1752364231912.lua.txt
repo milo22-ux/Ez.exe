@@ -1,75 +1,54 @@
 local key = getgenv().key or ""
 local hwid = gethwid()
 local request = request or http_request or (http and http.request) or syn and syn.request
-if not request then error() end
-local function c()
- if hookfunction then error() end
- if hookmetamethod then error() end
- if oldhook then error() end
- if not debug or not debug.gethook or not debug.getinfo or not debug.sethook then error() end
- if debug.gethook() then error() end
- local function m(t)
-  local mt = getrawmetatable(t)
-  if mt then
-   if mt.__index and type(mt.__index) ~= "table" then error() end
-   if mt.__newindex and type(mt.__newindex) ~= "table" then error() end
-   if mt.__namecall and debug.getinfo(mt.__namecall, "S").what ~= "C" then error() end
-  end
- end
- m(game)
- m(game.Players)
- m(game.ReplicatedStorage)
- local funcs = {
-  pcall, xpcall, coroutine.create, coroutine.resume, coroutine.running, coroutine.status, coroutine.wrap,
-  loadstring, load, loadfile, getfenv, setfenv, getrawmetatable, setreadonly, newcclosure,
-  tostring, tonumber, type, rawequal, rawget, rawset
- }
- for _, f in pairs(funcs) do
-  if type(f) ~= "function" then error() end
-  if tostring(f):find("function") == nil then error() end
- end
- if tostring(game.HttpGet):find("function") == nil then error() end
- local env = getfenv(0)
- if env._G ~= _G then error() end
- local mt = getrawmetatable(game)
- if mt and mt.__metatable ~= nil then error() end
- for i=1,50 do
-  local info = debug.getinfo(i)
-  if not info then break end
-  if info.what ~= "Lua" and info.what ~= "C" then error() end
- end
- local gmt = getrawmetatable(getgenv())
- if gmt and gmt.__newindex then error() end
- local envmt = getrawmetatable(env)
- if envmt and envmt.__newindex then error() end
- local fenv = getfenv()
- if fenv._G ~= _G then error() end
- local function detectPcallTamper()
-  local s, err = pcall(function() error() end)
-  if not s then
-   if not err or err == "" then error() end
-  end
- end
- detectPcallTamper()
- local function detectMetatableTamper(o)
-  local mt = getrawmetatable(o)
-  if mt then
-   for k,v in pairs(mt) do
-    if type(v) == "function" and tostring(v):find("function") == nil then
-     error()
+if type(request) ~= "function" then error("Invalid request function") end
+
+local function antiTamper()
+    if hookfunction or hookmetamethod or oldhook then error("Tampering") end
+    if not debug or not debug.getinfo or not debug.gethook then error("Debug missing") end
+    if debug.gethook() then error("Debug hook active") end
+
+    local function checkMeta(t)
+        local mt = getrawmetatable(t)
+        if not mt then return end
+        if mt.__index and type(mt.__index) ~= "table" then error("__index hook") end
+        if mt.__newindex and type(mt.__newindex) ~= "table" then error("__newindex hook") end
+        if mt.__namecall and debug.getinfo(mt.__namecall, "S").what ~= "C" then error("__namecall hook") end
+        if mt.__metatable ~= nil then error("Locked metatable") end
     end
-   end
-  end
- end
- detectMetatableTamper(game)
- detectMetatableTamper(game.Players)
- detectMetatableTamper(game.ReplicatedStorage)
+
+    checkMeta(game)
+    checkMeta(game.Players)
+    checkMeta(game.ReplicatedStorage)
+
+    local funcs = {
+        pcall, xpcall, coroutine.create, coroutine.resume, coroutine.running,
+        coroutine.status, coroutine.wrap, loadstring, load, getfenv,
+        setfenv, getrawmetatable, setreadonly, tostring, tonumber, type
+    }
+
+    for _, f in pairs(funcs) do
+        if type(f) ~= "function" then error("Function tampered") end
+    end
+
+    if type(game.HttpGet) ~= "function" then error("HttpGet tampered") end
+
+    for i = 1, 25 do
+        local info = debug.getinfo(i)
+        if not info then break end
+        if info.what ~= "Lua" and info.what ~= "C" then error("Stack injection") end
+    end
+
+    local env = getfenv(0)
+    if env._G ~= _G then error("Global env modified") end
 end
-c()
+
+antiTamper()
+
 local url = ("https://whitelist-ivp4.vercel.app/api/vaildate?key=%s&hwid=%s"):format(key, hwid)
-local r = request({Url = url, Method = "GET"})
+local r = request({ Url = url, Method = "GET" })
 if r and r.Body then
- print(r.Body)
+    print(r.Body)
 else
- error()
+    error("Validation failed")
 end
