@@ -33,11 +33,10 @@ local function c()
  if env._G ~= _G then error() end
  local mt = getrawmetatable(game)
  if mt and mt.__metatable ~= nil then error() end
- local stack = 0
- while debug.getinfo(stack) do
-  local info = debug.getinfo(stack)
+ for i=1,50 do
+  local info = debug.getinfo(i)
+  if not info then break end
   if info.what ~= "Lua" and info.what ~= "C" then error() end
-  stack = stack + 1
  end
  local gmt = getrawmetatable(getgenv())
  if gmt and gmt.__newindex then error() end
