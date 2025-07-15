@@ -1,7 +1,7 @@
 local key = getgenv().key or ""
 local hwid = gethwid()
 local request = request or http_request or (http and http.request) or syn and syn.request
-if type(request) ~= "function" then error("Invalid request function") end
+if not request or type(request) ~= "function" then error("HTTP request function not found") end
 
 local function antiTamper()
     if hookfunction or hookmetamethod or oldhook then error("Tampering") end
@@ -45,7 +45,7 @@ end
 
 antiTamper()
 
-local url = ("https://whitelist-ivp4.vercel.app/api/vaildate?key=%s&hwid=%s"):format(key, hwid)
+local url = ("http://whitelist-ivp4.vercel.app/api/vaildate?key=%s&hwid=%s"):format(key, hwid)
 local r = request({ Url = url, Method = "GET" })
 if r and r.Body then
     print(r.Body)
