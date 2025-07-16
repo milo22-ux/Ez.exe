@@ -1,4 +1,4 @@
-local key=getgenv().key or""
+local key=getgenv().key or ""
 local hwid=gethwid()
 local request=request or http_request or (http and http.request) or syn and syn.request
 if type(request)~="function"then error("Request function missing")end
