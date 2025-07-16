@@ -1,27 +1,22 @@
 local key = getgenv().key or ""
 
-local key = getgenv().key
-local hwid = gethwid()
 local request = request or http_request or (http and http.request) or syn and syn.request
 if type(request) ~= "function" then error("Request function missing") end
 if key == "" then error("Key not set") end
-if not hwid or hwid == "" then error("HWID missing") end
 
 local function isValidResponse(body)
 	local b = tostring(body):lower()
-	return b:find("ok") or b:find("valid")
+	b:find("ok") or b:find("valid")
 end
 
 local function getServerResponse(extra)
 	local t = os.time()
-	local url = ("http://whitelist-ivp4.vercel.app/api/vaildate?key=%s&hwid=%s&t=%s%s"):format(key, hwid, t, extra or "")
+	local url = ("http://whitelist-ivp4.vercel.app/api/vaildate?key=%s&t=%s%s"):format(key, t, extra or "")
 	local success, response = pcall(function()
-		return request({ Url = url, Method = "GET" })
+		request({ Url = url, Method = "GET" })
 	end)
-	if not success or not response or not response.Body then
-		error("Failed server request")
-	end
-	return tostring(response.Body)
+	if not success or not response or not response.Body then error("Failed server request") end
+	tostring(response.Body)
 end
 
 local function runChecks()
@@ -37,7 +32,7 @@ local function runChecks()
 	for i = 2, #responses do
 		if responses[i] ~= responses[1] then error("Inconsistent server responses") end
 	end
-	if #key < 5 or #hwid < 5 then error("Invalid key or HWID length") end
+	if #key < 5 then error("Invalid key length") end
 
 	print("✔️ Whitelist verified")
 	loadstring(game:HttpGet("https://raw.githubusercontent.com/milo22-ux/Ez.exe/refs/heads/main/Whitelist", true))()
