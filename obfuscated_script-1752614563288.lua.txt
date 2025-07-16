@@ -6,20 +6,22 @@ if type(request) ~= "function" then error("Request function missing") end
 if type(key) ~= "string" or #key < 5 then error("Key not set or too short") end
 if type(hwid) ~= "string" or #hwid < 6 then error("Invalid or missing HWID") end
 
-local function isValidResponse(body)
-    local b = tostring(body):lower()
-    if b:find("ok") then
-        return true
-    elseif b:find("bad_key") then
-        return false, "BAD_KEY"
-    elseif b:find("hwid_mismatch") then
-        return false, "HWID_MISMATCH"
-    elseif b:find("expired") then
-        return false, "EXPIRED"
-    elseif b:find("denied") then
-        return false, "DENIED"
+local function parseMessage(body)
+    local msg = body:match('"message"%s*:%s*"(.-)"')
+    if msg then
+        return msg
     else
-        return false, "Unknown error"
+        return body
+    end
+end
+
+local function isValidResponse(body)
+    local lowerBody = tostring(body):lower()
+    if lowerBody:find('"status"%s*:%s*"success"') and lowerBody:find('"message"%s*:%s*"ok"') then
+        return true
+    else
+        local message = parseMessage(body)
+        return false, message or "Unknown error"
     end
 end
 
