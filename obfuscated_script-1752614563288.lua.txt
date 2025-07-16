@@ -6,42 +6,60 @@ if type(request) ~= "function" then error("Request function missing") end
 if type(key) ~= "string" or #key < 5 then error("Key not set or too short") end
 if type(hwid) ~= "string" or #hwid < 6 then error("Invalid or missing HWID") end
 
-local isValidResponse = function(body)
-	return tostring(body):lower():find("ok") or tostring(body):lower():find("valid")
+local function isValidResponse(body)
+    local b = tostring(body):lower()
+    if b:find("ok") then
+        return true
+    elseif b:find("bad_key") then
+        return false, "BAD_KEY"
+    elseif b:find("hwid_mismatch") then
+        return false, "HWID_MISMATCH"
+    elseif b:find("expired") then
+        return false, "EXPIRED"
+    elseif b:find("denied") then
+        return false, "DENIED"
+    else
+        return false, "Unknown error"
+    end
 end
 
-local getServerResponse = function(extra)
-	local url = ("http://whitelist-ivp4.vercel.app/api/vaildate?key=%s&hwid=%s&t=%s%s"):format(
-		key, hwid, os.time(), extra or ""
-	)
-	local success, response = pcall(function()
-		return request({ Url = url, Method = "GET" })
-	end)
-	if not success or not response or not response.Body then
-		error("Failed to contact server")
-	end
-	return tostring(response.Body)
+local function getServerResponse(extra)
+    local t = os.time()
+    local url = ("http://whitelist-ivp4.vercel.app/api/vaildate?key=%s&hwid=%s&t=%s%s"):format(
+        key, hwid, t, extra or ""
+    )
+    local success, response = pcall(function()
+        return request({ Url = url, Method = "GET" })
+    end)
+    if not success or not response or not response.Body then
+        error("Failed to contact server")
+    end
+    return tostring(response.Body)
 end
 
-(function()
-	local responses = {}
-	for i = 1, 5 do
-		local param = i == 3 and ("&keyrev=" .. key:reverse()) or ("&chk=" .. i)
-		responses[i] = getServerResponse(param)
-		if not isValidResponse(responses[i]) then
-			error("Whitelist failed on check " .. i .. ": " .. responses[i])
-		end
-	end
-	for i = 2, #responses do
-		if responses[i] ~= responses[1] then
-			error("Server responses inconsistent")
-		end
-	end
+local function runChecks()
+    local responses = {}
+    for i = 1, 5 do
+        local param = i == 3 and ("&keyrev=" .. key:reverse()) or ("&chk=" .. i)
+        local body = getServerResponse(param)
+        local valid, errMsg = isValidResponse(body)
+        if not valid then
+            error("Whitelist failed on check " .. i .. ": " .. errMsg)
+        end
+        responses[i] = body
+    end
+    for i = 2, #responses do
+        if responses[i] ~= responses[1] then
+            error("Server responses inconsistent")
+        end
+    end
 
-	local success, err = pcall(function()
-		loadstring(game:HttpGet("https://raw.githubusercontent.com/milo22-ux/Ez.exe/refs/heads/main/Whitelist", true))()
-	end)
-	if not success then
-		error("Failed to load main script: " .. tostring(err))
-	end
-end)()
+    local success, loadErr = pcall(function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/milo22-ux/Ez.exe/refs/heads/main/Whitelist", true))()
+    end)
+    if not success then
+        error("Failed to load main script: " .. tostring(loadErr))
+    end
+end
+
+runChecks()
