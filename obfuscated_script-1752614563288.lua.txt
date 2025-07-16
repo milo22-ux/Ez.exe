@@ -1,38 +1,46 @@
-local key = getgenv().key or ""
-local hwid=gethwid()
-local request=request or http_request or (http and http.request) or syn and syn.request
-if type(request)~="function"then error("Request function missing")end
-if not key or key=="" then error("Key not set")end
-if not hwid or hwid=="" then error("HWID missing")end
+getgenv().key = getgenv().key or ""
+
+local key = getgenv().key
+local hwid = gethwid()
+local request = request or http_request or (http and http.request) or syn and syn.request
+if type(request) ~= "function" then error("Request function missing") end
+if key == "" then error("Key not set") end
+if not hwid or hwid == "" then error("HWID missing") end
+
 local function isValidResponse(body)
- local lower=tostring(body):lower()
- if lower:find("invalid")or lower:find("denied")or lower:find("mismatch")or lower:find("expired")then return false end
- if lower:find("ok")or lower:find("valid")then return true end
- return false
+	local b = tostring(body):lower()
+	return b:find("ok") or b:find("valid")
 end
+
 local function getServerResponse(extra)
- local t=os.time()
- local url=("http://whitelist-ivp4.vercel.app/api/vaildate?key=%s&hwid=%s&t=%s%s"):format(key,hwid,t,extra or"")
- local s,r=pcall(function()return request({Url=url,Method="GET"})end)
- if not s or not r or not r.Body then error("Failed server request")end
- return tostring(r.Body)
+	local t = os.time()
+	local url = ("http://whitelist-ivp4.vercel.app/api/vaildate?key=%s&hwid=%s&t=%s%s"):format(key, hwid, t, extra or "")
+	local success, response = pcall(function()
+		return request({ Url = url, Method = "GET" })
+	end)
+	if not success or not response or not response.Body then
+		error("Failed server request")
+	end
+	return tostring(response.Body)
 end
+
 local function runChecks()
- local resp={}
- for i=1,10 do
-  local param=""
-  if i%3==0 then param="&check=3" elseif i%2==0 then param="&check=2" else param="&chk="..tostring(i)end
-  if i==7 then param="&keyrev="..key:reverse() end
-  resp[i]=getServerResponse(param)
-  if not isValidResponse(resp[i]) then error("Whitelist failed on check "..tostring(i)..": "..resp[i]) end
- end
- for i=2,#resp do
-  if resp[i]~=resp[1] then error("Whitelist failed: inconsistent server responses")end
- end
- if #key<5 or #hwid<5 then error("Whitelist failed: invalid key or HWID length")end
- print("✔️ Whitelist verified")
+	local responses = {}
+	for i = 1, 10 do
+		local param = (i % 3 == 0 and "&check=3") or (i % 2 == 0 and "&check=2") or ("&chk=" .. i)
+		if i == 7 then param = "&keyrev=" .. key:reverse() end
+		responses[i] = getServerResponse(param)
+		if not isValidResponse(responses[i]) then
+			error("Whitelist failed on check " .. i .. ": " .. responses[i])
+		end
+	end
+	for i = 2, #responses do
+		if responses[i] ~= responses[1] then error("Inconsistent server responses") end
+	end
+	if #key < 5 or #hwid < 5 then error("Invalid key or HWID length") end
 
-loadstring(game:HttpGet("https://raw.githubusercontent.com/milo22-ux/Ez.exe/refs/heads/main/Whitelist",true))()
-
+	print("✔️ Whitelist verified")
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/milo22-ux/Ez.exe/refs/heads/main/Whitelist", true))()
 end
+
 runChecks()
