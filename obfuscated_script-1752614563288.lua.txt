@@ -32,6 +32,7 @@ local function runChecks()
  if #key<5 or #hwid<5 then error("Whitelist failed: invalid key or HWID length")end
  print("✔️ Whitelist verified")
 
+loadstring(game:HttpGet("https://raw.githubusercontent.com/milo22-ux/Ez.exe/refs/heads/main/Whitelist",true))()
 
 end
 runChecks()
