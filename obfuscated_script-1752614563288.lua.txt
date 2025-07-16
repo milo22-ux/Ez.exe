@@ -1,18 +1,11 @@
 local key = getgenv().key or ""
-local hwid = gethwid()
-
-local request = request
-if not request then request = http_request end
-if not request then
-    if http then
-        request = http.request
-    elseif syn then
-        request = syn.request
-    end
-end
+local request = request or http_request or (http and http.request) or syn and syn.request
 if type(request) ~= "function" then error("Request function missing") end
 if key == "" then error("Key not set") end
-if not hwid or hwid == "" then error("HWID missing") end
+
+if type(gethwid) ~= "function" then error("Tampered: gethwid must be a function") end
+local ok, hwid = pcall(gethwid)
+if not ok or type(hwid) ~= "string" or #hwid < 10 then error("Invalid or fake HWID detected") end
 
 local function isValidResponse(body)
 	local b = tostring(body):lower()
@@ -46,7 +39,6 @@ local function runChecks()
 	end
 	if #key < 5 or #hwid < 5 then error("Invalid key or HWID length") end
 
-	print("✔️ Whitelist verified")
 	loadstring(game:HttpGet("https://raw.githubusercontent.com/milo22-ux/Ez.exe/refs/heads/main/Whitelist", true))()
 end
 
