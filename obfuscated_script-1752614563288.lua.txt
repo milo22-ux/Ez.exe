@@ -1,4 +1,4 @@
-getgenv().key = getgenv().key or ""
+local key = getgenv().key or ""
 
 local key = getgenv().key
 local hwid = gethwid()
