@@ -56,14 +56,6 @@ if request then
     end
 end
 
-if game and game.HttpGet then
-    local _orig = originals["game.HttpGet"]
-    game.HttpGet = function(self, url, ...)
-        log_attempt("game.HttpGet", url, "game.HttpGet wrapper")
-        return _orig and _orig(self, url, ...) or nil
-    end
-end
-
 local function fetch_using_originals(u)
     if originals["syn.request"] then
         local ok, r = pcall(originals["syn.request"], {Url = u, Method = "GET"})
