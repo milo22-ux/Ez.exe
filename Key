@@ -1,31 +1,33 @@
 local url = "https://pastebin.com/raw/ZwL9ABFQ"
 
-local function fetch(url)
-    if game and game:HttpGet then
-        return game:HttpGet(url)
-    elseif syn and syn.request then
-        return syn.request({Url = url, Method = "GET"}).Body
-    else
-        error("No HTTP method available")
+local function fetch(u)
+    if syn and syn.request then
+        local r = syn.request({Url = u, Method = "GET"})
+        return r and (r.Body or r.body)
+    elseif http and http.request then
+        local r = http.request({Url = u, Method = "GET"})
+        return r and (r.Body or r.body)
+    elseif request then
+        local r = request({Url = u, Method = "GET"})
+        return r and (r.Body or r.body)
+    elseif game and game.HttpGet then
+        return game:HttpGet(u, true)
     end
+    error("No supported HTTP method available for fetching keys")
 end
 
-local keys_text = fetch(url)
+local keys_text = fetch(url) or ""
 local keys = {}
 for line in keys_text:gmatch("[^\r\n]+") do
     table.insert(keys, line)
 end
 
-getfenv().key = "your_key_here"
-
 local key = getfenv().key
 local allowed = false
-if key then
-    for _, k in ipairs(keys) do
-        if k == key then
-            allowed = true
-            break
-        end
+for _, k in ipairs(keys) do
+    if k == key then
+        allowed = true
+        break
     end
 end
 
