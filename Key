@@ -1,4 +1,5 @@
 local url = "https://pastebin.com/raw/ZwL9ABFQ"
+
 local function fetch(url)
     if game and game:HttpGet then
         return game:HttpGet(url)
@@ -15,10 +16,9 @@ for line in keys_text:gmatch("[^\r\n]+") do
     table.insert(keys, line)
 end
 
-getfenv = getfenv or {}
-getfenv.key = "your_key_here"
+getfenv().key = "your_key_here"
 
-local key = getfenv.key
+local key = getfenv().key
 local allowed = false
 if key then
     for _, k in ipairs(keys) do
