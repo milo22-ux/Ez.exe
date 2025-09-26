@@ -1,93 +1,18 @@
 local keys_url  = "https://pastebin.com/raw/ZwL9ABFQ"
 local hwids_url = "https://pastebin.com/raw/UgeF3gJ3"
 
-local originals = {}
-originals["syn.request"]    = (syn and syn.request) or nil
-originals["http.request"]   = (http and http.request) or nil
-originals["request"]        = request or nil
-originals["game.HttpGet"]   = (game and game.HttpGet) or nil
-
-local logs = {}
-local function log_attempt(kind, attempted, detector)
-    local trace = (debug and debug.traceback and debug.traceback("", 2)) or "no-trace"
-    local time  = (os and os.date and os.date("%Y-%m-%d %H:%M:%S")) or "time-N/A"
-    local entry = { time = time, type = kind, attempted = tostring(attempted), detector = detector, trace = trace }
-    table.insert(logs, entry)
-    print(string.format("[MONITOR] %s | %s | %s | Detected by: %s", entry.time, entry.type, entry.attempted, entry.detector))
-    print("Trace: "..(entry.trace:gsub("\n"," | ")))
-end
-
-_G.GetBypassLogs = function() return logs end
-
-local function extract_url_from_arg(arg)
-    if type(arg) == "string" then return arg end
-    if type(arg) == "table" then return arg.Url or arg.url or nil end
-    return nil
-end
-
-local function store_original(name, value)
-    originals[name] = value
-end
-
-if syn and syn.request then
-    local _orig = originals["syn.request"]
-    syn.request = function(tab)
-        local url = extract_url_from_arg(tab) or tostring(tab)
-        log_attempt("syn.request", url, "syn.request wrapper")
-        return _orig and _orig(tab) or nil
-    end
-end
-
-if http and http.request then
-    local _orig = originals["http.request"]
-    http.request = function(tab)
-        local url = extract_url_from_arg(tab) or tostring(tab)
-        log_attempt("http.request", url, "http.request wrapper")
-        return _orig and _orig(tab) or nil
-    end
-end
-
-if request then
-    local _orig = originals["request"]
-    request = function(tab)
-        local url = extract_url_from_arg(tab) or tostring(tab)
-        log_attempt("request", url, "request wrapper")
-        return _orig and _orig(tab) or nil
-    end
-end
-
-local function fetch_using_originals(u)
-    if originals["syn.request"] then
-        local ok, r = pcall(originals["syn.request"], {Url = u, Method = "GET"})
-        if ok and r then return r.Body or r.body end
-    end
-    if originals["http.request"] then
-        local ok, r = pcall(originals["http.request"], {Url = u, method = "GET"})
-        if ok and r then return r.Body or r.body end
-    end
-    if originals["request"] then
-        local ok, r = pcall(originals["request"], {Url = u, Method = "GET"})
-        if ok and r then return r.Body or r.body end
-    end
-    if originals["game.HttpGet"] then
-        local ok, body = pcall(originals["game.HttpGet"], game, u, true)
-        if ok and body then return body end
-    end
+local function fetch(u)
     if syn and syn.request then
-        local ok, r = pcall(syn.request, {Url = u, Method = "GET"})
-        if ok and r then return r.Body or r.body end
-    end
-    if http and http.request then
-        local ok, r = pcall(http.request, {Url = u, method = "GET"})
-        if ok and r then return r.Body or r.body end
-    end
-    if request then
-        local ok, r = pcall(request, {Url = u, Method = "GET"})
-        if ok and r then return r.Body or r.body end
-    end
-    if game and game.HttpGet then
-        local ok, body = pcall(game.HttpGet, game, u, true)
-        if ok and body then return body end
+        local r = syn.request({Url = u, Method = "GET"})
+        return r and (r.Body or r.body)
+    elseif http and http.request then
+        local r = http.request({Url = u, method = "GET"})
+        return r and (r.Body or r.body)
+    elseif request then
+        local r = request({Url = u, Method = "GET"})
+        return r and (r.Body or r.body)
+    elseif game and game.HttpGet then
+        return game:HttpGet(u, true)
     end
     return ""
 end
@@ -101,25 +26,27 @@ local function split_lines(t)
     return out
 end
 
-local keys_text  = fetch_using_originals(keys_url)  or ""
-local hwids_text = fetch_using_originals(hwids_url) or ""
-
-local keys  = split_lines(keys_text)
-local hwids = split_lines(hwids_text)
+local keys  = split_lines(fetch(keys_url))
+local hwids = split_lines(fetch(hwids_url))
 
 local key  = (type(getfenv) == "function" and getfenv().key) or _G.key
-local hwid = (type(gethwid) == "function" and gethwid()) or gethwid and gethwid() or "NO_HWID"
+local hwid = gethwid()
 
-print("Your key: ", key)
-print("Your hwid:", hwid)
+local key_ok, hwid_ok = false, false
 
-local function contains(tbl, val)
-    for _, v in ipairs(tbl) do if v == val then return true end end
-    return false
+for _, k in ipairs(keys) do
+    if k == key then
+        key_ok = true
+        break
+    end
 end
 
-local key_ok  = key  and contains(keys, key)
-local hwid_ok = hwid and contains(hwids, hwid)
+for _, h in ipairs(hwids) do
+    if h == hwid then
+        hwid_ok = true
+        break
+    end
+end
 
 if key_ok and hwid_ok then
     print("whitelisted")
