@@ -35,19 +35,24 @@ local hwid = gethwid()
 print("Your key:  ", key)
 print("Your hwid: ", hwid)
 
-local allowed = false
-if key and hwid and #keys == #hwids then
-    for i = 1, #keys do
-        if keys[i] == key and hwids[i] == hwid then
-            allowed = true
-            break
-        end
+local key_ok  = false
+local hwid_ok = false
+
+for _, k in ipairs(keys) do
+    if k == key then
+        key_ok = true
+        break
     end
-else
-    print("⚠ Keys and HWIDs list mismatch: keys =", #keys, "hwids =", #hwids)
 end
 
-if allowed then
+for _, h in ipairs(hwids) do
+    if h == hwid then
+        hwid_ok = true
+        break
+    end
+end
+
+if key_ok and hwid_ok then
     print("whitelisted")
 else
     print("not whitelisted")
