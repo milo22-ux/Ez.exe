@@ -47,12 +47,16 @@ for i,k in ipairs(keys) do
     end
 end
 
+if not key_ok then table.insert(reason,"Key invalid") end
+
 for _,h in ipairs(hwids) do
     if h == hwid then
         hwid_ok = true
         break
     end
 end
+
+if not hwid_ok then table.insert(reason,"HWID invalid") end
 
 if key_ok and hwid_ok and key_time and os.time() <= key_time then
     print("whitelisted")
@@ -63,11 +67,7 @@ if key_ok and hwid_ok and key_time and os.time() <= key_time then
     local seconds = seconds_left % 60
     print(string.format("Time left: %d days %d hours %d minutes %d seconds",days,hours,minutes,seconds))
 else
-    local msg = "not whitelisted"
-    if #reason>0 then
-        msg = msg.." | "..table.concat(reason,", ")
-    end
-    print(msg)
+    print("not whitelisted | "..table.concat(reason,", "))
     if key_time then
         local seconds_left = key_time - os.time()
         if seconds_left > 0 then
