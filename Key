@@ -14,7 +14,7 @@ local function fetch(u)
     elseif game and game.HttpGet then
         return game:HttpGet(u, true)
     end
-    error("No supported HTTP method available")
+    return ""
 end
 
 local function split_lines(t)
@@ -26,17 +26,16 @@ local function split_lines(t)
     return out
 end
 
-local keys  = split_lines(fetch(keys_url) or "")
-local hwids = split_lines(fetch(hwids_url) or "")
+local keys  = split_lines(fetch(keys_url))
+local hwids = split_lines(fetch(hwids_url))
 
 local key  = (type(getfenv) == "function" and getfenv().key) or _G.key
 local hwid = gethwid()
 
-print("Your key:  ", key)
-print("Your hwid: ", hwid)
+print("Your key:", key)
+print("Your hwid:", hwid)
 
-local key_ok  = false
-local hwid_ok = false
+local key_ok, hwid_ok = false, false
 
 for _, k in ipairs(keys) do
     if k == key then
