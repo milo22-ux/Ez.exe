@@ -1,5 +1,5 @@
 local keys_url  = "https://pastebin.com/raw/ZwL9ABFQ"
-local hwids_url = "https://pastebin.com/raw/YOUR_HWIDS_PASTEBIN"
+local hwids_url = "https://pastebin.com/raw/UgeF3gJ3"
 
 local function fetch(u)
     if syn and syn.request then
