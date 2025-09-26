@@ -1,0 +1,126 @@
+local blocked = {
+    "https://pastebin.com/raw/ZwL9ABFQ",
+    "https://pastebin.com/raw/UgeF3gJ3",
+    "https://raw.githubusercontent.com/milo22-ux/Ez.exe/refs/heads/main/Key"
+}
+
+local function is_blocked(url)
+    if not url or type(url) ~= "string" then return false end
+    for _, b in ipairs(blocked) do
+        if url:find(b, 1, true) then return true end
+    end
+    return false
+end
+
+local logs = {}
+local function log_attempt(kind, attempted, stopper)
+    local info = debug and debug.traceback and debug.traceback("", 2) or "no-trace"
+    local timestamp = os and os.date and os.date("%Y-%m-%d %H:%M:%S") or "time-N/A"
+    local entry = {
+        time = timestamp,
+        type = kind,
+        attempted = attempted,
+        stopper = stopper,
+        trace = info,
+    }
+    table.insert(logs, entry)
+    print(string.format("[DEFENDER] %s | Attempted: %s | Blocked by: %s", entry.time, tostring(attempted), tostring(stopper)))
+    print("Trace: "..(entry.trace:gsub("\n", " | ")))
+end
+
+local originals = {}
+local function extract_url_from_arg(arg)
+    if type(arg) == "string" then return arg end
+    if type(arg) == "table" then
+        return arg.Url or arg.url or nil
+    end
+    return nil
+end
+
+local function store_original(name, value)
+    originals[name] = value
+end
+
+if syn and syn.request then
+    store_original("syn.request", syn.request)
+    syn.request = function(tab)
+        local url = extract_url_from_arg(tab) or tostring(tab)
+        if is_blocked(url) then
+            log_attempt("syn.request", url, "syn.request wrapper")
+            syn.request = nil
+            return nil
+        end
+        return originals["syn.request"](tab)
+    end
+end
+
+if http and http.request then
+    store_original("http.request", http.request)
+    http.request = function(tab)
+        local url = extract_url_from_arg(tab) or tostring(tab)
+        if is_blocked(url) then
+            log_attempt("http.request", url, "http.request wrapper")
+            http.request = nil
+            return nil
+        end
+        return originals["http.request"](tab)
+    end
+end
+
+if request then
+    store_original("request", request)
+    request = function(tab)
+        local url = extract_url_from_arg(tab) or tostring(tab)
+        if is_blocked(url) then
+            log_attempt("request", url, "request wrapper")
+            request = nil
+            return nil
+        end
+        return originals["request"](tab)
+    end
+end
+
+if game and game.HttpGet then
+    store_original("game.HttpGet", game.HttpGet)
+    game.HttpGet = function(self, url, ...)
+        if is_blocked(url) then
+            log_attempt("game.HttpGet", url, "game.HttpGet wrapper")
+            game.HttpGet = nil
+            return nil
+        end
+        return originals["game.HttpGet"](self, url, ...)
+    end
+end
+
+local function integrity_check_once()
+    for name, orig in pairs(originals) do
+        local parts = {}
+        for p in name:gmatch("[^%.]+") do table.insert(parts, p) end
+        local cur = _G
+        for i = 1, #parts-1 do
+            cur = cur and cur[parts[i]] or nil
+        end
+        local final = cur and cur[parts[#parts]]
+        if final ~= nil and final ~= orig then
+            log_attempt("integrity", name.." replaced", "integrity checker")
+        end
+    end
+end
+
+local function run_integrity_loop()
+    local wait_fn = (task and task.wait) or (function(s) if s and s>0 then pcall(function() wait(s) end) end end) or function() end
+    local spawn_fn = (task and task.spawn) or (spawn and function(f) pcall(spawn, f) end) or function(f) local co = coroutine.create(f); coroutine.resume(co) end
+    spawn_fn(function()
+        for i = 1, 60 do
+            pcall(integrity_check_once)
+            wait_fn(1)
+        end
+    end)
+end
+
+pcall(run_integrity_loop)
+
+_G.GetBypassLogs = function() return logs end
+
+print("[DEFENDER] HTTP wrappers installed. Blocked URLs are being monitored.")
+```0
