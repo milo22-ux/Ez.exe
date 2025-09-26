@@ -1,67 +1,67 @@
 local keys_url  = "https://pastebin.com/raw/ZwL9ABFQ"
 local hwids_url = "https://pastebin.com/raw/UgeF3gJ3"
+local times_url = "https://pastebin.com/raw/YOUR_TIMES_PASTEBIN"
 
 local function fetch(u)
-    if syn and syn.request then
-        local r = syn.request({Url = u, Method = "GET"})
-        return r and (r.Body or r.body)
-    elseif http and http.request then
-        local r = http.request({Url = u, method = "GET"})
-        return r and (r.Body or r.body)
-    elseif request then
-        local r = request({Url = u, Method = "GET"})
-        return r and (r.Body or r.body)
-    elseif game and game.HttpGet then
-        return game:HttpGet(u, true)
-    end
+    if syn and syn.request then return (syn.request({Url=u,Method="GET"}) or {}).Body end
+    if http and http.request then return (http.request({Url=u,method="GET"}) or {}).Body end
+    if request then return (request({Url=u,Method="GET"}) or {}).Body end
+    if game and game.HttpGet then return game:HttpGet(u,true) end
     return ""
 end
 
-local function split_lines(t)
-    local out = {}
-    for line in (t or ""):gmatch("[^\r\n]+") do
-        line = line:match("^%s*(.-)%s*$")
-        if line ~= "" then table.insert(out, line) end
-    end
+local function lines(t)
+    local out={}
+    for l in (t or ""):gmatch("[^\r\n]+") do table.insert(out,l:match("^%s*(.-)%s*$")) end
     return out
 end
 
-local keys  = split_lines(fetch(keys_url))
-local hwids = split_lines(fetch(hwids_url))
+local keys  = lines(fetch(keys_url))
+local hwids = lines(fetch(hwids_url))
+local times = lines(fetch(times_url))
 
-local key  = (type(getfenv) == "function" and getfenv().key) or _G.key
+local key  = (type(getfenv)=="function" and getfenv().key) or _G.key
 local hwid = gethwid()
 
-local key_ok, hwid_ok = false, false
+local key_ok, hwid_ok, time_ok = false,false,false
+local reason = {}
 
-for _, k in ipairs(keys) do
+for i,k in ipairs(keys) do
     if k == key then
         key_ok = true
+        local time_str = times[i]
+        if time_str then
+            local d,m,y = time_str:match("(%d+)%/(%d+)%/(%d+)")
+            if d and m and y then
+                local key_time = os.time({day=tonumber(d),month=tonumber(m),year=tonumber(y),hour=23,min=59,sec=59})
+                if os.time() <= key_time then
+                    time_ok = true
+                else
+                    table.insert(reason,"Key expired ("..time_str..")")
+                end
+            else
+                table.insert(reason,"Invalid date format ("..time_str..")")
+            end
+        else
+            table.insert(reason,"No expiration date for key")
+        end
         break
     end
 end
 
-for _, h in ipairs(hwids) do
+for _,h in ipairs(hwids) do
     if h == hwid then
         hwid_ok = true
         break
     end
 end
 
-if key_ok and hwid_ok then
+if key_ok and hwid_ok and time_ok then
     print("whitelisted")
 else
-    print("not whitelisted")
-    if not key_ok then
-        print("Reason: Key is invalid or missing")
-        if type(getfenv) == "function" then
-            getfenv().key = nil
-        else
-            _G.key = nil
-        end
+    local msg = "not whitelisted"
+    if #reason>0 then
+        msg = msg.." | "..table.concat(reason,", ")
     end
-    if not hwid_ok then
-        print("Reason: HWID is invalid or missing")
-        hwid = nil
-    end
+    print(msg)
 end
