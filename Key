@@ -32,9 +32,6 @@ local hwids = split_lines(fetch(hwids_url))
 local key  = (type(getfenv) == "function" and getfenv().key) or _G.key
 local hwid = gethwid()
 
-print("Your key:", key)
-print("Your hwid:", hwid)
-
 local key_ok, hwid_ok = false, false
 
 for _, k in ipairs(keys) do
