@@ -52,4 +52,16 @@ if key_ok and hwid_ok then
     print("whitelisted")
 else
     print("not whitelisted")
+    if not key_ok then
+        print("Reason: Key is invalid or missing")
+        if type(getfenv) == "function" then
+            getfenv().key = nil
+        else
+            _G.key = nil
+        end
+    end
+    if not hwid_ok then
+        print("Reason: HWID is invalid or missing")
+        hwid = nil
+    end
 end
