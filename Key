@@ -1,11 +1,12 @@
-local url = "https://pastebin.com/raw/ZwL9ABFQ"
+local keys_url  = "https://pastebin.com/raw/ZwL9ABFQ"
+local hwids_url = "https://pastebin.com/raw/YOUR_HWIDS_PASTEBIN"
 
 local function fetch(u)
     if syn and syn.request then
         local r = syn.request({Url = u, Method = "GET"})
         return r and (r.Body or r.body)
     elseif http and http.request then
-        local r = http.request({Url = u, Method = "GET"})
+        local r = http.request({Url = u, method = "GET"})
         return r and (r.Body or r.body)
     elseif request then
         local r = request({Url = u, Method = "GET"})
@@ -16,18 +17,31 @@ local function fetch(u)
     error("No supported HTTP method available")
 end
 
-local keys_text = fetch(url) or ""
-local keys = {}
-for line in keys_text:gmatch("[^\r\n]+") do
-    table.insert(keys, line)
+local function split_lines(t)
+    local out = {}
+    for line in (t or ""):gmatch("[^\r\n]+") do
+        line = line:match("^%s*(.-)%s*$")
+        if line ~= "" then table.insert(out, line) end
+    end
+    return out
 end
 
-local key = getfenv().key
+local keys_text  = fetch(keys_url)  or ""
+local hwids_text = fetch(hwids_url) or ""
+
+local keys  = split_lines(keys_text)
+local hwids = split_lines(hwids_text)
+
+local key  = (type(getfenv) == "function" and getfenv().key) or _G.key
+local hwid = gethwid and gethwid() or "NO_HWID"
+
 local allowed = false
-for _, k in ipairs(keys) do
-    if k == key then
-        allowed = true
-        break
+if key and hwid and #keys == #hwids then
+    for i = 1, #keys do
+        if keys[i] == key and hwids[i] == hwid then
+            allowed = true
+            break
+        end
     end
 end
 
