@@ -13,7 +13,7 @@ local function fetch(u)
     elseif game and game.HttpGet then
         return game:HttpGet(u, true)
     end
-    error("No supported HTTP method available for fetching keys")
+    error("No supported HTTP method available")
 end
 
 local keys_text = fetch(url) or ""
