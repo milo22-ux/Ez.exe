@@ -26,14 +26,14 @@ local function split_lines(t)
     return out
 end
 
-local keys_text  = fetch(keys_url)  or ""
-local hwids_text = fetch(hwids_url) or ""
-
-local keys  = split_lines(keys_text)
-local hwids = split_lines(hwids_text)
+local keys  = split_lines(fetch(keys_url) or "")
+local hwids = split_lines(fetch(hwids_url) or "")
 
 local key  = (type(getfenv) == "function" and getfenv().key) or _G.key
-local hwid = gethwid and gethwid() or "NO_HWID"
+local hwid = gethwid()
+
+print("Your key:  ", key)
+print("Your hwid: ", hwid)
 
 local allowed = false
 if key and hwid and #keys == #hwids then
@@ -43,6 +43,8 @@ if key and hwid and #keys == #hwids then
             break
         end
     end
+else
+    print("⚠ Keys and HWIDs list mismatch: keys =", #keys, "hwids =", #hwids)
 end
 
 if allowed then
