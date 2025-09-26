@@ -23,7 +23,7 @@ local times = lines(fetch(times_url))
 local key  = (type(getfenv)=="function" and getfenv().key) or _G.key
 local hwid = gethwid()
 
-local key_ok, hwid_ok, time_ok = false,false,false
+local key_ok, hwid_ok, key_time = false,false,nil
 local reason = {}
 
 for i,k in ipairs(keys) do
@@ -33,10 +33,8 @@ for i,k in ipairs(keys) do
         if time_str then
             local d,m,y = time_str:match("(%d+)%/(%d+)%/(%d+)")
             if d and m and y then
-                local key_time = os.time({day=tonumber(d),month=tonumber(m),year=tonumber(y),hour=23,min=59,sec=59})
-                if os.time() <= key_time then
-                    time_ok = true
-                else
+                key_time = os.time({day=tonumber(d),month=tonumber(m),year=tonumber(y),hour=23,min=59,sec=59})
+                if os.time() > key_time then
                     table.insert(reason,"Key expired ("..time_str..")")
                 end
             else
@@ -56,12 +54,30 @@ for _,h in ipairs(hwids) do
     end
 end
 
-if key_ok and hwid_ok and time_ok then
+if key_ok and hwid_ok and key_time and os.time() <= key_time then
     print("whitelisted")
+    local seconds_left = key_time - os.time()
+    local days = math.floor(seconds_left / 86400)
+    local hours = math.floor((seconds_left % 86400)/3600)
+    local minutes = math.floor((seconds_left % 3600)/60)
+    local seconds = seconds_left % 60
+    print(string.format("Time left: %d days %d hours %d minutes %d seconds",days,hours,minutes,seconds))
 else
     local msg = "not whitelisted"
     if #reason>0 then
         msg = msg.." | "..table.concat(reason,", ")
     end
     print(msg)
+    if key_time then
+        local seconds_left = key_time - os.time()
+        if seconds_left > 0 then
+            local days = math.floor(seconds_left / 86400)
+            local hours = math.floor((seconds_left % 86400)/3600)
+            local minutes = math.floor((seconds_left % 3600)/60)
+            local seconds = seconds_left % 60
+            print(string.format("Time left: %d days %d hours %d minutes %d seconds",days,hours,minutes,seconds))
+        else
+            print("Time left: expired")
+        end
+    end
 end
