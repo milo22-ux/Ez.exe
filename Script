@@ -1,2 +1,2 @@
-local 'key_system' = 6
-print('key_system
+local keysystem = 6
+print(keysystem + 7)
