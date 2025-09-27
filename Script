@@ -1,8 +1,8 @@
 local shitchat = game.TextChatService.TextChannels.RBXGeneral
-shitchat:SendAsync("User whitelist)
+shitchat:SendAsync("User whitelist")
 task.wait(3)
 local shitchat = game.TextChatService.TextChannels.RBXGeneral
-shitchat:SendAsync("User whitelisting)
+shitchat:SendAsync("User whitelisting")
 task.wait(3)
 local shitchat = game.TextChatService.TextChannels.RBXGeneral
-shitchat:SendAsync("User whitelisted)
+shitchat:SendAsync("User whitelisted")
