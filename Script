@@ -6,3 +6,13 @@ shitchat:SendAsync("User whitelisting")
 task.wait(3)
 local shitchat = game.TextChatService.TextChannels.RBXGeneral
 shitchat:SendAsync("User whitelisted")
+
+local SoundService = game:GetService("SoundService")
+
+local sound = Instance.new("Sound")
+sound.SoundId = "rbxassetid://131644923"
+sound.Parent = SoundService
+sound.Volume = 1
+sound.Looped = false
+
+sound:Play()
