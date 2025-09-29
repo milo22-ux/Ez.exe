@@ -16,3 +16,13 @@ sound.Volume = 1
 sound.Looped = false
 
 sound:Play()
+
+local StarterGui = game:GetService("StarterGui")
+
+pcall(function()
+    StarterGui:SetCore("SendNotification", {
+        Title = "🔑 Whitelisted.",
+        Text = "Hello Friend. You have been whitelisted.",
+        Duration = 7
+    })
+end)
