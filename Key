@@ -1,5 +1,17 @@
-
-getfenv().key = ""
+if type(getfenv) == "function" then
+    pcall(function()
+        if getfenv().key == nil then
+            if _G.__INJECT_KEY ~= nil then
+                getfenv().key = _G.__INJECT_KEY
+            elseif _G.key ~= nil then
+                getfenv().key = _G.key
+            end
+        end
+    end)
+end
+if _G.key == nil then
+    _G.key = _G.__INJECT_KEY or _G.key
+end
 
 local github_url = "https://raw.githubusercontent.com/milo22-ux/Whitelist-keys-hwids-times/refs/heads/main/keys.txt"
 local github_token = "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"
@@ -99,7 +111,7 @@ for line in raw_data:gmatch("[^\r\n]+") do
     end
 end
 
-local key = (type(getfenv) == "function" and getfenv().key) or _G.key
+local key = (type(getfenv) == "function" and pcall(function() return getfenv().key end) and getfenv().key) or _G.key
 local hwid_raw = tostring((type(gethwid) == "function" and gethwid()) or "nil")
 local hwid = "HWID-" .. hwid_raw
 local key_ok, hwid_ok, key_time = false, false, nil
@@ -190,7 +202,7 @@ sendWebhookEmbed(status_msg, fields)
 if key_ok and hwid_ok and key_time and os.time() <= key_time then
     print("✅ Whitelisted")
     print("Time left on key: "..time_left_msg)
-    pcall(function() loadstring(game:HttpGet("https://raw.githubusercontent.com/milo22-ux/Ez.exe/main/Script", true))() end)
+    pcall(function() loadstring(game:HttpGet("https://raw.githubusercontent.com/milo22-ux/V5-paid/refs/heads/main/V5%20paid", true))() end)
 else
     print("not whitelisted | "..table.concat(reason, ", "))
     if key_time then
