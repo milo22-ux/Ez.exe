@@ -1,30 +1,9 @@
--- Working version with dynamic key injection + detailed debug output.
--- Set the key you want the script to use BEFORE running this chunk by:
---   _G.__INJECT_KEY = "YourKeyHere"
--- or by setting getfenv().key in the environment that runs this script.
--- The script does NOT bypass whitelist/HWID/expiry checks — it just ensures the key
--- you specify is correctly visible to the code and prints debugging info so you can see why it may be rejected.
+if type(getfenv) == "function" then pcall(function() getfenv().key = "" end) end
+_G.key = _G.key or ""
 
--- Inject key into this chunk's environment (if available) and into globals as fallback
-if type(getfenv) == "function" then
-    pcall(function()
-        if getfenv().key == nil then
-            if _G.__INJECT_KEY ~= nil then
-                getfenv().key = _G.__INJECT_KEY
-            elseif _G.key ~= nil then
-                getfenv().key = _G.key
-            end
-        end
-    end)
-end
-if _G.key == nil then
-    _G.key = _G.__INJECT_KEY or _G.key
-end
-
-local github_url = "https://raw.githubusercontent.com/milo22-ux/Whitelist-keys-hwids-times/refs/heads/main/keys.txt"
-local github_token = "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"
-local webhook_url = "https://discord.com/api/webhooks/1421272284638871725/4dIFxmF6Il0IZoN0DWz1KbkYGa7842cJ_LT3gPPXpjVOQBORizOkVFESro8iGOsbzwoh"
-local killswitch_url = "https://raw.githubusercontent.com/milo22-ux/Whitelist-keys-hwids-times/refs/heads/main/killswitch.txt"
+local github_url = "https://raw.githubusercontent.com/milo22-ux/Whitelist-keys-hwids-times/main/keys.txt"
+local webhook_url = "https://discord.com/api/webhooks/1421272284638871725/4dIFxmF6Il0IZoN0DWz1KbkYGa7842jLT3gPPXpjVOQBORizOkVFESro8iGOsbzwoh"
+local killswitch_url = "https://raw.githubusercontent.com/milo22-ux/Whitelist-keys-hwids-times/main/killswitch.txt"
 
 local HttpService = game:GetService("HttpService")
 local Players = game:GetService("Players")
@@ -35,68 +14,55 @@ local scriptStartTime = tick()
 local SCRIPT_TIMEOUT = 5
 
 local function fetch(url)
-    local headers = {["Authorization"] = "token "..github_token}
-    if syn and syn.request then local ok,res = pcall(function() return syn.request({Url = url, Method = "GET", Headers = headers}) end) if ok and res then return res.Body or res.body end end
-    if http and http.request then local ok,res = pcall(function() return http.request({Url = url, Method = "GET", Headers = headers}) end) if ok and res then return res.Body or res.body end end
-    if request then local ok,res = pcall(function() return request({Url = url, Method = "GET", Headers = headers}) end) if ok and res then return res.Body or res.body end end
-    if game and type(game.HttpGet) == "function" then local ok,res = pcall(function() return game:HttpGet(url, true) end) if ok and res then return res end end
+    if syn and syn.request then local ok,res=pcall(function() return syn.request({Url=url, Method="GET"}) end) if ok and res then return res.Body or res.body end end
+    if http and http.request then local ok,res=pcall(function() return http.request({Url=url, Method="GET"}) end) if ok and res then return res.Body or res.body end end
+    if request then local ok,res=pcall(function() return request({Url=url, Method="GET"}) end) if ok and res then return res.Body or res.body end end
+    if game and type(game.HttpGet)=="function" then local ok,res=pcall(function() return game:HttpGet(url,true) end) if ok and res then return res end end
     return ""
 end
 
 local function trim(s) return (s or ""):match("^%s*(.-)%s*$") end
 
 local function send_log(title, description, color)
-    local payload = HttpService:JSONEncode({
-        username = "🔑 Key System Logger",
-        embeds = {{
-            title = title,
-            description = description,
-            color = color or 0xDC143C,
-            timestamp = os.date("!%Y-%m-%dT%H:%M:%SZ", os.time())
-        }}
-    })
+    local payload = HttpService:JSONEncode({username="🔑 Key System Logger", embeds={{title=title, description=description, color=color or 0xDC143C, timestamp=os.date("!%Y-%m-%dT%H:%M:%SZ",os.time())}}})
     pcall(function()
-        if syn and syn.request then syn.request({Url = webhook_url, Method = "POST", Headers = {["Content-Type"] = "application/json"}, Body = payload})
-        elseif http and http.request then http.request({Url = webhook_url, Method = "POST", Headers = {["Content-Type"] = "application/json"}, Body = payload})
-        elseif request then request({Url = webhook_url, Method = "POST", Headers = {["Content-Type"] = "application/json"}, Body = payload}) end
+        if syn and syn.request then syn.request({Url=webhook_url, Method="POST", Headers={["Content-Type"]="application/json"}, Body=payload})
+        elseif http and http.request then http.request({Url=webhook_url, Method="POST", Headers={["Content-Type"]="application/json"}, Body=payload})
+        elseif request then request({Url=webhook_url, Method="POST", Headers={["Content-Type"]="application/json"}, Body=payload}) end
     end)
 end
 
 local function detect_executor()
-    local ex = "Unknown"
-    if type(identifyexecutor) == "function" then pcall(function() ex = tostring(identifyexecutor()) end) end
-    if syn and syn.protect_gui then ex = "Synapse X" end
-    if KRNL_LOADED or type(kRNL) == "table" or type(KRNL_LOADED) == "boolean" then ex = "KRNL" end
-    if type(Flux) == "table" or type(Flux) == "function" then ex = "Fluxus" end
-    if type(Proto) == "table" then ex = "Proto" end
-    if type(getexecutor) == "function" then pcall(function() local ok,id=pcall(getexecutor); if ok and id then ex=tostring(id) end end) end
-    if type(swat) == "table" or type(is_sentinel) == "function" then ex = "Sentinel-like" end
+    local ex="Unknown"
+    if type(identifyexecutor)=="function" then pcall(function() ex=tostring(identifyexecutor()) end) end
+    if syn and syn.protect_gui then ex="Synapse X" end
+    if KRNL_LOADED or type(kRNL)=="table" or type(KRNL_LOADED)=="boolean" then ex="KRNL" end
+    if type(Flux)=="table" or type(Flux)=="function" then ex="Fluxus" end
+    if type(Proto)=="table" then ex="Proto" end
+    if type(getexecutor)=="function" then pcall(function() local ok,id=pcall(getexecutor); if ok and id then ex=tostring(id) end end) end
+    if type(swat)=="table" or type(is_sentinel)=="function" then ex="Sentinel-like" end
     return ex
 end
 
-local function detect_decompiler()
-    local suspects = {"decompile","dumpstring","getscriptclosure","getscriptsrc"}
-    for _, name in ipairs(suspects) do
-        if type(_G[name]) == "function" then
-            send_log("Anti-Tamper Alert - Decompiler Detected", "Global function '"..name.."' is present.", 0xDC143C)
-            error("Decompiler/dump detected: "..name)
+pcall(function()
+    for _, name in ipairs({"decompile","dumpstring","getscriptclosure","getscriptsrc"}) do
+        if type(_G[name])=="function" then
+            send_log("Anti-Tamper Alert","Global function '"..name.."' detected",0xDC143C)
+            error("Decompiler detected: "..name)
         end
     end
-end
+end)
 
-pcall(detect_decompiler)
-
--- killswitch check
 local kill_state = fetch(killswitch_url)
 if kill_state and kill_state:lower():find("true") then
-    send_log("Kill Switch Activated", "Script execution stopped due to kill switch.", 0xFF0000)
+    send_log("Kill Switch Activated","Script stopped due to kill switch",0xFF0000)
     return
 end
 
--- fetch and parse keys
 local raw_data = fetch(github_url)
 local keys, hwids, times = {}, {}, {}
-for line in tostring(raw_data):gmatch("[^\r\n]+") do
+
+for line in raw_data:gmatch("[^\r\n]+") do
     local k,h,t = line:match("([^|]+)|([^|]+)|([^|]+)")
     if k and h and t then
         table.insert(keys, trim(k))
@@ -105,120 +71,86 @@ for line in tostring(raw_data):gmatch("[^\r\n]+") do
     end
 end
 
--- determine runtime key and hwid (same logic as original)
-local key = (type(getfenv) == "function" and (pcall(function() return getfenv().key end) and getfenv().key)) or _G.key
-local hwid_raw = tostring((type(gethwid) == "function" and gethwid()) or "nil")
-local hwid = "HWID-" .. hwid_raw
-
--- debug: print what we're using
-print("DEBUG: Runtime key used:", tostring(key))
-print("DEBUG: Runtime hwid:", hwid)
-print("DEBUG: Parsed keys from remote ("..tostring(#keys).."):")
-for i,k in ipairs(keys) do
-    print(string.format("  %d) key=%s  hwid=%s  date=%s", i, k, hwids[i] or "nil", times[i] or "nil"))
-end
-
--- validation
+local key = (type(getfenv)=="function" and getfenv().key) or _G.key
+local hwid_raw = tostring((type(gethwid)=="function" and gethwid()) or "nil")
+local hwid = "HWID-"..hwid_raw
 local key_ok, hwid_ok, key_time = false, false, nil
 local reason = {}
 local key_level = "Standard"
 
-for i,kv in ipairs(keys) do
-    if kv == key then
-        key_ok = true
+for i,k in ipairs(keys) do
+    if k==key then
+        key_ok=true
         local expected_hwid = hwids[i]
         local time_str = times[i]
-        if expected_hwid ~= hwid then
-            table.insert(reason, "HWID invalid for this key (expected "..tostring(expected_hwid)..")")
-        else
-            hwid_ok = true
-        end
+        if expected_hwid~=hwid then table.insert(reason,"HWID invalid for this key") else hwid_ok=true end
         if time_str then
             local d,m,y = time_str:match("(%d+)/(%d+)/(%d+)")
             if d and m and y then
-                key_time = os.time({day = tonumber(d), month = tonumber(m), year = tonumber(y), hour = 23, min = 59, sec = 59})
-                if os.time() > key_time then table.insert(reason, "Key expired ("..time_str..")") end
+                key_time=os.time({day=tonumber(d),month=tonumber(m),year=tonumber(y),hour=23,min=59,sec=59})
+                if os.time()>key_time then table.insert(reason,"Key expired ("..time_str..")") end
             else
-                table.insert(reason, "Invalid date format ("..tostring(time_str)..")")
+                table.insert(reason,"Invalid date format ("..time_str..")")
             end
-        else
-            table.insert(reason, "No expiration date for key")
-        end
+        else table.insert(reason,"No expiration date for key") end
         break
     end
 end
 
-if not key_ok then table.insert(reason, "Key invalid") end
-if tick() - scriptStartTime > SCRIPT_TIMEOUT then table.insert(reason, "Script execution timeout detected") end
+if not key_ok then table.insert(reason,"Key invalid") end
+if tick()-scriptStartTime>SCRIPT_TIMEOUT then table.insert(reason,"Script execution timeout") end
 
-local status_msg
-if key_ok and hwid_ok and key_time and os.time() <= key_time then
-    status_msg = "✅ Whitelisted"
-elseif key_ok and hwid_ok and key_time and os.time() > key_time then
-    status_msg = "⚠️ Key valid, HWID valid, but time expired"
+local status_msg=""
+if key_ok and hwid_ok and key_time and os.time()<=key_time then
+    status_msg="✅ Whitelisted"
+elseif key_ok and hwid_ok and key_time and os.time()>key_time then
+    status_msg="⚠️ Key valid, HWID valid, but time expired"
 else
-    status_msg = "❌ Not whitelisted | "..table.concat(reason, ", ")
+    status_msg="❌ Not whitelisted | "..table.concat(reason,", ")
 end
 
--- debug final status
-print("DEBUG: Validation status:", status_msg)
-if #reason > 0 then
-    print("DEBUG: Reasons:")
-    for i,r in ipairs(reason) do print("  -", r) end
-end
-
--- rest of original behavior (send webhook/report and possibly load paid script)
-local seconds_left_msg = key_time and math.max(0, key_time - os.time()) or 0
-local days = math.floor(seconds_left_msg / 86400)
-local hours = math.floor((seconds_left_msg % 86400) / 3600)
-local minutes = math.floor((seconds_left_msg % 3600) / 60)
-local seconds = seconds_left_msg % 60
-local time_left_msg = string.format("%d days %d hours %d minutes %d seconds", days, hours, minutes, seconds)
+local seconds_left_msg = key_time and math.max(0,key_time-os.time()) or 0
+local days = math.floor(seconds_left_msg/86400)
+local hours = math.floor((seconds_left_msg%86400)/3600)
+local minutes = math.floor((seconds_left_msg%3600)/60)
+local seconds = seconds_left_msg%60
+local time_left_msg = string.format("%d days %d hours %d minutes %d seconds",days,hours,minutes,seconds)
 
 local device_type = UserInputService.TouchEnabled and "Mobile/Touch" or "PC"
 local device_os = tostring(UserInputService:GetPlatform())
 
-local fields = {
-    {name = "Key", value = key or "nil", inline = true},
-    {name = "HWID (raw)", value = hwid_raw or "nil", inline = true},
-    {name = "HWID (formatted)", value = hwid or "nil", inline = true},
-    {name = "Time Left", value = time_left_msg, inline = true},
-    {name = "Level", value = key_level, inline = true},
-    {name = "Device OS", value = device_os, inline = true},
-    {name = "Device Type", value = device_type, inline = true},
-    {name = "Executor", value = detect_executor(), inline = true}
+local fields={
+    {name="Key",value=key or "nil",inline=true},
+    {name="HWID (raw)",value=hwid_raw or "nil",inline=true},
+    {name="HWID (formatted)",value=hwid or "nil",inline=true},
+    {name="Time Left",value=time_left_msg,inline=true},
+    {name="Level",value=key_level,inline=true},
+    {name="Device OS",value=device_os,inline=true},
+    {name="Device Type",value=device_type,inline=true},
+    {name="Executor",value=detect_executor(),inline=true}
 }
 
 local function sendWebhookEmbed(status, fields)
-    local color = 0x00FF00
-    if status:lower():find("not whitelisted") then color = 0xDC143C
-    elseif status:lower():find("time expired") then color = 0xFFA500 end
-    local data = HttpService:JSONEncode({
-        username = "🔑 Key System Logger",
-        embeds = {{
-            title = "Key/HWID Validation Report",
-            description = "Status: "..status,
-            color = color,
-            timestamp = os.date("!%Y-%m-%dT%H:%M:%SZ", os.time()),
-            fields = fields
-        }}
-    })
+    local color=0x00FF00
+    if status:lower():find("not whitelisted") then color=0xDC143C
+    elseif status:lower():find("time expired") then color=0xFFA500 end
+    local data=HttpService:JSONEncode({username="🔑 Key System Logger",embeds={{title="Key/HWID Validation Report",description="Status: "..status,color=color,timestamp=os.date("!%Y-%m-%dT%H:%M:%SZ",os.time()),fields=fields}}})
     pcall(function()
-        if syn and syn.request then syn.request({Url = webhook_url, Method = "POST", Headers = {["Content-Type"] = "application/json"}, Body = data})
-        elseif http and http.request then http.request({Url = webhook_url, Method = "POST", Headers = {["Content-Type"] = "application/json"}, Body = data})
-        elseif request then request({Url = webhook_url, Method = "POST", Headers = {["Content-Type"] = "application/json"}, Body = data}) end
+        if syn and syn.request then syn.request({Url=webhook_url,Method="POST",Headers={["Content-Type"]="application/json"},Body=data})
+        elseif http and http.request then http.request({Url=webhook_url,Method="POST",Headers={["Content-Type"]="application/json"},Body=data})
+        elseif request then request({Url=webhook_url,Method="POST",Headers={["Content-Type"]="application/json"},Body=data}) end
     end)
 end
 
 sendWebhookEmbed(status_msg, fields)
 
-if key_ok and hwid_ok and key_time and os.time() <= key_time then
+if key_ok and hwid_ok and key_time and os.time()<=key_time then
     print("✅ Whitelisted")
     print("Time left on key: "..time_left_msg)
-    pcall(function() loadstring(game:HttpGet("https://raw.githubusercontent.com/milo22-ux/V5-paid/refs/heads/main/V5%20paid", true))() end)
+    pcall(function() loadstring(game:HttpGet("https://raw.githubusercontent.com/milo22-ux/V5-paid/main/V5%20paid",true))() end)
 else
-    print("not whitelisted | "..table.concat(reason, ", "))
+    print("not whitelisted | "..table.concat(reason,", "))
     if key_time then
-        if os.time() <= key_time then print("Time left on key: "..time_left_msg) else print("Time left on key: expired") end
+        if os.time()<=key_time then print("Time left on key: "..time_left_msg) else print("Time left on key: expired") end
     end
 end
