@@ -1,3 +1,11 @@
+-- Working version with dynamic key injection + detailed debug output.
+-- Set the key you want the script to use BEFORE running this chunk by:
+--   _G.__INJECT_KEY = "YourKeyHere"
+-- or by setting getfenv().key in the environment that runs this script.
+-- The script does NOT bypass whitelist/HWID/expiry checks — it just ensures the key
+-- you specify is correctly visible to the code and prints debugging info so you can see why it may be rejected.
+
+-- Inject key into this chunk's environment (if available) and into globals as fallback
 if type(getfenv) == "function" then
     pcall(function()
         if getfenv().key == nil then
@@ -36,15 +44,6 @@ local function fetch(url)
 end
 
 local function trim(s) return (s or ""):match("^%s*(.-)%s*$") end
-
-local function lines(t)
-    local out = {}
-    for l in (t or ""):gmatch("[^\r\n]+") do
-        local s = trim(l)
-        if s ~= "" then table.insert(out, s) end
-    end
-    return out
-end
 
 local function send_log(title, description, color)
     local payload = HttpService:JSONEncode({
@@ -87,22 +86,17 @@ end
 
 pcall(detect_decompiler)
 
+-- killswitch check
 local kill_state = fetch(killswitch_url)
 if kill_state and kill_state:lower():find("true") then
-    pcall(function()
-        local ok, tcs = pcall(function() return game:GetService("TextChatService") end)
-        if ok and tcs and tcs.TextChannels and tcs.TextChannels.RBXGeneral then
-            pcall(function() tcs.TextChannels.RBXGeneral:SendAsync("Kill switch true") end)
-        end
-    end)
     send_log("Kill Switch Activated", "Script execution stopped due to kill switch.", 0xFF0000)
     return
 end
 
+-- fetch and parse keys
 local raw_data = fetch(github_url)
 local keys, hwids, times = {}, {}, {}
-
-for line in raw_data:gmatch("[^\r\n]+") do
+for line in tostring(raw_data):gmatch("[^\r\n]+") do
     local k,h,t = line:match("([^|]+)|([^|]+)|([^|]+)")
     if k and h and t then
         table.insert(keys, trim(k))
@@ -111,20 +105,31 @@ for line in raw_data:gmatch("[^\r\n]+") do
     end
 end
 
-local key = (type(getfenv) == "function" and pcall(function() return getfenv().key end) and getfenv().key) or _G.key
+-- determine runtime key and hwid (same logic as original)
+local key = (type(getfenv) == "function" and (pcall(function() return getfenv().key end) and getfenv().key)) or _G.key
 local hwid_raw = tostring((type(gethwid) == "function" and gethwid()) or "nil")
 local hwid = "HWID-" .. hwid_raw
+
+-- debug: print what we're using
+print("DEBUG: Runtime key used:", tostring(key))
+print("DEBUG: Runtime hwid:", hwid)
+print("DEBUG: Parsed keys from remote ("..tostring(#keys).."):")
+for i,k in ipairs(keys) do
+    print(string.format("  %d) key=%s  hwid=%s  date=%s", i, k, hwids[i] or "nil", times[i] or "nil"))
+end
+
+-- validation
 local key_ok, hwid_ok, key_time = false, false, nil
 local reason = {}
 local key_level = "Standard"
 
-for i,k in ipairs(keys) do
-    if k == key then
+for i,kv in ipairs(keys) do
+    if kv == key then
         key_ok = true
         local expected_hwid = hwids[i]
         local time_str = times[i]
         if expected_hwid ~= hwid then
-            table.insert(reason, "HWID invalid for this key")
+            table.insert(reason, "HWID invalid for this key (expected "..tostring(expected_hwid)..")")
         else
             hwid_ok = true
         end
@@ -134,7 +139,7 @@ for i,k in ipairs(keys) do
                 key_time = os.time({day = tonumber(d), month = tonumber(m), year = tonumber(y), hour = 23, min = 59, sec = 59})
                 if os.time() > key_time then table.insert(reason, "Key expired ("..time_str..")") end
             else
-                table.insert(reason, "Invalid date format ("..time_str..")")
+                table.insert(reason, "Invalid date format ("..tostring(time_str)..")")
             end
         else
             table.insert(reason, "No expiration date for key")
@@ -146,7 +151,7 @@ end
 if not key_ok then table.insert(reason, "Key invalid") end
 if tick() - scriptStartTime > SCRIPT_TIMEOUT then table.insert(reason, "Script execution timeout detected") end
 
-local status_msg = ""
+local status_msg
 if key_ok and hwid_ok and key_time and os.time() <= key_time then
     status_msg = "✅ Whitelisted"
 elseif key_ok and hwid_ok and key_time and os.time() > key_time then
@@ -155,6 +160,14 @@ else
     status_msg = "❌ Not whitelisted | "..table.concat(reason, ", ")
 end
 
+-- debug final status
+print("DEBUG: Validation status:", status_msg)
+if #reason > 0 then
+    print("DEBUG: Reasons:")
+    for i,r in ipairs(reason) do print("  -", r) end
+end
+
+-- rest of original behavior (send webhook/report and possibly load paid script)
 local seconds_left_msg = key_time and math.max(0, key_time - os.time()) or 0
 local days = math.floor(seconds_left_msg / 86400)
 local hours = math.floor((seconds_left_msg % 86400) / 3600)
